@@ -10,14 +10,9 @@ const router = createRouter({
       component: DashboardView
     },
     {
-      path: '/create-starship',
-      name: 'createStarship',
-      component: () => import('../views/CreateStarshipView.vue')
-    },
-    {
-      path: '/remove-starship',
-      name: 'removeStarship',
-      component: () => import('../views/RemoveStarshipView.vue')
+      path: '/manage-starships',
+      name: 'manageStarships',
+      component: () => import('../views/ManageStarshipsView.vue')
     }
   ]
 })

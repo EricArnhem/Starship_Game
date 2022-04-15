@@ -5,29 +5,44 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/create-starship">Create a Starship</RouterLink>
-      <RouterLink to="/remove-starship">Remove a Starship</RouterLink>
+      <ul id="navigation-links">
+        <li><RouterLink to="/"><img src="/svg/dashboard.svg" title="Dashboard" class="filter-white"></RouterLink></li>
+        <li><RouterLink to="/manage-starships"><img src="/svg/rocket.svg" title="Manage Starships" class="filter-white"></RouterLink></li>
+      </ul>      
     </nav>
   </header>
 
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style>
+
+/* Filter used to change the svgs color to white (#f5f5f5) */
+.filter-white {
+  filter: invert(92%) sepia(65%) saturate(5592%) hue-rotate(186deg) brightness(129%) contrast(92%);
+}
 
 body {
   background-color: #181818;
   font-family: sans-serif;
   color: rgba(235, 235, 235, 0.64);
+  margin: 0;
 }
 
 #app {
-  padding: 2rem;
+  display: flex;
+  flex-direction: row;
 }
 
 nav {
-  font-size: 1.2rem;
+  min-height: 100vh;
+  width: 45px;
+  border-right: 1px solid rgba(146, 146, 146, 0.75);
+  padding: 0 0.3rem;
+  /* temporary margin */
+  margin-right: 1rem; 
 }
 
 a {
@@ -52,6 +67,26 @@ nav a.router-link-exact-active:hover {
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
+}
+
+#navigation-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation-links li {
+  border-bottom: 1px solid rgba(146, 146, 146, 0.356);
+  padding-top: 0.6rem;
+  padding-bottom: 0.3rem;
+}
+
+#navigation-links li:last-of-type {
+  border-bottom: none;
+}
+
+#navigation-links li img{
+  display: block;
+  height: 45px;
 }
 </style>
