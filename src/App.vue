@@ -7,10 +7,10 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav>
       <ul id="navigation-links">
         <li>
-          <RouterLink to="/"><img src="/src/images/dashboard.svg" title="Dashboard"></RouterLink>
+          <RouterLink to="/"><img src="./images/dashboard.svg" title="Dashboard"></RouterLink>
         </li>
         <li>
-          <RouterLink to="/manage-starships"><img src="/src/images/rocket.svg" title="Manage Starships"></RouterLink>
+          <RouterLink to="/manage-starships"><img src="./images/rocket.svg" title="Manage Starships"></RouterLink>
         </li>
       </ul>
     </nav>
