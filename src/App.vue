@@ -32,6 +32,12 @@ body {
 #app {
   display: flex;
   flex-direction: row;
+  flex: auto;
+}
+
+main {
+  display: flex;
+  flex: auto;
 }
 
 nav {
@@ -40,8 +46,6 @@ nav {
   border-right: 1px solid rgba(146, 146, 146, 0.75);
   box-shadow: 1px 0 1px rgba(146, 146, 146, 0.75);
   padding: 0 0.3rem;
-  /* temporary margin */
-  margin-right: 1rem;
 }
 
 nav a {

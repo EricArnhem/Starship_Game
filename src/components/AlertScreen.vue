@@ -50,10 +50,26 @@ function displayAlert(textString) {
 
 <template>
 
-  <div>
-    <p>{{alertMessage}}</p>
+  <div id="alert-container">
+    <p id="alert-display">{{ alertMessage }}</p>
   </div>
 
 </template>
 
-<style></style>
+<style>
+#alert-container {
+  flex: auto;
+}
+
+#alert-display {
+  width: 50%;
+  min-height: 18px;
+  margin: auto;
+  margin-top: 10px;
+  padding: 0.7rem;
+  border-radius: 4px;
+  background-color: aliceblue;
+  color: rgb(15, 15, 15);
+  text-align: center;
+}
+</style>
