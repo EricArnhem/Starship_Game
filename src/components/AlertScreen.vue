@@ -58,14 +58,14 @@ function displayAlert(textString) {
 
 <style>
 #alert-container {
-  flex: auto;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 
 #alert-display {
   width: 50%;
   min-height: 18px;
   margin: auto;
-  margin-top: 10px;
   padding: 0.7rem;
   border-radius: 4px;
   background-color: aliceblue;
