@@ -14,7 +14,7 @@ import StatsTable from '../components/StatsTable.vue';
   </div>
 </template>
 
-<style>
+<style scoped>
 #starship-data {
   display: flex;
   justify-content: center;
