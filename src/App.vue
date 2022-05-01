@@ -41,6 +41,7 @@ main {
   display: flex;
   flex: auto;
   flex-direction: column;
+  padding-bottom: 30px;
 }
 
 nav {
