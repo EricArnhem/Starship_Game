@@ -66,7 +66,7 @@ function displayAlert(textString) {
   width: 50%;
   min-height: 18px;
   margin: auto;
-  padding: 0.7rem;
+  padding: 12px;
   border-radius: 4px;
   background-color: aliceblue;
   color: rgb(15, 15, 15);

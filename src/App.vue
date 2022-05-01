@@ -48,7 +48,7 @@ nav {
   width: 45px;
   border-right: 1px solid rgba(146, 146, 146, 0.75);
   box-shadow: 1px 0 1px rgba(146, 146, 146, 0.75);
-  padding: 0 0.3rem;
+  padding: 0 7px;
 }
 
 nav a {
@@ -72,8 +72,8 @@ nav a:hover {
 
 #navigation-links li {
   border-bottom: 1px solid rgba(146, 146, 146, 0.356);
-  padding-top: 0.6rem;
-  padding-bottom: 0.3rem;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 #navigation-links li:last-of-type {

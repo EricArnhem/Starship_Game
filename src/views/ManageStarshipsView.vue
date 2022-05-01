@@ -23,7 +23,7 @@ h1 {
 
 h2 {
   border-left: 2px solid rgba(146, 146, 146, 0.75);
-  padding-left: 0.6rem;
+  padding-left: 10px;
   margin-top: 0;
 }
 

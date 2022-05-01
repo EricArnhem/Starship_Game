@@ -46,7 +46,7 @@
 
 #starship-stats th,
 #starship-stats td {
-  padding: 0.7rem 1.5rem;
+  padding: 12px 24px;
 }
 
 #starship-stats td:first-of-type {
