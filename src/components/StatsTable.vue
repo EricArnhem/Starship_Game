@@ -32,10 +32,14 @@
 </template>
 
 <style>
+#starship-stats {
+  width: 70vw;
+  max-width: 400px;
+}
+
 #starship-stats,
 #starship-stats th,
 #starship-stats td {
-  width: 400px;
   border: 1px solid aliceblue;
   border-collapse: collapse;
 }
