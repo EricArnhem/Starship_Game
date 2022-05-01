@@ -23,6 +23,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style>
 body {
+  display: flex;
+  min-height: 100vh;
   background-color: #181818;
   font-family: sans-serif;
   color: #ebebeb;
@@ -42,7 +44,7 @@ main {
 }
 
 nav {
-  min-height: 100vh;
+  height: 100%;
   width: 45px;
   border-right: 1px solid rgba(146, 146, 146, 0.75);
   box-shadow: 1px 0 1px rgba(146, 146, 146, 0.75);
