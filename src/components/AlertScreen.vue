@@ -72,4 +72,10 @@ function displayAlert(textString) {
   color: rgb(15, 15, 15);
   text-align: center;
 }
+
+@media (max-width: 1200px) {
+  #alert-display {
+    width: 70%;
+  }
+}
 </style>

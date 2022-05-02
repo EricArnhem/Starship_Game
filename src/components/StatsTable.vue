@@ -49,6 +49,13 @@
   padding: 12px 24px;
 }
 
+@media (max-width: 480px) {
+  #starship-stats th,
+  #starship-stats td {
+    padding: 12px 12px;
+  }
+}
+
 #starship-stats td:first-of-type {
   font-weight: bold;
 }
