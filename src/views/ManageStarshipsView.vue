@@ -34,6 +34,7 @@ h2 {
 
 #new-starship {
   background-color: #2a2a2a;
+  border: 1px solid rgba(146, 146, 146, 0.75);
   border-radius: 10px;
   padding: 30px;
   margin: 0 10px;
