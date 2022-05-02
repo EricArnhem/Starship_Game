@@ -40,7 +40,7 @@
 #starship-stats,
 #starship-stats th,
 #starship-stats td {
-  border: 1px solid aliceblue;
+  border: 1px solid rgba(146, 146, 146, 0.75);
   border-collapse: collapse;
 }
 
