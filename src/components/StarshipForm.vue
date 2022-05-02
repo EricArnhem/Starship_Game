@@ -8,7 +8,7 @@ const starshipFuel = ref(1000);
 
 <template>
 
-  <form>
+  <form autocomplete="off">
     <label for="starship-name">Name:</label>
     <input type="text" name="starship-name" id="starship-name" v-model="starshipName" required>
     <label for="starship-speed">Speed:</label>
@@ -19,8 +19,7 @@ const starshipFuel = ref(1000);
       name="starship-speed"
       id="starship-speed"
       v-model="starshipSpeed"
-      required
-      autocomplete="off">
+      required>
 
     <label for="starship-fuel">Fuel tank capacity:</label>
     <input
@@ -30,8 +29,7 @@ const starshipFuel = ref(1000);
       name="starship-fuel"
       id="starship-fuel"
       v-model="starshipFuel"
-      required
-      autocomplete="off">
+      required>
 
     <input type="submit" value="Create">
   </form>
