@@ -60,6 +60,10 @@
   font-weight: bold;
 }
 
+#starship-stats td:last-of-type {
+  overflow-wrap: anywhere;
+}
+
 #starship-stats thead {
   background-color: #222368;
 }
