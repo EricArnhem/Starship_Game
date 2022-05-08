@@ -1,12 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 const starshipName = ref('');
 const starshipSpeed = ref(100);
 const starshipFuel = ref(1000);
 
+let formErrors = reactive([]);
+
 function handleSubmit() {
-  let formErrors = [];
+
+  // Resets the errors array
+  formErrors.length = 0;
 
   const regexName = new RegExp(/^[^-\s][\p{L}0-9- ]{1,20}$/gu);
 
@@ -49,27 +53,39 @@ function handleSubmit() {
 <template>
 
   <form @submit.prevent="handleSubmit" autocomplete="off">
-    <label for="starship-name">Name:</label>
+    <div class="formLabelGroup">
+      <label for="starship-name">Name:</label>
+      <span class="formHelpText">Accepts any letters, numbers, spaces and dashes.</span>
+    </div>
     <input type="text" maxlength="20" name="starship-name" id="starship-name" v-model="starshipName" required>
-    <label for="starship-speed">Speed:</label>
+    <span class="formError" v-if="formErrors.includes('nameError')">Invalid name.</span>
+    <div class="formLabelGroup">
+      <label for="starship-speed">Speed:</label>
+      <span class="formHelpText">Accepts a number from 100 to 1000.</span>
+    </div>
     <input
       type="number"
-      min="100"
+      min="10"
       max="1000"
       name="starship-speed"
       id="starship-speed"
       v-model="starshipSpeed"
       required>
+    <span class="formError" v-if="formErrors.includes('speedError')">Invalid speed. Not in the available range.</span>
 
-    <label for="starship-fuel">Fuel tank capacity:</label>
+    <div class="formLabelGroup">
+      <label for="starship-fuel">Fuel tank capacity:</label>
+      <span class="formHelpText">Accepts a number from 1000 to 5000.</span>
+    </div>
     <input
       type="number"
-      min="1000"
+      min="100"
       max="5000"
       name="starship-fuel"
       id="starship-fuel"
       v-model="starshipFuel"
       required>
+    <span class="formError" v-if="formErrors.includes('fuelError')">Invalid fuel. Not in the available range.</span>
 
     <input type="submit" value="Create">
   </form>
@@ -86,11 +102,13 @@ form {
 }
 
 label {
-  margin-bottom: 5px;
-  margin: 25px 0 15px;
   letter-spacing: 1px;
   color: rgb(175, 175, 175);
   font-weight: bold;
+}
+
+.formLabelGroup {
+  margin: 25px 0 15px;
 }
 
 input {
@@ -117,5 +135,19 @@ input[type="submit"]:hover {
   background-color: #3a3a3a;
   cursor: pointer;
   transition: 0.1s;
+}
+
+.formHelpText {
+  color: rgb(165, 165, 165);
+  font-size: 14px;
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.formError {
+  color: #ED4337;
+  font-size: 14px;
+  margin-top: 10px;
 }
 </style>
