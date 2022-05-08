@@ -48,6 +48,11 @@ function handleSubmit() {
 
 }
 
+// Used to trim the name when the input loses focus
+function trimStarshipName() {
+  starshipName.value = starshipName.value.trim();
+}
+
 </script>
 
 <template>
@@ -57,7 +62,14 @@ function handleSubmit() {
       <label for="starship-name">Name:</label>
       <span class="formHelpText">Accepts any letters, numbers, spaces and dashes.</span>
     </div>
-    <input type="text" maxlength="20" name="starship-name" id="starship-name" v-model="starshipName" required>
+    <input
+      type="text"
+      maxlength="20"
+      name="starship-name"
+      id="starship-name"
+      v-model="starshipName"
+      v-on:blur="trimStarshipName"
+      required>
     <span class="formError" v-if="formErrors.includes('nameError')">Invalid name.</span>
     <div class="formLabelGroup">
       <label for="starship-speed">Speed:</label>
