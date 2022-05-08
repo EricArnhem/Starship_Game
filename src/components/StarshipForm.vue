@@ -60,7 +60,7 @@ function trimStarshipName() {
   <form @submit.prevent="handleSubmit" autocomplete="off">
     <div class="formLabelGroup">
       <label for="starship-name">Name:</label>
-      <span class="formHelpText">Accepts any letters, numbers, spaces and dashes.</span>
+      <span class="formHelpText">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
     </div>
     <input
       type="text"
