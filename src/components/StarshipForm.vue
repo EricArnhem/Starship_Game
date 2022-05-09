@@ -137,7 +137,7 @@ form {
 
 label {
   letter-spacing: 1px;
-  color: rgb(175, 175, 175);
+  color: rgb(210, 210, 210);
   font-weight: bold;
 }
 
