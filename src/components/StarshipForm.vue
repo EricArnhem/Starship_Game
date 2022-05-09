@@ -11,7 +11,6 @@ function handleSubmit() {
 
   // Resets the errors array
   formErrors.length = 0;
-
   const regexName = new RegExp(/^[^-\s][\p{L}0-9- ]{1,20}$/gu);
 
   // Trims the name provided
@@ -53,6 +52,29 @@ function trimStarshipName() {
   starshipName.value = starshipName.value.trim();
 }
 
+// Checks the name validity
+function checkNameValidity() {
+
+  const regexName = new RegExp(/^[^-\s][\p{L}0-9- ]{1,20}$/gu);
+
+  // If the name is invalid
+  if (!regexName.test(starshipName.value)) {
+
+    // If we don't already have a name error
+    if (!formErrors.includes('nameError')) {
+      // We add an error to the errors array
+      formErrors.push('nameError');
+    }
+
+  } else { // If the name is valid
+
+    // We get the index of the nameError and we remove it
+    let IdNameError = formErrors.indexOf('nameError');
+    formErrors.splice(IdNameError, 1);
+
+  }
+}
+
 </script>
 
 <template>
@@ -68,7 +90,7 @@ function trimStarshipName() {
       name="starship-name"
       id="starship-name"
       v-model="starshipName"
-      v-on:blur="trimStarshipName"
+      v-on:blur="trimStarshipName(); checkNameValidity();"
       required>
     <span class="formError" v-if="formErrors.includes('nameError')">Invalid name.</span>
     <div class="formLabelGroup">
@@ -77,7 +99,7 @@ function trimStarshipName() {
     </div>
     <input
       type="number"
-      min="10"
+      min="100"
       max="1000"
       name="starship-speed"
       id="starship-speed"
@@ -91,7 +113,7 @@ function trimStarshipName() {
     </div>
     <input
       type="number"
-      min="100"
+      min="1000"
       max="5000"
       name="starship-fuel"
       id="starship-fuel"
