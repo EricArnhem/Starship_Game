@@ -57,20 +57,20 @@ function checkNameValidity() {
 
   const regexName = new RegExp(/^[^-\s][\p{L}0-9- ]{1,20}$/gu);
 
-  // If the name is invalid
-  if (!regexName.test(starshipName.value)) {
+  // If the input in empty or if the name is valid
+  if (starshipName.value === '' || regexName.test(starshipName.value)) {
+
+    // We get the index of the nameError and we remove it
+    let IdNameError = formErrors.indexOf('nameError');
+    formErrors.splice(IdNameError, 1);
+
+  } else { // If the name is invalid
 
     // If we don't already have a name error
     if (!formErrors.includes('nameError')) {
       // We add an error to the errors array
       formErrors.push('nameError');
     }
-
-  } else { // If the name is valid
-
-    // We get the index of the nameError and we remove it
-    let IdNameError = formErrors.indexOf('nameError');
-    formErrors.splice(IdNameError, 1);
 
   }
 }
