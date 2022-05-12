@@ -22,12 +22,19 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style>
+:root {
+  --main-bg-color: #181818;
+  --main-text-color: #ebebeb;
+  --main-border-color: rgba(146, 146, 146, 0.75);
+  --content-box-bg-color: #2a2a2a;
+}
+
 body {
   display: flex;
   min-height: 100vh;
-  background-color: #181818;
+  background-color: var(--main-bg-color);
   font-family: sans-serif;
-  color: #ebebeb;
+  color: var(--main-text-color);
   margin: 0;
 }
 
@@ -47,8 +54,8 @@ main {
 nav {
   height: 100%;
   width: 45px;
-  border-right: 1px solid rgba(146, 146, 146, 0.75);
-  box-shadow: 1px 0 1px rgba(146, 146, 146, 0.75);
+  border-right: 1px solid var(--main-border-color);
+  box-shadow: 1px 0 1px var(--main-border-color);
   padding: 0 7px;
 }
 

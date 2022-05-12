@@ -22,7 +22,7 @@ h1 {
 }
 
 h2 {
-  border-left: 2px solid rgba(146, 146, 146, 0.75);
+  border-left: 2px solid var(--main-border-color);
   padding-left: 10px;
   margin-top: 0;
 }
@@ -33,8 +33,8 @@ h2 {
 }
 
 #new-starship {
-  background-color: #2a2a2a;
-  border: 1px solid rgba(146, 146, 146, 0.75);
+  background-color: var(--content-box-bg-color);
+  border: 1px solid var(--main-border-color);
   border-radius: 10px;
   padding: 30px;
   margin: 0 10px;

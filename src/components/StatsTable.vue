@@ -40,7 +40,7 @@
 #starship-stats,
 #starship-stats th,
 #starship-stats td {
-  border: 1px solid rgba(146, 146, 146, 0.75);
+  border: 1px solid var(--main-border-color);
   border-collapse: collapse;
 }
 
@@ -69,6 +69,6 @@
 }
 
 #starship-stats tbody {
-  background-color: #2a2a2a;
+  background-color: var(--content-box-bg-color);
 }
 </style>

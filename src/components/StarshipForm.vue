@@ -150,8 +150,8 @@ input {
   width: 100%;
   box-sizing: border-box;
   border: 0;
-  border-bottom: 1px solid rgba(146, 146, 146, 0.75);
-  background-color: #2a2a2a;
+  border-bottom: 1px solid var(--main-border-color);
+  background-color: var(--content-box-bg-color);
   color: inherit;
   font-size: 1rem;
 }
@@ -161,7 +161,7 @@ input[type="submit"] {
   width: 30%;
   margin: auto;
   margin-top: 25px;
-  border: 1px solid rgba(146, 146, 146, 0.75);
+  border: 1px solid var(--main-border-color);
   border-radius: 3px;
 }
 
