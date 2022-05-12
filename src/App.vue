@@ -65,6 +65,18 @@ main {
   justify-content: center;
 }
 
+h1 {
+  text-align: center;
+  text-decoration: underline double 1px;
+  text-underline-offset: 9px;
+}
+
+h2 {
+  border-left: 2px solid var(--main-border-color);
+  padding-left: 10px;
+  margin-top: 0;
+}
+
 nav {
   height: 100%;
   width: 45px;
