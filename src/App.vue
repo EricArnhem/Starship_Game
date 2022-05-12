@@ -51,6 +51,11 @@ main {
   padding-bottom: 30px;
 }
 
+.wrapper-content-box {
+  display: flex;
+  justify-content: center;
+}
+
 .content-box {
   background-color: var(--content-box-bg-color);
   border: 1px solid var(--main-border-color);
@@ -60,9 +65,10 @@ main {
   box-sizing: border-box;
 }
 
-.wrapper-content-box {
-  display: flex;
-  justify-content: center;
+.body-content-box {
+  width: 40vw;
+  min-width: 100%;
+  max-width: 650px;
 }
 
 h1 {

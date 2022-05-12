@@ -8,7 +8,9 @@ import StarshipForm from '../components/StarshipForm.vue';
   <div class="wrapper-content-box">
     <div class="content-box">
       <h2>Create a new Starship</h2>
-      <StarshipForm />
+      <div class="body-content-box">
+        <StarshipForm />
+      </div>
     </div>
   </div>
 

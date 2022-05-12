@@ -130,9 +130,6 @@ function checkNameValidity() {
 form {
   display: flex;
   flex-direction: column;
-  width: 40vw;
-  min-width: 100%;
-  max-width: 650px;
 }
 
 label {
