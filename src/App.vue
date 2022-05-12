@@ -51,6 +51,20 @@ main {
   padding-bottom: 30px;
 }
 
+.content-box {
+  background-color: var(--content-box-bg-color);
+  border: 1px solid var(--main-border-color);
+  border-radius: 10px;
+  padding: 30px;
+  margin: 0 10px;
+  box-sizing: border-box;
+}
+
+.wrapper-content-box {
+  display: flex;
+  justify-content: center;
+}
+
 nav {
   height: 100%;
   width: 45px;
