@@ -59,7 +59,7 @@ function displayAlert(textString) {
 <style>
 #alert-container {
   margin-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 #alert-display {
