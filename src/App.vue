@@ -66,6 +66,9 @@ main {
 }
 
 .body-content-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 40vw;
   min-width: 100%;
   max-width: 650px;
