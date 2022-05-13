@@ -156,7 +156,7 @@ input {
 
 input[type="submit"] {
   padding: 10px 6px;
-  width: 30%;
+  width: 50%;
   margin: auto;
   margin-top: 25px;
   border: 1px solid var(--main-border-color);
@@ -167,6 +167,12 @@ input[type="submit"]:hover {
   background-color: #3a3a3a;
   cursor: pointer;
   transition: 0.1s;
+}
+
+@media (max-width: 480px) {
+  input[type="submit"] {
+    width: 100%;
+  }
 }
 
 .formHelpText {
