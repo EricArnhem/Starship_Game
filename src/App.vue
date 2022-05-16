@@ -27,6 +27,8 @@ import { RouterLink, RouterView } from 'vue-router'
   --main-text-color: #ebebeb;
   --main-border-color: rgba(146, 146, 146, 0.75);
   --content-box-bg-color: #2a2a2a;
+  --button-dark-bg-color: #242424;
+  --button-dark-bg-hover-color: #3a3a3a;
 }
 
 body {
@@ -49,6 +51,28 @@ main {
   flex: auto;
   flex-direction: column;
   padding-bottom: 30px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.button-dark {
+  padding: 10px 6px;
+  width: 50%;
+  margin: auto;
+  margin-top: 25px;
+  font-size: 1rem;
+  color: inherit;
+  background-color: var(--button-dark-bg-color);
+  border: 1px solid var(--main-border-color);
+  border-radius: 3px;
+}
+
+.button-dark:hover {
+  background-color: var(--button-dark-bg-hover-color);
+  cursor: pointer;
+  transition: 0.1s;
 }
 
 .wrapper-content-box {
