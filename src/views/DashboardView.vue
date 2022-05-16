@@ -30,7 +30,7 @@ const starshipSelect = ref('Falcon');
             <p class="starship-name">{{ starshipSelect }}</p>
             <StatsTable />
           </div>
-          <button id="play-button" v-if="starshipSelect" @click="inGame = true">Play</button>
+          <button class="button-dark" v-if="starshipSelect" @click="inGame = true">Play</button>
 
         </div>
 
@@ -92,24 +92,6 @@ h1 {
   #starship-select {
     width: 100%;
   }
-}
-
-#play-button {
-  padding: 10px 6px;
-  width: 50%;
-  margin: auto;
-  margin-top: 25px;
-  font-size: 1rem;
-  color: inherit;
-  background-color: var(--content-box-bg-color);
-  border: 1px solid var(--main-border-color);
-  border-radius: 3px;
-}
-
-#play-button:hover {
-  background-color: #3a3a3a;
-  cursor: pointer;
-  transition: 0.1s;
 }
 
 /* Starship dashboard - In game */
