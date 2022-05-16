@@ -121,7 +121,7 @@ function checkNameValidity() {
       required>
     <span class="formError" v-if="formErrors.includes('fuelError')">Invalid fuel. Not in the available range.</span>
 
-    <input type="submit" value="Create">
+    <button class="button-dark" type="submit">Create</button>
   </form>
 
 </template>
@@ -154,23 +154,8 @@ input {
   font-size: 1rem;
 }
 
-input[type="submit"] {
-  padding: 10px 6px;
-  width: 50%;
-  margin: auto;
-  margin-top: 25px;
-  border: 1px solid var(--main-border-color);
-  border-radius: 3px;
-}
-
-input[type="submit"]:hover {
-  background-color: #3a3a3a;
-  cursor: pointer;
-  transition: 0.1s;
-}
-
 @media (max-width: 480px) {
-  input[type="submit"] {
+  button[type="submit"] {
     width: 100%;
   }
 }
