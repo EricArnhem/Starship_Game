@@ -35,6 +35,7 @@
 #starship-stats {
   width: 70vw;
   max-width: 400px;
+  margin: auto;
 }
 
 #starship-stats,

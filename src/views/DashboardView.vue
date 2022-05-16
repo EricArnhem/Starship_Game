@@ -3,8 +3,8 @@ import { ref } from 'vue';
 import AlertScreen from '../components/AlertScreen.vue';
 import StatsTable from '../components/StatsTable.vue';
 
-const inGame = ref(false);
-const starshipSelect = ref('');
+const inGame = ref(true);
+const starshipSelect = ref('Falcon');
 
 </script>
 
@@ -42,10 +42,21 @@ const starshipSelect = ref('');
   <!-- Starship dashboard - In game -->
   <div v-if="inGame === true">
     <AlertScreen />
-    <div id="starship-data">
+    <div id="starship-data" class="content-box">
       <div id="starship-info">
         <p class="starship-name">{{ starshipSelect }}</p>
         <StatsTable />
+      </div>
+      <div id="starship-encounters">
+        <p id="starship-encounters-title">Encounters log</p>
+        <div id="starship-encounters-choices">
+          <p>You have encountered a foreign ship.</p>
+          <ul>
+            <li>Option A</li>
+            <li>Option B</li>
+            <li>Option C</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -54,10 +65,10 @@ const starshipSelect = ref('');
 
 <style scoped>
 /* Style for both parts */
-.starship-name {
+.starship-name,
+#starship-encounters-title {
   font-size: 1.4em;
   font-weight: bold;
-  /* margin-top: 0; */
   text-align: center;
   text-decoration: underline double 1px;
   text-underline-offset: 4px;
@@ -104,6 +115,21 @@ h1 {
 /* Starship dashboard - In game */
 #starship-data {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+#starship-info {
+  border: 1px solid green;
+  width: 100%;
+}
+
+#starship-encounters {
+  border: 1px solid red;
+  width: 100%;
+}
+
+#starship-encounters-choices {
+  width: fit-content;
+  margin: auto;
 }
 </style>
