@@ -1,10 +1,69 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import AlertScreen from '../components/AlertScreen.vue';
 import StatsTable from '../components/StatsTable.vue';
 
 const inGame = ref(true);
 const starshipSelect = ref('Falcon');
+
+const enginesOn = ref(false);
+const enginesStatus = ref('OFF');
+const enginesStatusTheme = reactive({color: 'red'});
+
+// Method to update the Engines status display with the correct text and color
+function updateEnginesStatus(status) {
+
+  switch (status) {
+    case 'ON':
+      enginesStatus.value = 'ON';
+      enginesStatusTheme.color = 'green';
+      break;
+
+    case 'OFF':
+      enginesStatus.value = 'OFF';
+      enginesStatusTheme.color = 'red';
+      break;
+
+    case 'PAUSED':
+      enginesStatus.value = 'PAUSED';
+      enginesStatusTheme.color = 'orange';
+      break;
+
+    case 'REFUELING':
+      enginesStatus.value = 'REFUELING';
+      enginesStatusTheme.color = 'cornflowerblue';
+      break;
+
+    default:
+      break;
+  }
+}
+
+// Method to start or stop the engines
+function startStopEngines() {
+
+  // If the engines are OFF
+  if (enginesOn.value === false) {
+    // We start them and update the Engines status
+    enginesOn.value = true;
+    updateEnginesStatus('ON');
+  } else {
+    // Otherwise we stop them and update the Engines status
+    enginesOn.value = false;
+    updateEnginesStatus('OFF');
+  }
+
+}
+
+// Method to refuel the Starship
+function refuelStarship() {
+  updateEnginesStatus('REFUELING');
+}
+
+// Gets the right text to update the engines button depending on the engines status
+const enginesButtonText = computed(() => {
+  return enginesOn.value === false ? 'Start' : 'Stop';
+});
 
 </script>
 
@@ -44,9 +103,19 @@ const starshipSelect = ref('Falcon');
     <AlertScreen />
     <div id="starship-data" class="content-box">
       <div id="starship-info">
+
         <p class="starship-name">{{ starshipSelect }}</p>
         <StatsTable />
+
+        <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
+
+        <div class="text-center" id="starship-command-buttons">
+          <button class="button-dark" @click="startStopEngines()">{{ enginesButtonText }}</button>
+          <button class="button-dark" @click="refuelStarship()">Refuel</button>
+        </div>
+
       </div>
+
       <div id="starship-encounters">
         <p id="starship-encounters-title">Encounters log</p>
         <div id="starship-encounters-choices">
@@ -58,6 +127,7 @@ const starshipSelect = ref('Falcon');
           </ul>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -103,6 +173,21 @@ h1 {
 #starship-info {
   border: 1px solid green;
   width: 100%;
+}
+
+#starship-engines-status {
+  /* Set the correct color depending on the status */
+  color: v-bind('enginesStatusTheme.color');
+}
+
+#starship-command-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#starship-command-buttons button {
+  margin: 0 5px;
+  width: 20%;
 }
 
 #starship-encounters {
