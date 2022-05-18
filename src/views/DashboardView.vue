@@ -145,12 +145,6 @@ const enginesButtonText = computed(() => {
 }
 
 /* Starship select screen - Not in game */
-h1 {
-  text-align: center;
-  text-decoration: underline double 1px;
-  text-underline-offset: 9px;
-}
-
 #starship-select {
   padding: 10px;
   font-size: 1em;
