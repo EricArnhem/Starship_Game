@@ -8,7 +8,7 @@ const starshipSelect = ref('Falcon');
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
-const enginesStatusTheme = reactive({color: 'red'});
+const enginesStatusTheme = reactive({ color: 'red' });
 
 // Method to update the Engines status display with the correct text and color
 function updateEnginesStatus(status) {
@@ -177,6 +177,18 @@ h1 {
   width: 100%;
 }
 
+/* Small screens style */
+@media (max-width: 1024px) {
+  #starship-data {
+    flex-wrap: wrap;
+  }
+
+  #starship-info {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--main-border-color);
+  }
+}
+
 #starship-engines-status {
   /* Set the correct color depending on the status */
   color: v-bind('enginesStatusTheme.color');
@@ -190,6 +202,13 @@ h1 {
 #starship-command-buttons button {
   margin: 0 5px;
   width: 20%;
+}
+
+/* Larger buttons on tablets and mobile devices */
+@media (max-width: 768px) {
+  #starship-command-buttons button {
+    width: 40% !important;
+  }
 }
 
 #starship-encounters {
