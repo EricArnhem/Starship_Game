@@ -66,6 +66,14 @@ h2 {
   margin-top: 0;
 }
 
+h3 {
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline double 1px;
+  text-underline-offset: 4px;
+}
+
 /* Navbar */
 nav {
   height: 100%;

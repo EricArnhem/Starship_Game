@@ -86,7 +86,7 @@ const enginesButtonText = computed(() => {
           </select>
 
           <div v-if="starshipSelect">
-            <p class="starship-name">{{ starshipSelect }}</p>
+            <h3>{{ starshipSelect }}</h3>
             <StatsTable />
           </div>
           <button class="button-dark" v-if="starshipSelect" @click="inGame = true">Play</button>
@@ -104,7 +104,7 @@ const enginesButtonText = computed(() => {
     <div id="starship-data" class="content-box">
       <div id="starship-info">
 
-        <p class="starship-name">{{ starshipSelect }}</p>
+        <h3>{{ starshipSelect }}</h3>
         <StatsTable />
 
         <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
@@ -117,7 +117,7 @@ const enginesButtonText = computed(() => {
       </div>
 
       <div id="starship-encounters">
-        <p id="starship-encounters-title">Encounters log</p>
+        <h3>Encounters log</h3>
         <div id="starship-encounters-choices">
           <p>You have encountered a foreign ship.</p>
           <ul>
@@ -134,16 +134,6 @@ const enginesButtonText = computed(() => {
 </template>
 
 <style scoped>
-/* Style for both parts */
-.starship-name,
-#starship-encounters-title {
-  font-size: 1.4em;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: underline double 1px;
-  text-underline-offset: 4px;
-}
-
 /* Starship select screen - Not in game */
 #starship-select {
   padding: 10px;
