@@ -29,6 +29,7 @@ import { RouterLink, RouterView } from 'vue-router'
   --content-box-bg-color: #2a2a2a;
   --button-dark-bg-color: #242424;
   --button-dark-bg-hover-color: #3a3a3a;
+  --button-dark-bg-active-color: #474747;
 }
 
 body {
@@ -128,6 +129,11 @@ nav a:hover {
 .button-dark:hover {
   background-color: var(--button-dark-bg-hover-color);
   cursor: pointer;
+  transition: 0.1s;
+}
+
+.button-dark:active {
+  background-color: var(--button-dark-bg-active-color);
   transition: 0.1s;
 }
 
