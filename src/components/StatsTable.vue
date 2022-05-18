@@ -70,6 +70,6 @@
 }
 
 #starship-stats tbody {
-  background-color: var(--content-box-bg-color);
+  background-color: #242424;
 }
 </style>
