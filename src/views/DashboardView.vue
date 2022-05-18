@@ -168,10 +168,12 @@ h1 {
 #starship-data {
   display: flex;
   justify-content: space-evenly;
+  padding: 0;
 }
 
 #starship-info {
-  border: 1px solid green;
+  border-right: 1px solid var(--main-border-color);
+  padding-bottom: 22.4px;
   width: 100%;
 }
 
@@ -191,7 +193,6 @@ h1 {
 }
 
 #starship-encounters {
-  border: 1px solid red;
   width: 100%;
 }
 
