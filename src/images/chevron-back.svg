@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="512px"
+   height="512px"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg7663"
+   sodipodi:docname="chevron-back.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs7667" />
+  <sodipodi:namedview
+     id="namedview7665"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="2.2953349"
+     inkscape:cx="340.47319"
+     inkscape:cy="257.0431"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7663" />
+  <title
+     id="title7659">ionicons-v5-a</title>
+  <polyline
+     points="328 112 184 256 328 400"
+     style="fill:none;stroke:#000;stroke-linecap:square;stroke-miterlimit:10;stroke-width:48px"
+     id="polyline7661" />
+  <path
+     style="fill:#5e5c64;stroke-width:0.616125"
+     d="M 239.05489,344.72036 150.33614,256 l 88.71875,-88.72036 88.71876,-88.72036 16.79348,16.785156 16.79349,16.785154 -71.93324,71.9352 L 217.49416,256 l 71.93322,71.93521 71.93324,71.9352 -16.79349,16.78515 -16.79348,16.78516 z"
+     id="path7761" />
+  <path
+     style="fill:#deddda;stroke-width:0.435666"
+     d="m 239.18064,344.39405 -88.43958,-88.44039 88.54861,-88.54861 88.54862,-88.54861 16.66392,16.663921 16.66392,16.663919 -71.99325,71.99423 -71.99325,71.99424 71.88412,71.88313 71.88413,71.88313 -16.44344,16.44772 c -9.04389,9.04624 -16.54262,16.4477 -16.66383,16.4477 -0.12121,0 -40.01819,-39.79817 -88.65997,-88.44038 z"
+     id="path650" />
+</svg>

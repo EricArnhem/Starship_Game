@@ -3,7 +3,7 @@ import { ref, reactive, computed } from 'vue';
 import AlertScreen from '../components/AlertScreen.vue';
 import StatsTable from '../components/StatsTable.vue';
 
-const inGame = ref(true);
+const inGame = ref(false);
 const starshipSelect = ref('Falcon');
 
 const enginesOn = ref(false);
@@ -102,6 +102,7 @@ const enginesButtonText = computed(() => {
   <div v-if="inGame === true">
     <AlertScreen />
     <div id="starship-data" class="content-box">
+      <a id="go-back-button" @click="inGame = false" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
       <div id="starship-info">
 
         <h3>{{ starshipSelect }}</h3>
@@ -153,6 +154,24 @@ const enginesButtonText = computed(() => {
   display: flex;
   justify-content: space-evenly;
   padding: 0;
+}
+
+#go-back-button {
+  cursor: pointer;
+  height: 45px;
+  position: absolute;
+  left: 74px;
+  top: 83px;
+}
+
+#go-back-button:hover {
+  filter: drop-shadow(3px 3px 2px #dddddd);
+  transition: 0.1s;
+}
+
+#go-back-button img {
+  display: block;
+  height: 45px;
 }
 
 #starship-info {
