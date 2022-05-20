@@ -159,6 +159,15 @@ nav a:hover {
   box-sizing: border-box;
 }
 
+@media (max-width: 480px) {
+  .content-box {
+    margin: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+}
+
 .body-content-box {
   display: flex;
   flex-direction: column;
