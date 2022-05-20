@@ -54,6 +54,12 @@ main {
   padding-bottom: 30px;
 }
 
+@media (max-width: 480px) {
+  main {
+    padding-bottom: 0;
+  }
+}
+
 h1 {
   text-align: center;
   text-decoration: underline double 1px;
