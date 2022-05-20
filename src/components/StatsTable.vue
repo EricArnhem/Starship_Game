@@ -51,6 +51,10 @@
 }
 
 @media (max-width: 480px) {
+  #starship-stats {
+    width: 100%;
+  }
+
   #starship-stats th,
   #starship-stats td {
     padding: 12px 12px;
