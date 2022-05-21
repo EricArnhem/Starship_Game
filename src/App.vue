@@ -180,6 +180,7 @@ nav a:hover {
     border-left: 0;
     border-right: 0;
     border-radius: 0;
+    padding: 20px;
   }
 
   .body-content-box {
