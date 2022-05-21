@@ -85,7 +85,7 @@ const enginesButtonText = computed(() => {
             <option>Slug</option>
           </select>
 
-          <div v-if="starshipSelect">
+          <div id="starship-selected-info" v-if="starshipSelect">
             <h3>{{ starshipSelect }}</h3>
             <StatsTable />
           </div>
@@ -149,6 +149,17 @@ const enginesButtonText = computed(() => {
   }
 }
 
+#starship-selected-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#starship-selected-info table {
+  width: 100%;
+}
+
 /* Starship dashboard - In game */
 #starship-data {
   display: flex;
@@ -178,6 +189,8 @@ const enginesButtonText = computed(() => {
   border-right: 1px solid var(--main-border-color);
   padding-bottom: 22.4px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Small screens style */

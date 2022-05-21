@@ -52,7 +52,8 @@
 
 @media (max-width: 480px) {
   #starship-stats {
-    width: 100%;
+    width: auto;
+    margin: 0 10px;
   }
 
   #starship-stats th,
