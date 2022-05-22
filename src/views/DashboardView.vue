@@ -135,7 +135,7 @@ const enginesButtonText = computed(() => {
 </template>
 
 <style scoped>
-/* Starship select screen - Not in game */
+/* -- Starship select screen - Not in game -- */
 #starship-select {
   padding: 10px;
   font-size: 1em;
@@ -160,7 +160,7 @@ const enginesButtonText = computed(() => {
   width: 100%;
 }
 
-/* Starship dashboard - In game */
+/* -- Starship dashboard - In game -- */
 #starship-data {
   display: flex;
   justify-content: space-evenly;
