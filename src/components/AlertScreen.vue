@@ -58,7 +58,7 @@ function displayAlert(textString) {
 
 <style>
 #alert-container {
-  margin-top: 10px;
+  margin-top: 15px;
   margin-bottom: 25px;
 }
 

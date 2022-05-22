@@ -172,7 +172,7 @@ const enginesButtonText = computed(() => {
   height: 45px;
   position: absolute;
   left: 74px;
-  top: 83px;
+  top: 88px;
 }
 
 #go-back-button:hover {
