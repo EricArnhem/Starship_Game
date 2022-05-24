@@ -187,4 +187,65 @@ nav a:hover {
     width: 100%;
   }
 }
+
+/* -- Starships cards -- */
+.starship-cards-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.starship-card {
+  background-color: var(--content-box-bg-color);
+  border: 1px solid var(--main-border-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 275px;
+  padding: 20px;
+  margin-left: 20px;
+  box-sizing: border-box;
+}
+
+/* Card title */
+.starship-card-title {
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: bold;
+  border-bottom: 1px solid var(--main-border-color);
+  padding-bottom: 5px;
+}
+
+/* Stats table */
+.starship-card-stats {
+  margin-top: 16px;
+  border-collapse: collapse;
+}
+
+/* Table borders */
+.starship-card-stats tr:not(:last-of-type) {
+  border-bottom: 1px solid var(--main-border-color);
+}
+
+.starship-card-stats td:first-of-type {
+  border-right: 1px solid var(--main-border-color);
+  font-weight: bold;
+}
+
+/* Padding and text alignment */
+.starship-card-stats td {
+  padding: 10px 3px;
+}
+
+.starship-card-stats td:last-of-type {
+  text-align: right;
+}
+
+/* Changes for mobile version */
+@media (max-width: 768px) {
+  .starship-card {
+    margin: auto;
+    margin-bottom: 10px;
+  }
+}
 </style>
