@@ -30,6 +30,7 @@ import { RouterLink, RouterView } from 'vue-router'
   --button-dark-bg-color: #242424;
   --button-dark-bg-hover-color: #3a3a3a;
   --button-dark-bg-active-color: #474747;
+  --table-bg-color: #242424;
 }
 
 body {

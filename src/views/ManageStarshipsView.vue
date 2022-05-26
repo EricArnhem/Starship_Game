@@ -13,16 +13,45 @@ import StarshipForm from '../components/StarshipForm.vue';
       <table class="starship-card-stats">
         <tbody>
           <tr>
+            <td>Class</td>
+            <td>Fighter</td>
+          </tr>
+          <tr>
             <td>Speed</td>
-            <td>25000 km/h</td>
+            <td>70000 km/h</td>
           </tr>
           <tr>
             <td>Fuel capacity</td>
-            <td>5000 kg</td>
+            <td>1500 kg</td>
           </tr>
           <tr>
             <td>Fuel left</td>
-            <td>3500 kg</td>
+            <td>1000 kg</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="starship-card">
+      <span class="starship-card-title">Mantis</span>
+
+      <table class="starship-card-stats">
+        <tbody>
+          <tr>
+            <td>Class</td>
+            <td>Explorer</td>
+          </tr>
+          <tr>
+            <td>Speed</td>
+            <td>50000 km/h</td>
+          </tr>
+          <tr>
+            <td>Fuel capacity</td>
+            <td>3000 kg</td>
+          </tr>
+          <tr>
+            <td>Fuel left</td>
+            <td>2300 kg</td>
           </tr>
         </tbody>
       </table>
@@ -34,16 +63,20 @@ import StarshipForm from '../components/StarshipForm.vue';
       <table class="starship-card-stats">
         <tbody>
           <tr>
+            <td>Class</td>
+            <td>Hauler</td>
+          </tr>
+          <tr>
             <td>Speed</td>
             <td>30000 km/h</td>
           </tr>
           <tr>
             <td>Fuel capacity</td>
-            <td>1000 kg</td>
+            <td>5000 kg</td>
           </tr>
           <tr>
             <td>Fuel left</td>
-            <td>500 kg</td>
+            <td>3200 kg</td>
           </tr>
         </tbody>
       </table>

@@ -1,9 +1,23 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
+
+const starshipClasses = reactive({
+  Fighter: {
+    Speed: 70000,
+    'Fuel capacity': 1500
+  },
+  Explorer: {
+    Speed: 50000,
+    'Fuel capacity': 3000
+  },
+  Hauler: {
+    Speed: 30000,
+    'Fuel capacity': 5000
+  }
+});
 
 const starshipName = ref('');
-const starshipSpeed = ref(100);
-const starshipFuel = ref(1000);
+const starshipClass = ref('');
 
 let formErrors = reactive([]);
 
@@ -23,16 +37,11 @@ function handleSubmit() {
     formErrors.push('nameError');
   }
 
-  // SPEED CHECK
-  // If the speed is not between 100 and 1000. We add an error.
-  if (starshipSpeed.value < 100 || starshipSpeed.value > 1000) {
-    formErrors.push('speedError');
-  }
-
-  // FUEL CHECK
-  // If the fuel is not between 1000 and 5000. We add an error.
-  if (starshipFuel.value < 1000 || starshipFuel.value > 5000) {
-    formErrors.push('fuelError');
+  // CLASS CHECK
+  // If the class doesn't exist in the classes list
+  if (!starshipClasses.hasOwnProperty(starshipClass.value)) {
+    // We add an error
+    formErrors.push('classError');
   }
 
   // ERRORS CHECK
@@ -75,6 +84,49 @@ function checkNameValidity() {
   }
 }
 
+function checkClassValidity() {
+  // If the class is valid and exists
+  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+
+    // We get the index of the classError and we remove it
+    let IdClassError = formErrors.indexOf('classError');
+    formErrors.splice(IdClassError, 1);
+
+  } else { // If the class is invalid and doesn't exists
+    // If we don't already have a class error
+    if (!formErrors.includes('classError')) {
+      // We add an error to the errors array
+      formErrors.push('classError');
+    }
+
+  }
+}
+
+// Checks if the class is valid
+const isClassValid = computed(() => {
+  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
+// Gets the Speed of the selected class
+const selectedClassSpeed = computed(() => {
+  // If the class is valid and exists
+  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+    return starshipClasses[starshipClass.value].Speed;
+  }
+});
+
+// Gets the Speed of the selected class
+const selectedClassFuelCapacity = computed(() => {
+  // If the class is valid and exists
+  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+    return starshipClasses[starshipClass.value]['Fuel capacity'];
+  }
+});
+
 </script>
 
 <template>
@@ -93,33 +145,41 @@ function checkNameValidity() {
       v-on:blur="trimStarshipName(); checkNameValidity();"
       required>
     <span class="formError" v-if="formErrors.includes('nameError')">Invalid name.</span>
-    <div class="formLabelGroup">
-      <label for="starship-speed">Speed:</label>
-      <span class="formHelpText">Accepts a number from 100 to 1000.</span>
-    </div>
-    <input
-      type="number"
-      min="100"
-      max="1000"
-      name="starship-speed"
-      id="starship-speed"
-      v-model="starshipSpeed"
-      required>
-    <span class="formError" v-if="formErrors.includes('speedError')">Invalid speed. Not in the available range.</span>
 
     <div class="formLabelGroup">
-      <label for="starship-fuel">Fuel tank capacity:</label>
-      <span class="formHelpText">Accepts a number from 1000 to 5000.</span>
+      <label for="starship-class">Class:</label>
+      <span class="formHelpText">Each class has different stats.</span>
     </div>
-    <input
-      type="number"
-      min="1000"
-      max="5000"
-      name="starship-fuel"
-      id="starship-fuel"
-      v-model="starshipFuel"
+    <select
+      id="starship-class"
+      v-model="starshipClass"
+      @change="checkClassValidity();"
       required>
-    <span class="formError" v-if="formErrors.includes('fuelError')">Invalid fuel. Not in the available range.</span>
+
+      <option disabled value="">Select a class</option>
+      <option v-for="(shipClass, index) in starshipClasses">{{ index }}</option>
+
+    </select>
+
+    <table v-if="isClassValid" id="selected-class-info-table">
+      <thead>
+        <tr>
+          <th colspan="2">{{ starshipClass }} class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Speed</td>
+          <td>{{ selectedClassSpeed }} km/h</td>
+        </tr>
+        <tr>
+          <td>Fuel capacity</td>
+          <td>{{ selectedClassFuelCapacity }} kg</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <span class="formError" v-if="formErrors.includes('classError')">Invalid class.</span>
 
     <button class="button-dark" type="submit">Create</button>
   </form>
@@ -154,6 +214,12 @@ input {
   font-size: 1rem;
 }
 
+select {
+  padding: 9px;
+  font-size: 1em;
+  border-radius: 3px;
+}
+
 @media (max-width: 480px) {
   button[type="submit"] {
     width: 100%;
@@ -172,5 +238,35 @@ input {
   color: #ED4337;
   font-size: 14px;
   margin-top: 10px;
+}
+
+/* -- Class info table -- */
+#selected-class-info-table {
+  margin: auto;
+  margin-top: 15px;
+  width: 80%;
+  max-width: 300px;
+  border-collapse: collapse;
+}
+
+#selected-class-info-table th,
+#selected-class-info-table td {
+  border: 1px solid var(--main-border-color);
+  padding: 10px 5px;
+}
+
+#selected-class-info-table th {
+  background-color: #2f308f;
+}
+
+#selected-class-info-table td {
+  background-color: var(--table-bg-color);
+}
+
+/* Changes for mobile version */
+@media (max-width: 480px) {
+  #selected-class-info-table {
+    width: 100%;
+  }
 }
 </style>

@@ -15,16 +15,20 @@
         <td>Falcon</td>
       </tr>
       <tr>
+        <td>Class</td>
+        <td>Fighter</td>
+      </tr>
+      <tr>
         <td>Speed</td>
-        <td>25000 km/h</td>
+        <td>70000 km/h</td>
       </tr>
       <tr>
         <td>Fuel capacity</td>
-        <td>5000 kg</td>
+        <td>1500 kg</td>
       </tr>
       <tr>
         <td>Fuel left</td>
-        <td>3500 kg</td>
+        <td>1000 kg</td>
       </tr>
     </tbody>
   </table>
@@ -75,6 +79,6 @@
 }
 
 #starship-stats tbody {
-  background-color: #242424;
+  background-color: var(--table-bg-color);
 }
 </style>
