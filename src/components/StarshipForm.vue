@@ -132,9 +132,9 @@ const selectedClassFuelCapacity = computed(() => {
 <template>
 
   <form @submit.prevent="handleSubmit" autocomplete="off">
-    <div class="formLabelGroup">
+    <div class="form-label-group">
       <label for="starship-name">Name:</label>
-      <span class="formHelpText">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
+      <span class="form-help-text">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
     </div>
     <input
       type="text"
@@ -144,11 +144,11 @@ const selectedClassFuelCapacity = computed(() => {
       v-model="starshipName"
       v-on:blur="trimStarshipName(); checkNameValidity();"
       required>
-    <span class="formError" v-if="formErrors.includes('nameError')">Invalid name.</span>
+    <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
 
-    <div class="formLabelGroup">
+    <div class="form-label-group">
       <label for="starship-class">Class:</label>
-      <span class="formHelpText">Each class has different stats.</span>
+      <span class="form-help-text">Each class has different stats.</span>
     </div>
     <select
       id="starship-class"
@@ -179,7 +179,7 @@ const selectedClassFuelCapacity = computed(() => {
       </tbody>
     </table>
 
-    <span class="formError" v-if="formErrors.includes('classError')">Invalid class.</span>
+    <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
     <button class="button-dark" type="submit">Create</button>
   </form>
@@ -199,7 +199,7 @@ label {
   font-weight: bold;
 }
 
-.formLabelGroup {
+.form-label-group {
   margin: 25px 0 15px;
 }
 
@@ -226,7 +226,7 @@ select {
   }
 }
 
-.formHelpText {
+.form-help-text {
   color: rgb(165, 165, 165);
   font-size: 14px;
   font-style: italic;
@@ -234,7 +234,7 @@ select {
   margin-top: 2px;
 }
 
-.formError {
+.form-error {
   color: #ED4337;
   font-size: 14px;
   margin-top: 10px;
