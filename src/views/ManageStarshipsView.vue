@@ -104,6 +104,7 @@ import StarshipForm from '../components/StarshipForm.vue';
 <style scoped>
 #create-starship-card {
   justify-content: center;
+  min-height: 245px;
 }
 
 #create-starship-card-title {
