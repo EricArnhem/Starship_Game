@@ -209,6 +209,8 @@ nav a:hover {
   margin-right: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 .starship-card:hover {

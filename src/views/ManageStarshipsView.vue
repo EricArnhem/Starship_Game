@@ -1,5 +1,24 @@
 <script setup>
+import { reactive } from 'vue'
 import StarshipForm from '../components/StarshipForm.vue';
+
+const starshipClasses = reactive({
+  Fighter: {
+    Speed: 70000,
+    'Fuel capacity': 1500,
+    Color: "#CD3030"
+  },
+  Explorer: {
+    Speed: 50000,
+    'Fuel capacity': 3000,
+    Color: "#4471D3"
+  },
+  Hauler: {
+    Speed: 30000,
+    'Fuel capacity': 5000,
+    Color: "#D4971E"
+  }
+});
 </script>
 
 <template>
@@ -123,5 +142,21 @@ import StarshipForm from '../components/StarshipForm.vue';
   #create-starship-card {
     max-width: 240px;
   }
+}
+
+/* Colored corners depending on the starship class */
+.starship-card:after {
+  content: "";
+  position: absolute;
+  margin: -50px;
+  width: 60px;
+  height: 60px;
+  transform: rotate(45deg);
+  background-color: #000;
+}
+
+/* Removes the corner on the Create starship card */
+#create-starship-card:after {
+  content: none;
 }
 </style>
