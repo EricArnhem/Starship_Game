@@ -2,6 +2,7 @@
 import { reactive } from 'vue'
 import StarshipForm from '../components/StarshipForm.vue';
 
+// Starship classes list
 const starshipClasses = reactive({
   Fighter: {
     Speed: 70000,
@@ -19,6 +20,22 @@ const starshipClasses = reactive({
     Color: "#D4971E"
   }
 });
+
+// List of existing Starships
+const starshipList = reactive({
+  Falcon: {
+    Class: 'Fighter',
+    'Fuel left': 1500
+  },
+  Mantis: {
+    Class: 'Explorer',
+    'Fuel left': 2300
+  },
+  Slug: {
+    Class: 'Hauler',
+    'Fuel left': 3200
+  }
+});
 </script>
 
 <template>
@@ -26,76 +43,26 @@ const starshipClasses = reactive({
 
   <div class="starship-cards-container">
 
-    <div class="starship-card">
-      <span class="starship-card-title">Falcon</span>
+    <div class="starship-card" v-for="(starship, index) in starshipList">
+      <span class="starship-card-title">{{ index }}</span>
 
       <table class="starship-card-stats">
         <tbody>
           <tr>
             <td>Class</td>
-            <td>Fighter</td>
+            <td>{{ starship.Class }}</td>
           </tr>
           <tr>
             <td>Speed</td>
-            <td>70000 km/h</td>
+            <td>{{ starshipClasses[starship.Class].Speed }} km/h</td>
           </tr>
           <tr>
             <td>Fuel capacity</td>
-            <td>1500 kg</td>
+            <td>{{ starshipClasses[starship.Class]['Fuel capacity'] }} kg</td>
           </tr>
           <tr>
             <td>Fuel left</td>
-            <td>1000 kg</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="starship-card">
-      <span class="starship-card-title">Mantis</span>
-
-      <table class="starship-card-stats">
-        <tbody>
-          <tr>
-            <td>Class</td>
-            <td>Explorer</td>
-          </tr>
-          <tr>
-            <td>Speed</td>
-            <td>50000 km/h</td>
-          </tr>
-          <tr>
-            <td>Fuel capacity</td>
-            <td>3000 kg</td>
-          </tr>
-          <tr>
-            <td>Fuel left</td>
-            <td>2300 kg</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="starship-card">
-      <span class="starship-card-title">Slug</span>
-
-      <table class="starship-card-stats">
-        <tbody>
-          <tr>
-            <td>Class</td>
-            <td>Hauler</td>
-          </tr>
-          <tr>
-            <td>Speed</td>
-            <td>30000 km/h</td>
-          </tr>
-          <tr>
-            <td>Fuel capacity</td>
-            <td>5000 kg</td>
-          </tr>
-          <tr>
-            <td>Fuel left</td>
-            <td>3200 kg</td>
+            <td>{{ starship['Fuel left'] }} kg</td>
           </tr>
         </tbody>
       </table>
