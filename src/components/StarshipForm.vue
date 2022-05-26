@@ -4,15 +4,18 @@ import { reactive, ref, computed } from 'vue'
 const starshipClasses = reactive({
   Fighter: {
     Speed: 70000,
-    'Fuel capacity': 1500
+    'Fuel capacity': 1500,
+    Color: "#CD3030"
   },
   Explorer: {
     Speed: 50000,
-    'Fuel capacity': 3000
+    'Fuel capacity': 3000,
+    Color: "#4471D3"
   },
   Hauler: {
     Speed: 30000,
-    'Fuel capacity': 5000
+    'Fuel capacity': 5000,
+    Color: "#D4971E"
   }
 });
 
@@ -124,6 +127,14 @@ const selectedClassFuelCapacity = computed(() => {
   // If the class is valid and exists
   if (starshipClasses.hasOwnProperty(starshipClass.value)) {
     return starshipClasses[starshipClass.value]['Fuel capacity'];
+  }
+});
+
+// Gets the color of the selected class
+const selectedClassColor = computed(() => {
+  // If the class is valid and exists
+  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+    return starshipClasses[starshipClass.value].Color;
   }
 });
 
@@ -256,7 +267,8 @@ select {
 }
 
 #selected-class-info-table th {
-  background-color: #2f308f;
+  /* background-color: #2f308f; */
+  background-color: v-bind('selectedClassColor');
 }
 
 #selected-class-info-table td {
