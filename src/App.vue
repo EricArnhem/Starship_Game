@@ -194,6 +194,7 @@ nav a:hover {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .starship-card {
@@ -204,7 +205,9 @@ nav a:hover {
   flex-direction: column;
   width: 275px;
   padding: 20px;
-  margin-left: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
@@ -250,10 +253,11 @@ nav a:hover {
 }
 
 /* Changes for mobile version */
-@media (max-width: 768px) {
+@media (max-width: 355px) {
   .starship-card {
-    margin: auto;
-    margin-bottom: 10px;
+    width: auto;
+    min-width: 200px;
+    max-width: 275px;
   }
 }
 </style>

@@ -117,4 +117,11 @@ import StarshipForm from '../components/StarshipForm.vue';
   margin-top: 20px;
   height: 85px;
 }
+
+/* Changes for mobile version */
+@media (max-width: 355px) {
+  #create-starship-card {
+    max-width: 240px;
+  }
+}
 </style>
