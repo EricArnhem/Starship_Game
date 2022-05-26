@@ -43,7 +43,11 @@ const starshipList = reactive({
 
   <div class="starship-cards-container">
 
-    <div class="starship-card" v-for="(starship, index) in starshipList">
+    <div
+      class="starship-card"
+      v-for="(starship, index) in starshipList"
+      :style="{ '--card-corner-color': starshipClasses[starship.Class].Color }">
+
       <span class="starship-card-title">{{ index }}</span>
 
       <table class="starship-card-stats">
@@ -119,7 +123,7 @@ const starshipList = reactive({
   width: 60px;
   height: 60px;
   transform: rotate(45deg);
-  background-color: #000;
+  background-color: var(--card-corner-color);
 }
 
 /* Removes the corner on the Create starship card */
