@@ -3,12 +3,53 @@ import { ref, reactive, computed } from 'vue';
 import AlertScreen from '../components/AlertScreen.vue';
 import StatsTable from '../components/StatsTable.vue';
 
+// Starship classes list
+const starshipClasses = reactive({
+  Fighter: {
+    Speed: 70000,
+    'Fuel capacity': 1500,
+    Color: "#CD3030"
+  },
+  Explorer: {
+    Speed: 50000,
+    'Fuel capacity': 3000,
+    Color: "#4471D3"
+  },
+  Hauler: {
+    Speed: 30000,
+    'Fuel capacity': 5000,
+    Color: "#D4971E"
+  }
+});
+
+// List of existing Starships
+const starshipList = reactive({
+  Falcon: {
+    Class: 'Fighter',
+    'Fuel left': 1500
+  },
+  Mantis: {
+    Class: 'Explorer',
+    'Fuel left': 2300
+  },
+  Slug: {
+    Class: 'Hauler',
+    'Fuel left': 3200
+  }
+});
+
 const inGame = ref(false);
-const starshipSelect = ref('Falcon');
+const selectedStarship = ref('');
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
 const enginesStatusTheme = reactive({ color: 'red' });
+
+// Method to start the game with the selected starship
+function startGame(starshipName) {
+  selectedStarship.value = starshipName;
+  inGame.value = true;
+}
 
 // Method to update the Engines status display with the correct text and color
 function updateEnginesStatus(status) {
@@ -70,29 +111,41 @@ const enginesButtonText = computed(() => {
 <template>
 
   <!-- Starship select screen - Not in game -->
-  <div v-if="inGame === false">
+  <div v-if="inGame === false" id="starship-select-screen">
     <h1>Starship Game</h1>
 
-    <div class="wrapper-content-box">
-      <div class="content-box">
-        <h2>Select a Starship to start the game</h2>
+    <h2>Select a Starship to start the game</h2>
 
-        <div class="body-content-box">
+    <div class="starship-cards-container">
+      <div
+        class="starship-card"
+        v-for="(starship, index) in starshipList"
+        :key="index"
+        :style="{ '--card-corner-color': starshipClasses[starship.Class].Color }">
 
-          <select id="starship-select" v-model="starshipSelect">
-            <option disabled value="">Select a Starship</option>
-            <option>Falcon</option>
-            <option>Slug</option>
-          </select>
+        <span class="starship-card-title">{{ index }}</span>
 
-          <div id="starship-selected-info" v-if="starshipSelect">
-            <h3>{{ starshipSelect }}</h3>
-            <StatsTable />
-          </div>
-          <button class="button-dark" v-if="starshipSelect" @click="inGame = true">Play</button>
-
-        </div>
-
+        <table class="starship-card-stats">
+          <tbody>
+            <tr>
+              <td>Class</td>
+              <td>{{ starship.Class }}</td>
+            </tr>
+            <tr>
+              <td>Speed</td>
+              <td>{{ starshipClasses[starship.Class].Speed }} km/h</td>
+            </tr>
+            <tr>
+              <td>Fuel capacity</td>
+              <td>{{ starshipClasses[starship.Class]['Fuel capacity'] }} kg</td>
+            </tr>
+            <tr>
+              <td>Fuel left</td>
+              <td>{{ starship['Fuel left'] }} kg</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="button-dark play-button" @click="startGame(index)">Play</button>
       </div>
     </div>
 
@@ -105,7 +158,7 @@ const enginesButtonText = computed(() => {
       <a id="go-back-button" @click="inGame = false" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
       <div id="starship-info">
 
-        <h3>{{ starshipSelect }}</h3>
+        <h3>{{ selectedStarship }}</h3>
         <StatsTable />
 
         <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
@@ -136,28 +189,37 @@ const enginesButtonText = computed(() => {
 
 <style scoped>
 /* -- Starship select screen - Not in game -- */
-#starship-select {
-  padding: 10px;
-  font-size: 1em;
-  width: 50%;
-  border-radius: 3px;
+#starship-select-screen {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h2 {
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+.play-button {
+  margin-top: 20px;
 }
 
 @media (max-width: 480px) {
-  #starship-select {
-    width: 100%;
+  h2 {
+    margin-left: 15px;
+    margin-right: 15px;
   }
 }
 
-#starship-selected-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-#starship-selected-info table {
-  width: 100%;
+/* Colored corners depending on the starship class */
+.starship-card:after {
+  content: "";
+  position: absolute;
+  margin: -50px;
+  width: 60px;
+  height: 60px;
+  transform: rotate(45deg);
+  background-color: var(--card-corner-color);
 }
 
 /* -- Starship dashboard - In game -- */
