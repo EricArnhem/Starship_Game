@@ -216,7 +216,7 @@ nav a:hover {
 .starship-card:hover {
   cursor: pointer;
   transform: translate(5px, -5px);
-  filter: drop-shadow(-8px 8px 1px #3e40be);
+  filter: drop-shadow(-8px 8px 1px var(--main-border-color));
   transition: 200ms;
 }
 
