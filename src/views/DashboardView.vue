@@ -39,15 +39,20 @@ const starshipList = reactive({
 });
 
 const inGame = ref(false);
-const selectedStarship = ref('');
+const selectedStarshipName = ref('');
+const selectedStarshipInfo = ref({});
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
 const enginesStatusTheme = reactive({ color: 'red' });
 
-// Method to start the game with the selected starship
+// Method to start the game with the selected starship infos
 function startGame(starshipName) {
-  selectedStarship.value = starshipName;
+  // Gets the name
+  selectedStarshipName.value = starshipName;
+  // Gets the class and fuel left
+  selectedStarshipInfo.value = starshipList[starshipName];
+  // Starts the game
   inGame.value = true;
 }
 
@@ -158,8 +163,11 @@ const enginesButtonText = computed(() => {
       <a id="go-back-button" @click="inGame = false" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
       <div id="starship-info">
 
-        <h3>{{ selectedStarship }}</h3>
-        <StatsTable />
+        <h3>{{ selectedStarshipName }}</h3>
+        <StatsTable
+          :select-starship-name="selectedStarshipName"
+          :selected-starship-info="selectedStarshipInfo" 
+          :starship-classes="starshipClasses" />
 
         <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
