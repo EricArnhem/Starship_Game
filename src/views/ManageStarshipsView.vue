@@ -46,6 +46,7 @@ const starshipList = reactive({
     <div
       class="starship-card"
       v-for="(starship, index) in starshipList"
+      :key="index"
       :style="{ '--card-corner-color': starshipClasses[starship.Class].Color }">
 
       <span class="starship-card-title">{{ index }}</span>
