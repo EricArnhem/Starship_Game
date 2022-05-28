@@ -2,6 +2,7 @@
 import { ref, reactive, computed } from 'vue';
 import AlertScreen from '../components/AlertScreen.vue';
 import StatsTable from '../components/StatsTable.vue';
+import ClassesLegend from '../components/ClassesLegend.vue';
 
 // Starship classes list
 const starshipClasses = reactive({
@@ -120,6 +121,7 @@ const enginesButtonText = computed(() => {
     <h1>Starship Game</h1>
 
     <h2>Select a Starship to start the game</h2>
+    <ClassesLegend :starship-classes="starshipClasses" />
 
     <div class="starship-cards-container">
       <div

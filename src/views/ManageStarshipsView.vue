@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from 'vue'
 import StarshipForm from '../components/StarshipForm.vue';
+import ClassesLegend from '../components/ClassesLegend.vue';
 
 // Starship classes list
 const starshipClasses = reactive({
@@ -40,7 +41,8 @@ const starshipList = reactive({
 
 <template>
   <h1>Manage your Starships</h1>
-
+  <ClassesLegend :starship-classes="starshipClasses" />
+  
   <div class="starship-cards-container">
 
     <div
