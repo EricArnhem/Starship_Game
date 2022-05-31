@@ -183,8 +183,13 @@ h2 {
   margin-bottom: 15px;
 }
 
+.starship-card {
+  cursor: initial;
+}
+
 .play-button {
   margin-top: 20px;
+  cursor: pointer;
 }
 
 @media (max-width: 480px) {
