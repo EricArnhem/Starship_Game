@@ -60,7 +60,7 @@ const starshipList = reactive(starshipsData);
     <div class="content-box">
       <h2>Create a new Starship</h2>
       <div class="body-content-box">
-        <StarshipForm />
+        <StarshipForm :starship-classes="starshipClasses" />
       </div>
     </div>
   </div>

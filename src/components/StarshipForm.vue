@@ -1,23 +1,11 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
 
-const starshipClasses = reactive({
-  Fighter: {
-    Speed: 70000,
-    'Fuel capacity': 1500,
-    Color: "#CD3030"
-  },
-  Explorer: {
-    Speed: 50000,
-    'Fuel capacity': 3000,
-    Color: "#4471D3"
-  },
-  Hauler: {
-    Speed: 30000,
-    'Fuel capacity': 5000,
-    Color: "#D4971E"
-  }
+const props = defineProps({
+  starshipClasses: Object
 });
+
+const starshipClasses = props.starshipClasses;
 
 const starshipName = ref('');
 const starshipClass = ref('');
