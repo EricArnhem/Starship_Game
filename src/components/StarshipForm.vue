@@ -181,7 +181,7 @@ watch(() => props.updateForm, () => {
           <h2>{{ formTitle }}</h2>
           <img src="@/images/close-cross.svg" alt="Close cross" title="Close" @click="$emit('close')" id="modal-close-cross">
         </div>
-        <div class="body-content-box">
+        <div class="body-content-box modal-body">
 
           <form @submit.prevent="handleSubmit" autocomplete="off">
             <div class="form-label-group">
@@ -340,10 +340,11 @@ select {
   display: flex;
   justify-content: center;
   transition: opacity 0.3s ease;
+  overflow-y: auto;
 }
 
 .modal-container {
-  margin-top: 75px;
+  margin-top: 25px;
   padding: 20px 30px;
   transition: all 0.3s ease;
 }
@@ -354,6 +355,10 @@ select {
   align-items: flex-start;
 }
 
+.modal-body {
+  width: 70vw;
+}
+
 #modal-close-cross {
   cursor: pointer;
   margin-left: 15px;
@@ -361,5 +366,19 @@ select {
 
 #modal-close-cross:hover {
   opacity: 0.7;
+}
+
+/* Media query for mobile */
+@media (max-width: 480px) {
+  .modal-container {
+    border: 1px solid var(--main-border-color);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .modal-body {
+    width: 100%;
+  }
 }
 </style>
