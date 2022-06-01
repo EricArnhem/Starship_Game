@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import StarshipForm from '../components/StarshipForm.vue';
 import ClassesLegend from '../components/ClassesLegend.vue';
 import starshipClassesData from '@/data/starshipClassesData.json';
@@ -10,6 +10,9 @@ const starshipClasses = reactive(starshipClassesData);
 
 // List of existing Starships
 const starshipList = reactive(starshipsData);
+
+// Shows the modal (starship form) or not
+const showModal = ref(false);
 </script>
 
 <template>
@@ -21,6 +24,7 @@ const starshipList = reactive(starshipsData);
     <div
       class="starship-card"
       v-for="(starship, index) in starshipList"
+      @click="showModal = true"
       :key="index"
       :style="{ '--card-corner-color': starshipClasses[starship.Class].Color }">
 
@@ -56,14 +60,12 @@ const starshipList = reactive(starshipsData);
   </div>
 
   <!-- Starship Form to use in the modal -->
-  <div class="wrapper-content-box" v-if="false">
-    <div class="content-box">
-      <h2>Create a new Starship</h2>
-      <div class="body-content-box">
-        <StarshipForm :starship-classes="starshipClasses" />
-      </div>
-    </div>
-  </div>
+  <Teleport to="body">
+    <StarshipForm
+      :starship-classes="starshipClasses"
+      :show-modal="showModal"
+      @close="showModal = false" />
+  </Teleport>
 
 </template>
 

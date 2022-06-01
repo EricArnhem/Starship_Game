@@ -2,6 +2,7 @@
 import { reactive, ref, computed } from 'vue'
 
 const props = defineProps({
+  showModal: Boolean,
   starshipClasses: Object
 });
 
@@ -130,58 +131,72 @@ const selectedClassColor = computed(() => {
 
 <template>
 
-  <form @submit.prevent="handleSubmit" autocomplete="off">
-    <div class="form-label-group">
-      <label for="starship-name">Name:</label>
-      <span class="form-help-text">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
+  <div class="modal-mask" v-if="showModal">
+    <div class="modal-wrapper" @blur="$emit('close')">
+      <div class="modal-container content-box">
+        <div class="modal-header">
+          <h2>Create a new Starship</h2>
+          <img src="@/images/close-cross.svg" alt="Close cross" title="Close" @click="$emit('close')" id="modal-close-cross">
+        </div>
+        <div class="body-content-box">
+
+          <form @submit.prevent="handleSubmit" autocomplete="off">
+            <div class="form-label-group">
+              <label for="starship-name">Name:</label>
+              <span class="form-help-text">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
+            </div>
+            <input
+              type="text"
+              maxlength="20"
+              name="starship-name"
+              id="starship-name"
+              v-model="starshipName"
+              v-on:blur="trimStarshipName(); checkNameValidity();"
+              required>
+            <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
+
+            <div class="form-label-group">
+              <label for="starship-class">Class:</label>
+              <span class="form-help-text">Each class has different stats.</span>
+            </div>
+            <select
+              id="starship-class"
+              v-model="starshipClass"
+              @change="checkClassValidity();"
+              required>
+
+              <option disabled value="">Select a class</option>
+              <option v-for="(shipClass, index) in starshipClasses">{{ index }}</option>
+
+            </select>
+
+            <table v-if="isClassValid" id="selected-class-info-table">
+              <thead>
+                <tr>
+                  <th colspan="2">{{ starshipClass }} class</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Speed</td>
+                  <td>{{ selectedClassSpeed }} km/h</td>
+                </tr>
+                <tr>
+                  <td>Fuel capacity</td>
+                  <td>{{ selectedClassFuelCapacity }} kg</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
+
+            <button class="button-dark" type="submit">Create</button>
+          </form>
+
+        </div>
+      </div>
     </div>
-    <input
-      type="text"
-      maxlength="20"
-      name="starship-name"
-      id="starship-name"
-      v-model="starshipName"
-      v-on:blur="trimStarshipName(); checkNameValidity();"
-      required>
-    <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
-
-    <div class="form-label-group">
-      <label for="starship-class">Class:</label>
-      <span class="form-help-text">Each class has different stats.</span>
-    </div>
-    <select
-      id="starship-class"
-      v-model="starshipClass"
-      @change="checkClassValidity();"
-      required>
-
-      <option disabled value="">Select a class</option>
-      <option v-for="(shipClass, index) in starshipClasses">{{ index }}</option>
-
-    </select>
-
-    <table v-if="isClassValid" id="selected-class-info-table">
-      <thead>
-        <tr>
-          <th colspan="2">{{ starshipClass }} class</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Speed</td>
-          <td>{{ selectedClassSpeed }} km/h</td>
-        </tr>
-        <tr>
-          <td>Fuel capacity</td>
-          <td>{{ selectedClassFuelCapacity }} kg</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
-
-    <button class="button-dark" type="submit">Create</button>
-  </form>
+  </div>
 
 </template>
 
@@ -268,5 +283,40 @@ select {
   #selected-class-info-table {
     width: 100%;
   }
+}
+
+/* -- Modal styling -- */
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.modal-container {
+  margin-top: 75px;
+  padding: 20px 30px;
+  transition: all 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#modal-close-cross {
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+#modal-close-cross:hover {
+  opacity: 0.7;
 }
 </style>
