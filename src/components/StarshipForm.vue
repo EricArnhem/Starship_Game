@@ -325,6 +325,10 @@ select {
   background-color: var(--table-bg-color);
 }
 
+#selected-class-info-table td:first-child {
+  font-weight: bold;
+}
+
 /* Changes for mobile version */
 @media (max-width: 480px) {
   #selected-class-info-table {
