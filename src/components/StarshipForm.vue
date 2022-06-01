@@ -16,6 +16,8 @@ const starshipClass = ref(props.formStarshipClass);
 
 let formErrors = reactive([]);
 
+const deleteButtonClick = ref(false);
+
 // -- Methods --
 
 function handleSubmit() {
@@ -239,6 +241,34 @@ watch(() => props.updateForm, () => {
             </form>
 
           </div>
+          <div class="modal-footer" v-if="updateForm">
+            <div id="delete-starship">
+              <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
+              <button
+                class="button-dark"
+                id="delete-button"
+                @click="deleteButtonClick = true">
+                Delete the Starship
+              </button>
+              <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
+            </div>
+            <div id="delete-verification" v-if="deleteButtonClick">
+              <span>Are you sure?</span>
+              <div id="delete-verification-buttons">
+                <button
+                  class="button-dark"
+                  id="delete-button-yes">
+                  Yes
+                </button>
+                <button
+                  class="button-dark"
+                  id="delete-button-no"
+                  @click="deleteButtonClick = false">
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -364,6 +394,74 @@ select {
   width: 70vw;
 }
 
+.modal-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid var(--main-border-color);
+  margin-top: 25px;
+}
+
+/* Starship deletion part */
+
+#delete-starship {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+#warning-sign-svg {
+  height: 45px;
+}
+
+#delete-button {
+  background-color: #b23229;
+  width: 50%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#delete-button:hover {
+  background-color: #d53c32;
+}
+
+#delete-verification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+
+#delete-verification-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#delete-verification-buttons button {
+  margin: initial;
+  width: 30%;
+}
+
+#delete-button-yes {
+  background-color: #1e8144;
+  margin-right: 10px !important;
+}
+
+#delete-button-yes:hover {
+  background-color: #249650;
+}
+
+#delete-button-no {
+  background-color: #b23229;
+}
+
+#delete-button-no:hover {
+  background-color: #d53c32;
+}
+
 #modal-close-cross {
   cursor: pointer;
   margin-left: 15px;
@@ -383,6 +481,10 @@ select {
   }
 
   .modal-body {
+    width: 100%;
+  }
+
+  #delete-button {
     width: 100%;
   }
 }
