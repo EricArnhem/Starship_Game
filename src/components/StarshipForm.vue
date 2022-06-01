@@ -174,72 +174,76 @@ watch(() => props.updateForm, () => {
 
 <template>
 
-  <div class="modal-mask" v-if="showModal">
-    <div class="modal-wrapper" @blur="$emit('close')">
-      <div class="modal-container content-box">
-        <div class="modal-header">
-          <h2>{{ formTitle }}</h2>
-          <img src="@/images/close-cross.svg" alt="Close cross" title="Close" @click="$emit('close')" id="modal-close-cross">
-        </div>
-        <div class="body-content-box modal-body">
+  <Transition name="modal">
 
-          <form @submit.prevent="handleSubmit" autocomplete="off">
-            <div class="form-label-group">
-              <label for="starship-name">Name:</label>
-              <span class="form-help-text">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
-            </div>
-            <input
-              type="text"
-              maxlength="20"
-              name="starship-name"
-              id="starship-name"
-              v-model="starshipName"
-              v-on:blur="trimStarshipName(); checkNameValidity();"
-              required>
-            <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
+    <div class="modal-mask" v-if="showModal">
+      <div class="modal-wrapper" @blur="$emit('close')">
+        <div class="modal-container content-box">
+          <div class="modal-header">
+            <h2>{{ formTitle }}</h2>
+            <img src="@/images/close-cross.svg" alt="Close cross" title="Close" @click="$emit('close')" id="modal-close-cross">
+          </div>
+          <div class="body-content-box modal-body">
 
-            <div class="form-label-group">
-              <label for="starship-class">Class:</label>
-              <span class="form-help-text">Each class has different stats.</span>
-            </div>
-            <select
-              id="starship-class"
-              v-model="starshipClass"
-              @change="checkClassValidity();"
-              required>
+            <form @submit.prevent="handleSubmit" autocomplete="off">
+              <div class="form-label-group">
+                <label for="starship-name">Name:</label>
+                <span class="form-help-text">Accepts any letters, numbers, spaces and dashes. (20 characters max)</span>
+              </div>
+              <input
+                type="text"
+                maxlength="20"
+                name="starship-name"
+                id="starship-name"
+                v-model="starshipName"
+                v-on:blur="trimStarshipName(); checkNameValidity();"
+                required>
+              <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
 
-              <option disabled value="">Select a class</option>
-              <option v-for="(shipClass, index) in starshipClasses">{{ index }}</option>
+              <div class="form-label-group">
+                <label for="starship-class">Class:</label>
+                <span class="form-help-text">Each class has different stats.</span>
+              </div>
+              <select
+                id="starship-class"
+                v-model="starshipClass"
+                @change="checkClassValidity();"
+                required>
 
-            </select>
+                <option disabled value="">Select a class</option>
+                <option v-for="(shipClass, index) in starshipClasses">{{ index }}</option>
 
-            <table v-if="isClassValid" id="selected-class-info-table">
-              <thead>
-                <tr>
-                  <th colspan="2">{{ starshipClass }} class</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Speed</td>
-                  <td>{{ selectedClassSpeed }} km/h</td>
-                </tr>
-                <tr>
-                  <td>Fuel capacity</td>
-                  <td>{{ selectedClassFuelCapacity }} kg</td>
-                </tr>
-              </tbody>
-            </table>
+              </select>
 
-            <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
+              <table v-if="isClassValid" id="selected-class-info-table">
+                <thead>
+                  <tr>
+                    <th colspan="2">{{ starshipClass }} class</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Speed</td>
+                    <td>{{ selectedClassSpeed }} km/h</td>
+                  </tr>
+                  <tr>
+                    <td>Fuel capacity</td>
+                    <td>{{ selectedClassFuelCapacity }} kg</td>
+                  </tr>
+                </tbody>
+              </table>
 
-            <button class="button-dark" type="submit">{{ formSubmitButtonText }}</button>
-          </form>
+              <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
+              <button class="button-dark" type="submit">{{ formSubmitButtonText }}</button>
+            </form>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+  </Transition>
 
 </template>
 
@@ -339,14 +343,12 @@ select {
   background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
-  transition: opacity 0.3s ease;
   overflow-y: auto;
 }
 
 .modal-container {
   margin-top: 25px;
   padding: 20px 30px;
-  transition: all 0.3s ease;
 }
 
 .modal-header {
@@ -380,5 +382,17 @@ select {
   .modal-body {
     width: 100%;
   }
+}
+
+/* Transition */
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.2s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(1.05);
 }
 </style>
