@@ -243,14 +243,13 @@ watch(() => props.updateForm, () => {
           </div>
           <div class="modal-footer" v-if="updateForm">
             <div id="delete-starship">
-              <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
               <button
                 class="button-dark"
                 id="delete-button"
                 @click="deleteButtonClick = true">
+                <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
                 Delete the Starship
               </button>
-              <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
             </div>
             <div id="delete-verification" v-if="deleteButtonClick">
               <span>Are you sure?</span>
@@ -411,10 +410,13 @@ select {
 }
 
 #warning-sign-svg {
-  height: 45px;
+  height: 17px;
+  margin-right: 5px;
 }
 
 #delete-button {
+  display: flex;
+  justify-content: center;
   background-color: #b23229;
   width: 50%;
   margin-left: 20px;
