@@ -317,7 +317,6 @@ select {
 }
 
 #selected-class-info-table th {
-  /* background-color: #2f308f; */
   background-color: v-bind('selectedClassColor');
 }
 
