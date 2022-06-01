@@ -1,17 +1,22 @@
 <script setup>
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 
 const props = defineProps({
   showModal: Boolean,
-  starshipClasses: Object
+  updateForm: Boolean,
+  starshipClasses: Object,
+  formStarshipName: String,
+  formStarshipClass: String
 });
 
 const starshipClasses = props.starshipClasses;
 
-const starshipName = ref('');
-const starshipClass = ref('');
+const starshipName = ref(props.formStarshipName);
+const starshipClass = ref(props.formStarshipClass);
 
 let formErrors = reactive([]);
+
+// -- Methods --
 
 function handleSubmit() {
 
@@ -94,6 +99,26 @@ function checkClassValidity() {
   }
 }
 
+// -- Computed properties --
+
+// Gets the right form title depending on if we are Updating or Creating
+const formTitle = computed(() => {
+  if (props.updateForm === true) {
+    return 'Update a Starship';
+  } else if (props.updateForm === false) {
+    return 'Create a new Starship';
+  }
+});
+
+// Gets the submit button text depending on if we are Updating or Creating
+const formSubmitButtonText = computed(() => {
+  if (props.updateForm === true) {
+    return 'Update';
+  } else if (props.updateForm === false) {
+    return 'Create';
+  }
+});
+
 // Checks if the class is valid
 const isClassValid = computed(() => {
   if (starshipClasses.hasOwnProperty(starshipClass.value)) {
@@ -127,6 +152,24 @@ const selectedClassColor = computed(() => {
   }
 });
 
+// -- Watchers --
+
+// Updates the starship name when the prop value changes
+watch(() => props.formStarshipName, () => {
+  starshipName.value = props.formStarshipName;
+})
+
+// Updates the starship name when the prop value changes
+watch(() => props.formStarshipClass, () => {
+  starshipClass.value = props.formStarshipClass;
+})
+
+// Resets the errors array when the form mode changes
+// Prevents errors from the Create form to appear on the Update form
+watch(() => props.updateForm, () => {
+  formErrors.length = 0;
+})
+
 </script>
 
 <template>
@@ -135,7 +178,7 @@ const selectedClassColor = computed(() => {
     <div class="modal-wrapper" @blur="$emit('close')">
       <div class="modal-container content-box">
         <div class="modal-header">
-          <h2>Create a new Starship</h2>
+          <h2>{{ formTitle }}</h2>
           <img src="@/images/close-cross.svg" alt="Close cross" title="Close" @click="$emit('close')" id="modal-close-cross">
         </div>
         <div class="body-content-box">
@@ -190,7 +233,7 @@ const selectedClassColor = computed(() => {
 
             <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
-            <button class="button-dark" type="submit">Create</button>
+            <button class="button-dark" type="submit">{{ formSubmitButtonText }}</button>
           </form>
 
         </div>

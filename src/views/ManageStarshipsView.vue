@@ -13,6 +13,39 @@ const starshipList = reactive(starshipsData);
 
 // Shows the modal (starship form) or not
 const showModal = ref(false);
+
+// true if the form is in update mode
+const updateForm = ref(false);
+
+// Values used to fill the form
+const formStarshipName = ref('');
+const formStarshipClass = ref('');
+
+// -- Methods --
+
+// Opens the Update form with the correct starship values
+function openUpdateForm(starshipName) {
+  // If the starship name provided has a matching starship
+  if (starshipList.hasOwnProperty(starshipName)) {
+    // We give the starship's info to the form variables
+    formStarshipName.value = starshipName;
+    formStarshipClass.value = starshipList[starshipName].Class;
+    // Opens the form in Update mode
+    updateForm.value = true;
+    showModal.value = true;
+  }
+}
+
+// Opens the Create form
+function openCreateForm() {
+  // Resets the form values
+  formStarshipName.value = '';
+  formStarshipClass.value = '';
+  // Opens the form in Create mode
+  updateForm.value = false;
+  showModal.value = true;
+}
+
 </script>
 
 <template>
@@ -24,7 +57,7 @@ const showModal = ref(false);
     <div
       class="starship-card"
       v-for="(starship, index) in starshipList"
-      @click="showModal = true"
+      @click="openUpdateForm(index);"
       :key="index"
       :style="{ '--card-corner-color': starshipClasses[starship.Class].Color }">
 
@@ -52,7 +85,10 @@ const showModal = ref(false);
       </table>
     </div>
 
-    <div class="starship-card" id="create-starship-card">
+    <div
+      class="starship-card"
+      id="create-starship-card"
+      @click="openCreateForm();">
       <span id="create-starship-card-title">Create a new Starship</span>
       <img id="plus-svg" src="@/images/plus.svg" title="Create a new Starship" alt="Plus icon">
     </div>
@@ -64,6 +100,9 @@ const showModal = ref(false);
     <StarshipForm
       :starship-classes="starshipClasses"
       :show-modal="showModal"
+      :update-form="updateForm"
+      :form-starship-name="formStarshipName"
+      :form-starship-class="formStarshipClass"
       @close="showModal = false" />
   </Teleport>
 
