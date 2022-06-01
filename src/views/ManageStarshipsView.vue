@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import StarshipForm from '../components/StarshipForm.vue';
 import ClassesLegend from '../components/ClassesLegend.vue';
 import starshipClassesData from '@/data/starshipClassesData.json';
@@ -45,6 +45,15 @@ function openCreateForm() {
   updateForm.value = false;
   showModal.value = true;
 }
+
+// -- Watchers --
+watch(showModal, (showModal) => {
+  if (showModal === true) {
+    document.body.classList.add("overflow-hidden");
+  } else {
+    document.body.classList.remove("overflow-hidden");
+  }
+});
 
 </script>
 

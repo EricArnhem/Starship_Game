@@ -129,6 +129,11 @@ nav a:hover {
   text-align: center;
 }
 
+/* Used on the body when the modal is opened */
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .button-dark {
   padding: 10px 6px;
   width: 50%;
