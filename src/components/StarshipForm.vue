@@ -9,7 +9,7 @@ const props = defineProps({
   formStarshipClass: String
 });
 
-const starshipClasses = props.starshipClasses;
+const starshipClasses = reactive(props.starshipClasses);
 
 const starshipName = ref(props.formStarshipName);
 const starshipClass = ref(props.formStarshipClass);
@@ -38,7 +38,7 @@ function handleSubmit() {
 
   // CLASS CHECK
   // If the class doesn't exist in the classes list
-  if (!starshipClasses.hasOwnProperty(starshipClass.value)) {
+  if (!starshipClasses.value.hasOwnProperty(starshipClass.value)) {
     // We add an error
     formErrors.push('classError');
   }
