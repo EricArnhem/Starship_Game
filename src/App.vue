@@ -27,9 +27,9 @@ import { RouterLink, RouterView } from 'vue-router'
   --main-text-color: #ebebeb;
   --main-border-color: rgba(146, 146, 146, 0.75);
   --content-box-bg-color: #2a2a2a;
-  --button-dark-bg-color: #242424;
-  --button-dark-bg-hover-color: #3a3a3a;
-  --button-dark-bg-active-color: #474747;
+  --button-bg-color: #242424;
+  --button-bg-hover-color: #3a3a3a;
+  --button-bg-active-color: #474747;
   --table-bg-color: #242424;
 }
 
@@ -134,26 +134,26 @@ nav a:hover {
   overflow: hidden;
 }
 
-.button-dark {
+.button {
   padding: 10px 6px;
   width: 50%;
   margin: auto;
   margin-top: 25px;
   font-size: 1rem;
   color: inherit;
-  background-color: var(--button-dark-bg-color);
+  background-color: var(--button-bg-color);
   border: 1px solid var(--main-border-color);
   border-radius: 3px;
 }
 
-.button-dark:hover {
-  background-color: var(--button-dark-bg-hover-color);
+.button:hover {
+  background-color: var(--button-bg-hover-color);
   cursor: pointer;
   transition: 0.1s;
 }
 
-.button-dark:active {
-  background-color: var(--button-dark-bg-active-color);
+.button:active {
+  background-color: var(--button-bg-active-color);
   transition: 0.1s;
 }
 

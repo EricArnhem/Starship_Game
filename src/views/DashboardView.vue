@@ -125,7 +125,7 @@ const enginesButtonText = computed(() => {
             </tr>
           </tbody>
         </table>
-        <button class="button-dark play-button" @click="startGame(index)">Play</button>
+        <button class="button play-button" @click="startGame(index)">Play</button>
       </div>
     </div>
 
@@ -147,8 +147,8 @@ const enginesButtonText = computed(() => {
         <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
         <div class="text-center" id="starship-command-buttons">
-          <button class="button-dark" @click="startStopEngines()">{{ enginesButtonText }}</button>
-          <button class="button-dark" @click="refuelStarship()">Refuel</button>
+          <button class="button" @click="startStopEngines()">{{ enginesButtonText }}</button>
+          <button class="button" @click="refuelStarship()">Refuel</button>
         </div>
 
       </div>
@@ -158,9 +158,9 @@ const enginesButtonText = computed(() => {
         <div id="starship-encounters-choices">
           <p id="starship-encounters-message">You have encountered a foreign ship.</p>
           <ul id="starship-encounters-choices-list">
-            <li><button class="button-dark">Option A</button></li>
-            <li><button class="button-dark">Option B</button></li>
-            <li><button class="button-dark">Option C</button></li>
+            <li><button class="button">Option A</button></li>
+            <li><button class="button">Option B</button></li>
+            <li><button class="button">Option C</button></li>
           </ul>
         </div>
       </div>

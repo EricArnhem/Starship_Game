@@ -243,14 +243,14 @@ watch(() => props.updateForm, () => {
 
               <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
-              <button class="button-dark" type="submit">{{ formSubmitButtonText }}</button>
+              <button class="button" type="submit">{{ formSubmitButtonText }}</button>
             </form>
 
           </div>
           <div class="modal-footer" v-if="updateForm">
             <div id="delete-starship">
               <button
-                class="button-dark"
+                class="button"
                 id="delete-button"
                 @click="deleteButtonClick = true">
                 <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
@@ -261,12 +261,12 @@ watch(() => props.updateForm, () => {
               <span>Are you sure?</span>
               <div id="delete-verification-buttons">
                 <button
-                  class="button-dark"
+                  class="button"
                   id="delete-button-yes">
                   Yes
                 </button>
                 <button
-                  class="button-dark"
+                  class="button"
                   id="delete-button-no"
                   @click="deleteButtonClick = false">
                   No
