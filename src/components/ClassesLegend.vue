@@ -8,7 +8,8 @@ defineProps({
   <div id="starship-classes-legend">
     <div
       class="starship-class-legend"
-      v-for="(starshipClass, index) in starshipClasses">
+      v-for="(starshipClass, index) in starshipClasses"
+      :key="index">
       <span>{{ index }}</span>
       <div
         class="starship-class-color"
