@@ -219,7 +219,7 @@ watch(() => props.updateForm, () => {
                 required>
 
                 <option disabled value="">Select a class</option>
-                <option v-for="(shipClass, index) in starshipClasses">{{ index }}</option>
+                <option v-for="(shipClass, index) in starshipClasses" :key="index">{{ index }}</option>
 
               </select>
 
