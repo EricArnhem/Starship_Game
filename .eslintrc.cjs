@@ -7,5 +7,8 @@ module.exports = {
   ],
   "env": {
     "vue/setup-compiler-macros": true
+  },
+  "rules": {
+    "no-prototype-builtins": "off"
   }
 }
