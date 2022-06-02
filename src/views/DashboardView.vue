@@ -185,6 +185,7 @@ h2 {
 
 .starship-card {
   cursor: initial;
+  padding-bottom: 15px;
 }
 
 .play-button {
