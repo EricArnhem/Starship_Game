@@ -417,14 +417,9 @@ select {
 #delete-button {
   display: flex;
   justify-content: center;
-  background-color: #b23229;
   width: 50%;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-#delete-button:hover {
-  background-color: #d53c32;
 }
 
 #delete-verification {
