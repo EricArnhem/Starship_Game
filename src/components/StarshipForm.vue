@@ -107,7 +107,7 @@ function checkClassValidity() {
 const formTitle = computed(() => {
   if (props.updateForm === true) {
     return 'Update a Starship';
-  } else if (props.updateForm === false) {
+  } else {
     return 'Create a new Starship';
   }
 });
@@ -116,7 +116,7 @@ const formTitle = computed(() => {
 const formSubmitButtonText = computed(() => {
   if (props.updateForm === true) {
     return 'Update';
-  } else if (props.updateForm === false) {
+  } else {
     return 'Create';
   }
 });
@@ -135,6 +135,8 @@ const selectedClassSpeed = computed(() => {
   // If the class is valid and exists
   if (starshipClasses.hasOwnProperty(starshipClass.value)) {
     return starshipClasses[starshipClass.value].Speed;
+  } else {
+    return '';
   }
 });
 
@@ -143,6 +145,8 @@ const selectedClassFuelCapacity = computed(() => {
   // If the class is valid and exists
   if (starshipClasses.hasOwnProperty(starshipClass.value)) {
     return starshipClasses[starshipClass.value]['Fuel capacity'];
+  } else {
+    return '';
   }
 });
 
@@ -151,6 +155,8 @@ const selectedClassColor = computed(() => {
   // If the class is valid and exists
   if (starshipClasses.hasOwnProperty(starshipClass.value)) {
     return starshipClasses[starshipClass.value].Color;
+  } else {
+    return '';
   }
 });
 
