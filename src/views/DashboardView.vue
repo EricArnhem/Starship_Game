@@ -125,7 +125,7 @@ const enginesButtonText = computed(() => {
             </tr>
           </tbody>
         </table>
-        <button class="button play-button" @click="startGame(index)">Play</button>
+        <button class="button play-button" @click="startGame(index); $emit('gameStart')">Play</button>
       </div>
     </div>
 
@@ -135,13 +135,13 @@ const enginesButtonText = computed(() => {
   <div v-if="inGame === true">
     <AlertScreen />
     <div id="starship-data" class="content-box">
-      <a id="go-back-button" @click="inGame = false" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
+      <a id="go-back-button" @click="inGame = false; $emit('gameStop')" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
       <div id="starship-info">
 
         <h3>{{ selectedStarshipName }}</h3>
         <StatsTable
           :select-starship-name="selectedStarshipName"
-          :selected-starship-info="selectedStarshipInfo" 
+          :selected-starship-info="selectedStarshipInfo"
           :starship-classes="starshipClasses" />
 
         <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>

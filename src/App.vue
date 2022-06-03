@@ -22,7 +22,9 @@ const showNavbar = ref(true);
   </header>
 
   <main>
-    <RouterView />
+    <RouterView
+      @game-start="showNavbar = false"
+      @game-stop="showNavbar = true" />
   </main>
 </template>
 
