@@ -1,10 +1,14 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { ref, watch } from 'vue';
+
+// Shows/Hides the navbar when changed
+const showNavbar = ref(true);
 </script>
 
 <template>
   <header>
-    <nav>
+    <nav :class="{ 'nav-hidden': !showNavbar }">
       <ul id="navigation-links">
         <li>
           <RouterLink to="/"><img src="./images/dashboard.svg" title="Dashboard"></RouterLink>
@@ -13,6 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink to="/manage-starships"><img src="./images/rocket.svg" title="Manage Starships"></RouterLink>
         </li>
       </ul>
+      <span id="burger-button" @click="showNavbar = !showNavbar"></span>
     </nav>
   </header>
 
@@ -65,6 +70,9 @@ h1 {
   text-align: center;
   text-decoration: underline double 1px;
   text-underline-offset: 9px;
+  /* Padding equal to the width of the open/close navbar button */
+  padding-left: 35px;
+  padding-right: 35px;
 }
 
 h2 {
@@ -88,6 +96,30 @@ nav {
   border-right: 1px solid var(--main-border-color);
   box-shadow: 1px 0 1px var(--main-border-color);
   padding: 0 7px;
+  position: relative;
+  transition: margin 0.5s ease;
+}
+
+.nav-hidden {
+  margin-left: -60px;
+}
+
+#burger-button {
+  background-color: var(--content-box-bg-color);
+  background-image: url(@/images/hamburger-menu.svg);
+  background-size: 125%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 10px;
+  margin-left: 53px;
+  width: 35px;
+  height: 55px;
+  border: 1px solid var(--main-border-color);
+  border-left: 0px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  cursor: pointer;
 }
 
 nav a {
