@@ -215,6 +215,7 @@ h2 {
 #starship-data {
   display: flex;
   justify-content: space-evenly;
+  position: relative;
   padding: 0;
 }
 
@@ -222,8 +223,8 @@ h2 {
   cursor: pointer;
   height: 45px;
   position: absolute;
-  left: 74px;
-  top: 88px;
+  left: 5px;
+  top: 5px;
 }
 
 #go-back-button:hover {
