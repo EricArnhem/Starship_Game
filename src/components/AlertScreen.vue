@@ -60,6 +60,9 @@ function displayAlert(textString) {
 #alert-container {
   margin-top: 15px;
   margin-bottom: 25px;
+  /* Padding equal to the width of the open/close navbar button */
+  padding-left: 35px;
+  padding-right: 35px;
 }
 
 #alert-display {
