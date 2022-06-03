@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 // Shows/Hides the navbar when changed
 const showNavbar = ref(true);
