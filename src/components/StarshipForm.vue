@@ -418,6 +418,7 @@ select {
 #warning-sign-svg {
   height: 17px;
   margin-right: 5px;
+  margin-top: -1px;
 }
 
 #delete-button {
