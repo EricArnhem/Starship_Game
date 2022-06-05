@@ -6,6 +6,9 @@ import ClassesLegend from '../components/ClassesLegend.vue';
 import starshipClassesData from '@/data/starshipClassesData.json';
 import starshipsData from '@/data/starshipsData.json';
 
+// Declaring emits
+defineEmits(['updateNavbar']);
+
 // Starship classes list
 const starshipClasses = reactive(starshipClassesData);
 
@@ -125,7 +128,7 @@ const enginesButtonText = computed(() => {
             </tr>
           </tbody>
         </table>
-        <button class="button play-button" @click="startGame(index); $emit('gameStart')">Play</button>
+        <button class="button play-button" @click="startGame(index); $emit('updateNavbar', false)">Play</button>
       </div>
     </div>
 
@@ -135,7 +138,7 @@ const enginesButtonText = computed(() => {
   <div v-if="inGame === true">
     <AlertScreen />
     <div id="starship-data" class="content-box">
-      <a id="go-back-button" @click="inGame = false; $emit('gameStop')" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
+      <a id="go-back-button" @click="inGame = false; $emit('updateNavbar', true)" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
       <div id="starship-info">
 
         <h3>{{ selectedStarshipName }}</h3>

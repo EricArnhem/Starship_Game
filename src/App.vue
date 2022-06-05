@@ -4,6 +4,11 @@ import { ref } from 'vue';
 
 // Shows/Hides the navbar when changed
 const showNavbar = ref(true);
+
+// Updates the navbar with the desired status: true(show), false(hide)
+function updateNavbar(status) {
+  showNavbar.value = status;
+}
 </script>
 
 <template>
@@ -22,9 +27,7 @@ const showNavbar = ref(true);
   </header>
 
   <main>
-    <RouterView
-      @game-start="showNavbar = false"
-      @game-stop="showNavbar = true" />
+    <RouterView @update-navbar="updateNavbar" />
   </main>
 </template>
 
