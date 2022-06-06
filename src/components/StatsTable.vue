@@ -1,9 +1,9 @@
 <script setup>
 defineProps({
-  selectStarshipName: String,
-  selectedStarshipInfo: Object,
+  starshipName: String,
+  starshipInfo: Object,
   starshipClasses: Object
-})
+});
 </script>
 
 <template>
@@ -17,23 +17,23 @@ defineProps({
     <tbody>
       <tr>
         <td>Name</td>
-        <td>{{ selectStarshipName }}</td>
+        <td>{{ starshipName }}</td>
       </tr>
       <tr>
         <td>Class</td>
-        <td>{{ selectedStarshipInfo.Class }}</td>
+        <td>{{ starshipInfo.Class }}</td>
       </tr>
       <tr>
         <td>Speed</td>
-        <td>{{ starshipClasses[selectedStarshipInfo.Class].Speed }} km/h</td>
+        <td>{{ starshipClasses[starshipInfo.Class].Speed }} km/h</td>
       </tr>
       <tr>
         <td>Fuel capacity</td>
-        <td>{{ starshipClasses[selectedStarshipInfo.Class]['Fuel capacity'] }} kg</td>
+        <td>{{ starshipClasses[starshipInfo.Class]['Fuel capacity'] }} kg</td>
       </tr>
       <tr>
         <td>Fuel left</td>
-        <td>{{ selectedStarshipInfo['Fuel left'] }} kg</td>
+        <td>{{ starshipInfo['Fuel left'] }} kg</td>
       </tr>
     </tbody>
   </table>

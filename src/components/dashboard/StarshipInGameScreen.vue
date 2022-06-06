@@ -88,8 +88,8 @@ const enginesButtonText = computed(() => {
 
       <h3>{{ starshipName }}</h3>
       <StatsTable
-        :select-starship-name="starshipName"
-        :selected-starship-info="starshipInfo"
+        :starship-name="starshipName"
+        :starship-info="starshipInfo"
         :starship-classes="starshipClasses" />
 
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
