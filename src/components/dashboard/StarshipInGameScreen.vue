@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { showNavbar } from '@/components/navbar/state';
 
 import AlertScreen from '@/components/AlertScreen.vue';
@@ -15,38 +15,8 @@ defineEmits(['gameStop']);
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
-const enginesStatusTheme = reactive({ color: 'red' });
 
 // -- Methods --
-
-// Updates the Engines status display with the correct text and color
-function updateEnginesStatus(status) {
-
-  switch (status) {
-    case 'ON':
-      enginesStatus.value = 'ON';
-      enginesStatusTheme.color = 'green';
-      break;
-
-    case 'OFF':
-      enginesStatus.value = 'OFF';
-      enginesStatusTheme.color = 'red';
-      break;
-
-    case 'PAUSED':
-      enginesStatus.value = 'PAUSED';
-      enginesStatusTheme.color = 'orange';
-      break;
-
-    case 'REFUELING':
-      enginesStatus.value = 'REFUELING';
-      enginesStatusTheme.color = 'cornflowerblue';
-      break;
-
-    default:
-      break;
-  }
-}
 
 // Starts or stop the engines
 function startStopEngines() {
@@ -55,18 +25,18 @@ function startStopEngines() {
   if (enginesOn.value === false) {
     // We start them and update the Engines status
     enginesOn.value = true;
-    updateEnginesStatus('ON');
+    enginesStatus.value = 'ON';
   } else {
     // Otherwise we stop them and update the Engines status
     enginesOn.value = false;
-    updateEnginesStatus('OFF');
+    enginesStatus.value = 'OFF';
   }
 
 }
 
 // Refuels the Starship
 function refuelStarship() {
-  updateEnginesStatus('REFUELING');
+  enginesStatus.value = 'REFUELING';
 }
 
 // -- Computed properties --
@@ -74,6 +44,28 @@ function refuelStarship() {
 // Gets the right text to update the engines button depending on the engines status
 const enginesButtonText = computed(() => {
   return enginesOn.value === false ? 'Start' : 'Stop';
+});
+
+// Calculates the correct text color when the status changes
+const enginesStatusTheme = computed(() => {
+
+  switch (enginesStatus.value) {
+    case 'ON':
+      return 'green';
+
+    case 'OFF':
+      return 'red';
+
+    case 'PAUSED':
+      return 'orange';
+
+    case 'REFUELING':
+      return 'cornflowerblue';
+
+    default:
+      return 'initial';
+  }
+
 });
 
 </script>
@@ -169,7 +161,7 @@ const enginesButtonText = computed(() => {
 
 #starship-engines-status {
   /* Set the correct color depending on the status */
-  color: v-bind('enginesStatusTheme.color');
+  color: v-bind('enginesStatusTheme');
 }
 
 #starship-command-buttons {
