@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref, watch } from 'vue'
-import StarshipForm from '../components/StarshipForm.vue';
-import ClassesLegend from '../components/ClassesLegend.vue';
+import StarshipForm from '@/components/StarshipForm.vue';
+import ClassesLegend from '@/components/ClassesLegend.vue';
 import starshipClassesData from '@/data/starshipClassesData.json';
 import starshipsData from '@/data/starshipsData.json';
 
