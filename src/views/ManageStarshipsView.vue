@@ -1,7 +1,11 @@
 <script setup>
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
 import StarshipForm from '@/components/StarshipForm.vue';
+import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
 import ClassesLegend from '@/components/ClassesLegend.vue';
+import MyModal from '@/components/modal/MyModal.vue';
+import { modalOpen, openModal } from '@/components/modal/state';
+
 import starshipClassesData from '@/data/starshipClassesData.json';
 import starshipsData from '@/data/starshipsData.json';
 
@@ -10,9 +14,6 @@ const starshipClasses = reactive(starshipClassesData);
 
 // List of existing Starships
 const starshipList = reactive(starshipsData);
-
-// Shows the modal (starship form) or not
-const showModal = ref(false);
 
 // true if the form is in update mode
 const updateForm = ref(false);
@@ -32,7 +33,7 @@ function openUpdateForm(starshipName) {
     formStarshipClass.value = starshipList[starshipName].Class;
     // Opens the form in Update mode
     updateForm.value = true;
-    showModal.value = true;
+    openModal();
   }
 }
 
@@ -43,12 +44,25 @@ function openCreateForm() {
   formStarshipClass.value = '';
   // Opens the form in Create mode
   updateForm.value = false;
-  showModal.value = true;
+  openModal();
 }
 
+// -- Computed properties --
+
+// Gets the right modal title depending on if we are Updating or Creating
+const modalTitle = computed(() => {
+  if (updateForm.value === true) {
+    return 'Update a Starship';
+  } else {
+    return 'Create a new Starship';
+  }
+});
+
 // -- Watchers --
-watch(showModal, (showModal) => {
-  if (showModal === true) {
+
+// Applies a class to prevent scrolling the body when the modal is opened
+watch(modalOpen, (modalOpen) => {
+  if (modalOpen === true) {
     document.body.classList.add("overflow-hidden");
   } else {
     document.body.classList.remove("overflow-hidden");
@@ -104,15 +118,29 @@ watch(showModal, (showModal) => {
 
   </div>
 
-  <!-- Starship Form to use in the modal -->
+  <!-- Modal with the Starship Form -->
   <Teleport to="body">
-    <StarshipForm
-      :starship-classes="starshipClasses"
-      :show-modal="showModal"
-      :update-form="updateForm"
-      :form-starship-name="formStarshipName"
-      :form-starship-class="formStarshipClass"
-      @close="showModal = false" />
+
+    <MyModal>
+      <template #title>
+        {{ modalTitle }}
+      </template>
+
+      <template #body>
+
+        <StarshipForm
+          :starship-classes="starshipClasses"
+          :update-form="updateForm"
+          :form-starship-name="formStarshipName"
+          :form-starship-class="formStarshipClass" />
+
+      </template>
+
+      <template #footer v-if="updateForm">
+        <StarshipDeleteButton />
+      </template>
+
+    </MyModal>
   </Teleport>
 
 </template>
