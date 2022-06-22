@@ -1,13 +1,27 @@
 <script setup>
-import { reactive, ref, watch, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { reactive, ref, watch, computed, onMounted } from 'vue'
+
 import StarshipForm from '@/components/StarshipForm.vue';
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
 import ClassesLegend from '@/components/ClassesLegend.vue';
+
 import MyModal from '@/components/modal/MyModal.vue';
 import { modalOpen, openModal } from '@/components/modal/state';
 
 import starshipClassesData from '@/data/starshipClassesData.json';
 import starshipsData from '@/data/starshipsData.json';
+
+const route = useRoute();
+const router = useRouter();
+
+// When component is mounted
+onMounted(() => {
+  // Checks if we accessed the create path and if so opens the Create form modal
+  if (route.path === '/manage-starships/create') {
+    openCreateForm();
+  }
+});
 
 // Starship classes list
 const starshipClasses = reactive(starshipClassesData);
@@ -111,7 +125,7 @@ watch(modalOpen, (modalOpen) => {
     <div
       class="starship-card"
       id="create-starship-card"
-      @click="openCreateForm();">
+      @click="openCreateForm(); router.push('/manage-starships/create')">
       <span id="create-starship-card-title">Create a new Starship</span>
       <img id="plus-svg" src="@/images/plus.svg" title="Create a new Starship" alt="Plus icon">
     </div>

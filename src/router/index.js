@@ -12,7 +12,13 @@ const router = createRouter({
     {
       path: '/manage-starships',
       name: 'manageStarships',
-      component: () => import('../views/ManageStarshipsView.vue')
+      component: () => import('../views/ManageStarshipsView.vue'),
+      children: [
+        {
+          path: 'create',
+          component: () => import('../views/ManageStarshipsView.vue')
+        }
+      ]
     }
   ]
 })
