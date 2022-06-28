@@ -1,2 +1,2 @@
-# Starship Dashboard
-Interactable dashboard to command a starship made with Vue 3.
+# Starship Game
+Game in which you create a Starship and control it using their dashboard commands.
