@@ -3,12 +3,12 @@ import { reactive, ref, computed, watch } from 'vue'
 
 const props = defineProps({
   updateForm: Boolean,
-  starshipClasses: Object,
+  starshipClassesList: Array,
   formStarshipName: String,
   formStarshipClass: String
 });
 
-const starshipClasses = reactive(props.starshipClasses);
+const starshipClassesList = reactive(props.starshipClassesList);
 
 const starshipName = ref(props.formStarshipName);
 const starshipClass = ref(props.formStarshipClass);
@@ -35,7 +35,7 @@ function handleSubmit() {
 
   // CLASS CHECK
   // If the class doesn't exist in the classes list
-  if (!starshipClasses.hasOwnProperty(starshipClass.value)) {
+  if (!starshipClassesList.find(element => element.name === starshipClass.value)) {
     // We add an error
     formErrors.push('classError');
   }
@@ -82,7 +82,7 @@ function checkNameValidity() {
 
 function checkClassValidity() {
   // If the class is valid and exists
-  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
     // If we have a class error displayed
     if (formErrors.includes('classError')) {
       // We get the index of the classError and we remove it
@@ -112,7 +112,7 @@ const formSubmitButtonText = computed(() => {
 
 // Checks if the class is valid
 const isClassValid = computed(() => {
-  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
     return true;
   } else {
     return false;
@@ -122,8 +122,8 @@ const isClassValid = computed(() => {
 // Gets the Speed of the selected class
 const selectedClassSpeed = computed(() => {
   // If the class is valid and exists
-  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
-    return starshipClasses[starshipClass.value].Speed;
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
+    return starshipClassesList.find(element => element.name === starshipClass.value).speed;
   } else {
     return '';
   }
@@ -132,8 +132,8 @@ const selectedClassSpeed = computed(() => {
 // Gets the Speed of the selected class
 const selectedClassFuelCapacity = computed(() => {
   // If the class is valid and exists
-  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
-    return starshipClasses[starshipClass.value]['Fuel capacity'];
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
+    return starshipClassesList.find(element => element.name === starshipClass.value).fuelCapacity;
   } else {
     return '';
   }
@@ -142,8 +142,8 @@ const selectedClassFuelCapacity = computed(() => {
 // Gets the color of the selected class
 const selectedClassColor = computed(() => {
   // If the class is valid and exists
-  if (starshipClasses.hasOwnProperty(starshipClass.value)) {
-    return starshipClasses[starshipClass.value].Color;
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
+    return starshipClassesList.find(element => element.name === starshipClass.value).color;
   } else {
     return '';
   }
@@ -197,7 +197,7 @@ watch(() => props.updateForm, () => {
       required>
 
       <option disabled value="">Select a class</option>
-      <option v-for="(shipClass, index) in starshipClasses" :key="index">{{ index }}</option>
+      <option v-for="(starshipClass) in starshipClassesList" :key="starshipClass.id">{{ starshipClass.name }}</option>
 
     </select>
 

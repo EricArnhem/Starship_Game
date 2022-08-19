@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  starshipClasses: Object
+  starshipClassesList: Array
 })
 </script>
 
@@ -8,12 +8,12 @@ defineProps({
   <div id="starship-classes-legend">
     <div
       class="starship-class-legend"
-      v-for="(starshipClass, index) in starshipClasses"
-      :key="index">
-      <span>{{ index }}</span>
+      v-for="(starshipClass) in starshipClassesList"
+      :key="starshipClass.id">
+      <span>{{ starshipClass.name }}</span>
       <div
         class="starship-class-color"
-        :style="{ '--starship-class-color': starshipClass.Color }">
+        :style="{ '--starship-class-color': starshipClass.color }">
 
       </div>
     </div>

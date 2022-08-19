@@ -2,6 +2,8 @@
 import { useRoute, useRouter } from 'vue-router'
 import { reactive, ref, watch, computed, onMounted } from 'vue'
 
+import axios from 'axios'
+
 import StarshipForm from '@/components/StarshipForm.vue';
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
 import ClassesLegend from '@/components/ClassesLegend.vue';
@@ -9,25 +11,29 @@ import ClassesLegend from '@/components/ClassesLegend.vue';
 import MyModal from '@/components/modal/MyModal.vue';
 import { modalOpen, openModal } from '@/components/modal/state';
 
-import starshipClassesData from '@/data/starshipClassesData.json';
-import starshipsData from '@/data/starshipsData.json';
 
 const route = useRoute();
 const router = useRouter();
 
+const state = reactive({
+  starshipClassesList: [],
+  starshipList: []
+})
+
 // When component is mounted
-onMounted(() => {
+onMounted(async () => {
   // Checks if we accessed the create path and if so opens the Create form modal
   if (route.path === '/manage-starships/create') {
     openCreateForm();
   }
+
+  // Getting the starship classes
+  await getStarshipClasses();
+
+  // Getting the starships
+  await getStarships();
+
 });
-
-// Starship classes list
-const starshipClasses = reactive(starshipClassesData);
-
-// List of existing Starships
-const starshipList = reactive(starshipsData);
 
 // true if the form is in update mode
 const updateForm = ref(false);
@@ -36,15 +42,40 @@ const updateForm = ref(false);
 const formStarshipName = ref('');
 const formStarshipClass = ref('');
 
+// -- Methods to get data from database using the API --
+// Retrieves starships
+const getStarships = async () => {
+  try {
+
+    const response = await axios.get('http://localhost:3000/api/starship/');
+    state.starshipList = response.data;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Retrieves starship classes
+const getStarshipClasses = async () => {
+  try {
+
+    const response = await axios.get('http://localhost:3000/api/starship-class/');
+    state.starshipClassesList = response.data;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // -- Methods --
 
 // Opens the Update form with the correct starship values
-function openUpdateForm(starshipName) {
-  // If the starship name provided has a matching starship
-  if (starshipList.hasOwnProperty(starshipName)) {
+function openUpdateForm(starshipPublicId, starshipClassId) {
+  // If the starship publicId provided has a matching starship
+  if (state.starshipList.find(element => element.publicId === starshipPublicId)) {
     // We give the starship's info to the form variables
-    formStarshipName.value = starshipName;
-    formStarshipClass.value = starshipList[starshipName].Class;
+    formStarshipName.value = state.starshipList.find(element => element.publicId === starshipPublicId).name;
+    formStarshipClass.value = state.starshipClassesList.find(element => element.id === starshipClassId).name;
     // Opens the form in Update mode
     updateForm.value = true;
     openModal();
@@ -87,36 +118,36 @@ watch(modalOpen, (modalOpen) => {
 
 <template>
   <h1>Manage your Starships</h1>
-  <ClassesLegend :starship-classes="starshipClasses" />
+  <ClassesLegend :starship-classes-list="state.starshipClassesList" />
 
   <div class="starship-cards-container">
 
     <div
       class="starship-card"
-      v-for="(starship, index) in starshipList"
-      @click="openUpdateForm(index);"
-      :key="index"
-      :style="{ '--card-corner-color': starshipClasses[starship.Class].Color }">
+      v-for="(starship) in state.starshipList"
+      @click="openUpdateForm(starship.publicId, starship.starshipClassId);"
+      :key="starship.publicId"
+      :style="{ '--card-corner-color': state.starshipClassesList.find(element => element.id === starship.starshipClassId).color }">
 
-      <span class="starship-card-title">{{ index }}</span>
+      <span class="starship-card-title">{{ starship.name }}</span>
 
       <table class="starship-card-stats">
         <tbody>
           <tr>
             <td>Class</td>
-            <td>{{ starship.Class }}</td>
+            <td>{{ state.starshipClassesList.find(element => element.id === starship.starshipClassId).name }}</td>
           </tr>
           <tr>
             <td>Speed</td>
-            <td>{{ starshipClasses[starship.Class].Speed }} km/h</td>
+            <td>{{ state.starshipClassesList.find(element => element.id === starship.starshipClassId).speed }} km/h</td>
           </tr>
           <tr>
             <td>Fuel capacity</td>
-            <td>{{ starshipClasses[starship.Class]['Fuel capacity'] }} kg</td>
+            <td>{{ state.starshipClassesList.find(element => element.id === starship.starshipClassId).fuelCapacity }} kg</td>
           </tr>
           <tr>
             <td>Fuel left</td>
-            <td>{{ starship['Fuel left'] }} kg</td>
+            <td>{{ starship.fuelLeft }} kg</td>
           </tr>
         </tbody>
       </table>
@@ -143,10 +174,11 @@ watch(modalOpen, (modalOpen) => {
       <template #body>
 
         <StarshipForm
-          :starship-classes="starshipClasses"
+          :starship-classes-list="state.starshipClassesList"
           :update-form="updateForm"
           :form-starship-name="formStarshipName"
-          :form-starship-class="formStarshipClass" />
+          :form-starship-class="formStarshipClass"
+          v-if="state.starshipClassesList.length" />
 
       </template>
 
