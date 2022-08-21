@@ -2,8 +2,11 @@
 import { useRoute, useRouter } from 'vue-router'
 import { reactive, ref, watch, computed, onMounted } from 'vue'
 
-import axios from 'axios'
+// API methods
+import { getStarships } from "../api/methods/starship.js";
+import { getStarshipClasses } from "../api/methods/starship-class.js";
 
+// Vue components
 import StarshipForm from '@/components/StarshipForm.vue';
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
 import ClassesLegend from '@/components/ClassesLegend.vue';
@@ -21,17 +24,29 @@ const state = reactive({
 })
 
 // When component is mounted
-onMounted(async () => {
+onMounted(() => {
   // Checks if we accessed the create path and if so opens the Create form modal
   if (route.path === '/manage-starships/create') {
     openCreateForm();
   }
 
   // Getting the starship classes
-  await getStarshipClasses();
+  getStarshipClasses()
+    .then(response => {
+      state.starshipClassesList = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
   // Getting the starships
-  await getStarships();
+  getStarships()
+    .then(response => {
+      state.starshipList = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
 });
 
@@ -41,31 +56,6 @@ const updateForm = ref(false);
 // Values used to fill the form
 const formStarshipName = ref('');
 const formStarshipClass = ref('');
-
-// -- Methods to get data from database using the API --
-// Retrieves starships
-const getStarships = async () => {
-  try {
-
-    const response = await axios.get('http://192.168.1.91:3000/api/starship/');
-    state.starshipList = response.data;
-
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// Retrieves starship classes
-const getStarshipClasses = async () => {
-  try {
-
-    const response = await axios.get('http://192.168.1.91:3000/api/starship-class/');
-    state.starshipClassesList = response.data;
-
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 // -- Methods --
 
