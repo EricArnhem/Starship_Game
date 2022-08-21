@@ -47,7 +47,7 @@ const formStarshipClass = ref('');
 const getStarships = async () => {
   try {
 
-    const response = await axios.get('http://localhost:3000/api/starship/');
+    const response = await axios.get('http://192.168.1.91:3000/api/starship/');
     state.starshipList = response.data;
 
   } catch (error) {
@@ -59,7 +59,7 @@ const getStarships = async () => {
 const getStarshipClasses = async () => {
   try {
 
-    const response = await axios.get('http://localhost:3000/api/starship-class/');
+    const response = await axios.get('http://192.168.1.91:3000/api/starship-class/');
     state.starshipClassesList = response.data;
 
   } catch (error) {
