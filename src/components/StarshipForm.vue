@@ -1,6 +1,9 @@
 <script setup>
 import { reactive, ref, computed, watch } from 'vue'
 
+// API methods
+import { createStarship } from "../api/methods/starship.js";
+
 const props = defineProps({
   updateForm: Boolean,
   starshipClassesList: Array,
@@ -14,6 +17,9 @@ const starshipName = ref(props.formStarshipName);
 const starshipClass = ref(props.formStarshipClass);
 
 let formErrors = reactive([]);
+
+let submitResultMessage = ref('');
+let submitResultStatus = ref('')
 
 // -- Methods --
 
@@ -65,7 +71,7 @@ function checkClassValidity() {
   }
 }
 
-function handleSubmit() {
+async function handleSubmit() {
 
   // Checking the values
   checkNameValidity();
@@ -86,7 +92,32 @@ function handleSubmit() {
 
     } else if (props.updateForm === false) {
       // If we are creating
-      
+
+      const starshipData = {
+        name: starshipName.value,
+        starshipClassId: selectedClassId.value
+      }
+
+      // Creating the starship
+      try {
+
+        let result = await createStarship(starshipData);
+        console.log(result);
+
+        if (result.status === 200) {
+          // If starship has been created
+          submitResultMessage.value = result.data.message;
+          submitResultStatus.value = result.status;
+
+        } else {
+          // If error during creation
+          submitResultMessage.value = "Error while creating the Starship.";
+          submitResultStatus.value = result.response.status; // Using .response because Error message has a different structure
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
 
     }
   }
@@ -139,6 +170,16 @@ const selectedClassColor = computed(() => {
   // If the class is valid and exists
   if (starshipClassesList.find(element => element.name === starshipClass.value)) {
     return starshipClassesList.find(element => element.name === starshipClass.value).color;
+  } else {
+    return '';
+  }
+});
+
+// Gets id of the selected class
+const selectedClassId = computed(() => {
+  // If the class is valid and exists
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
+    return starshipClassesList.find(element => element.name === starshipClass.value).id;
   } else {
     return '';
   }
@@ -218,6 +259,12 @@ watch(() => props.updateForm, () => {
     <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
     <button class="button" type="submit">{{ formSubmitButtonText }}</button>
+    <span
+      id="submit-result"
+      :class="{ 'form-success': submitResultStatus === 200, 'form-error': submitResultStatus !== 200 }"
+      v-if="submitResultMessage">
+      {{ submitResultMessage }}
+    </span>
   </form>
 
 </template>
@@ -274,6 +321,18 @@ select {
   color: #ED4337;
   font-size: 14px;
   margin-top: 10px;
+}
+
+.form-success {
+  color: #37ed5e;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#submit-result {
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
 }
 
 /* -- Class info table -- */
