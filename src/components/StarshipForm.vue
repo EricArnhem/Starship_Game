@@ -17,63 +17,29 @@ let formErrors = reactive([]);
 
 // -- Methods --
 
-function handleSubmit() {
-
-  // Resets the errors array
-  formErrors.length = 0;
-  const regexName = new RegExp(/^[^-\s][\p{L}0-9- ]{1,20}$/gu);
-
-  // Trims the name provided
-  let TrimmedStarshipName = starshipName.value.trim();
-
-  // NAME CHECK
-  // If the name does not match the regex or if the name is too long
-  if (!regexName.test(TrimmedStarshipName) || TrimmedStarshipName.length > 20) {
-    // We add an error to the errors array
-    formErrors.push('nameError');
-  }
-
-  // CLASS CHECK
-  // If the class doesn't exist in the classes list
-  if (!starshipClassesList.find(element => element.name === starshipClass.value)) {
-    // We add an error
-    formErrors.push('classError');
-  }
-
-  // ERRORS CHECK
-  // If there is one or multiple errors
-  if (formErrors.length !== 0) {
-    console.log('There are errors in the form.');
-    console.log(formErrors);
-
-  } else {
-    console.log('Data ready to be sent to the database.');
-  }
-
-}
-
-// Used to trim the name when the input loses focus
+// Trim the name when the input loses focus
 function trimStarshipName() {
   starshipName.value = starshipName.value.trim();
 }
 
-// Checks the name validity
 function checkNameValidity() {
+
+  // Trims name before checking the value
+  trimStarshipName();
 
   const regexName = new RegExp(/^[^-\s][\p{L}0-9- ]{1,20}$/gu);
 
-  // If the input in empty or if the name is valid
-  if (starshipName.value === '' || regexName.test(starshipName.value)) {
+  // If the name input matches the regex
+  if (regexName.test(starshipName.value)) {
 
-    // We get the index of the nameError and we remove it
+    // Gets the nameError index then removes it
     let IdNameError = formErrors.indexOf('nameError');
     formErrors.splice(IdNameError, 1);
 
-  } else { // If the name is invalid
-
-    // If we don't already have a name error
+  } else {
+    // If the name is invalid
+    // Add nameError if not already added
     if (!formErrors.includes('nameError')) {
-      // We add an error to the errors array
       formErrors.push('nameError');
     }
 
@@ -98,6 +64,35 @@ function checkClassValidity() {
 
   }
 }
+
+function handleSubmit() {
+
+  // Checking the values
+  checkNameValidity();
+  checkClassValidity();
+
+  if (formErrors.length !== 0) {
+    // If there is one or multiple errors
+    console.log('There are errors in the form.');
+    console.log(formErrors);
+
+  } else {
+    // If data is valid
+    console.log('Data ready to be sent to the database.');
+
+    if (props.updateForm === true) {
+      // If we are updating
+
+
+    } else if (props.updateForm === false) {
+      // If we are creating
+      
+
+    }
+  }
+
+}
+
 
 // -- Computed properties --
 
@@ -149,6 +144,7 @@ const selectedClassColor = computed(() => {
   }
 });
 
+
 // -- Watchers --
 
 // Updates the starship name when the prop value changes
@@ -182,7 +178,7 @@ watch(() => props.updateForm, () => {
       name="starship-name"
       id="starship-name"
       v-model="starshipName"
-      v-on:blur="trimStarshipName(); checkNameValidity();"
+      v-on:blur="checkNameValidity();"
       required>
     <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
 
