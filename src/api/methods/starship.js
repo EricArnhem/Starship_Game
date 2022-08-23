@@ -12,3 +12,12 @@ export function createStarship(starshipData) {
         return error;
     });
 }
+
+export function updateStarship(starshipPublicId, starshipData) {
+    return axiosClient.put(`/starship/${starshipPublicId}`, starshipData)
+    .catch(error => {
+        console.log(error);
+        // Returning error to display the correct result message to the client
+        return error;
+    })
+}

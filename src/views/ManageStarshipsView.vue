@@ -53,7 +53,9 @@ onMounted(() => {
 // true if the form is in update mode
 const updateForm = ref(false);
 
+
 // Values used to fill the form
+const formStarshipPublicId = ref(''); // Used to select the starship to update
 const formStarshipName = ref('');
 const formStarshipClass = ref('');
 
@@ -74,6 +76,7 @@ function openUpdateForm(starshipPublicId, starshipClassId) {
   // If the starship publicId provided has a matching starship
   if (state.starshipList.find(element => element.publicId === starshipPublicId)) {
     // We give the starship's info to the form variables
+    formStarshipPublicId.value = starshipPublicId;
     formStarshipName.value = state.starshipList.find(element => element.publicId === starshipPublicId).name;
     formStarshipClass.value = state.starshipClassesList.find(element => element.id === starshipClassId).name;
     // Opens the form in Update mode
@@ -176,6 +179,7 @@ watch(modalOpen, (modalOpen) => {
         <StarshipForm
           :starship-classes-list="state.starshipClassesList"
           :update-form="updateForm"
+          :form-starship-public-id="formStarshipPublicId"
           :form-starship-name="formStarshipName"
           :form-starship-class="formStarshipClass"
           @starship-created="refreshStarshipsList()"

@@ -2,11 +2,12 @@
 import { reactive, ref, computed, watch } from 'vue'
 
 // API methods
-import { createStarship } from "../api/methods/starship.js";
+import { createStarship, updateStarship } from "../api/methods/starship.js";
 
 const props = defineProps({
   updateForm: Boolean,
   starshipClassesList: Array,
+  formStarshipPublicId: String,
   formStarshipName: String,
   formStarshipClass: String
 });
@@ -21,7 +22,7 @@ const starshipClass = ref(props.formStarshipClass);
 let formErrors = reactive([]);
 
 let submitResultMessage = ref('');
-let submitResultStatus = ref('')
+let submitResultStatus = ref('');
 
 // -- Methods --
 
@@ -91,6 +92,36 @@ async function handleSubmit() {
     if (props.updateForm === true) {
       // If we are updating
 
+      const starshipData = {
+        name: starshipName.value,
+        starshipClassId: selectedClassId.value
+      }
+
+      // Getting starship public id passed as a prop
+      let starshipPublicId = props.formStarshipPublicId;
+
+      // Updating the starship
+      try {
+
+        let result = await updateStarship(starshipPublicId, starshipData);
+
+        if (result.status === 200) {
+          // If starship has been updated
+          submitResultMessage.value = result.data.message;
+          submitResultStatus.value = result.status;
+
+          // Refreshing starships list on the parent component
+          emit('starshipCreated');
+
+        } else {
+          // If error during update
+          submitResultMessage.value = "Error while updating the Starship.";
+          submitResultStatus.value = result.response.status; // Using .response because Error message has a different structure
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
 
     } else if (props.updateForm === false) {
       // If we are creating
