@@ -12,7 +12,7 @@ const props = defineProps({
   formStarshipClass: String
 });
 
-const emit = defineEmits(['starshipCreated']);
+const emit = defineEmits(['starshipCreated', 'starshipUpdated']);
 
 const starshipClassesList = reactive(props.starshipClassesList);
 
@@ -111,7 +111,7 @@ async function handleSubmit() {
           submitResultStatus.value = result.status;
 
           // Refreshing starships list on the parent component
-          emit('starshipCreated');
+          emit('starshipUpdated');
 
         } else {
           // If error during update

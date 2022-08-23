@@ -183,6 +183,7 @@ watch(modalOpen, (modalOpen) => {
           :form-starship-name="formStarshipName"
           :form-starship-class="formStarshipClass"
           @starship-created="refreshStarshipsList()"
+          @starship-updated="refreshStarshipsList()"
           v-if="state.starshipClassesList.length" />
 
       </template>
