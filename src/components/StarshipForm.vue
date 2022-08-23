@@ -11,6 +11,8 @@ const props = defineProps({
   formStarshipClass: String
 });
 
+const emit = defineEmits(['starshipCreated']);
+
 const starshipClassesList = reactive(props.starshipClassesList);
 
 const starshipName = ref(props.formStarshipName);
@@ -102,12 +104,14 @@ async function handleSubmit() {
       try {
 
         let result = await createStarship(starshipData);
-        console.log(result);
 
         if (result.status === 200) {
           // If starship has been created
           submitResultMessage.value = result.data.message;
           submitResultStatus.value = result.status;
+
+          // Refreshing starships list on the parent component
+          emit('starshipCreated');
 
         } else {
           // If error during creation

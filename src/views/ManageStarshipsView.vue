@@ -59,6 +59,16 @@ const formStarshipClass = ref('');
 
 // -- Methods --
 
+function refreshStarshipsList() {
+  getStarships()
+    .then(response => {
+      state.starshipList = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
 // Opens the Update form with the correct starship values
 function openUpdateForm(starshipPublicId, starshipClassId) {
   // If the starship publicId provided has a matching starship
@@ -168,6 +178,7 @@ watch(modalOpen, (modalOpen) => {
           :update-form="updateForm"
           :form-starship-name="formStarshipName"
           :form-starship-class="formStarshipClass"
+          @starship-created="refreshStarshipsList()"
           v-if="state.starshipClassesList.length" />
 
       </template>
