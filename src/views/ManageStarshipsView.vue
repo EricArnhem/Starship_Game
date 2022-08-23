@@ -188,7 +188,9 @@ watch(modalOpen, (modalOpen) => {
       </template>
 
       <template #footer v-if="updateForm">
-        <StarshipDeleteButton />
+        <StarshipDeleteButton 
+        :starship-public-id="formStarshipPublicId"
+        @starship-deleted="refreshStarshipsList()"/>
       </template>
 
     </MyModal>

@@ -1,35 +1,91 @@
 <script setup>
 import { ref } from 'vue'
 
+// API methods
+import { deleteStarship } from "../api/methods/starship.js";
+
+const props = defineProps({
+  starshipPublicId: String
+});
+
+const emit = defineEmits(['starshipDeleted']);
+
+const showDeleteButton = ref(true);
 const deleteButtonClick = ref(false);
+
+let submitResultMessage = ref('');
+let submitResultStatus = ref('');
+
+// -- Methods --
+async function handleDelete() {
+
+  // Getting starship public id passed as a prop
+  let starshipPublicId = props.starshipPublicId;
+
+  // Deleting the starship
+  try {
+
+    let result = await deleteStarship(starshipPublicId);
+
+    if (result.status === 200) {
+      // If starship has been updated
+      submitResultMessage.value = result.data.message;
+      submitResultStatus.value = result.status;
+
+      // Refreshing starships list on the parent component
+      emit('starshipDeleted');
+
+      // Hides Delete button
+      showDeleteButton.value = false;
+
+    } else {
+      // If error during update
+      submitResultMessage.value = "Error while deleting the Starship.";
+      submitResultStatus.value = result.response.status; // Using .response because Error message has a different structure
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 </script>
 
 <template>
-  <div id="delete-starship">
-    <button
-      class="button"
-      id="delete-button"
-      @click="deleteButtonClick = true">
-      <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
-      Delete the Starship
-    </button>
-  </div>
-  <div id="delete-verification" v-if="deleteButtonClick">
-    <span>Are you sure?</span>
-    <div id="delete-verification-buttons">
+  <div v-if="showDeleteButton">
+    <div id="delete-starship">
       <button
         class="button"
-        id="delete-button-yes">
-        Yes
-      </button>
-      <button
-        class="button"
-        id="delete-button-no"
-        @click="deleteButtonClick = false">
-        No
+        id="delete-button"
+        @click="deleteButtonClick = true">
+        <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
+        Delete the Starship
       </button>
     </div>
+    <div id="delete-verification" v-if="deleteButtonClick">
+      <span>Are you sure?</span>
+      <div id="delete-verification-buttons">
+        <button
+          class="button"
+          id="delete-button-yes"
+          @click="handleDelete()">
+          Yes
+        </button>
+        <button
+          class="button"
+          id="delete-button-no"
+          @click="deleteButtonClick = false">
+          No
+        </button>
+      </div>
+    </div>
   </div>
+  <span
+    id="submit-result"
+    :class="{ 'form-success': submitResultStatus === 200, 'form-error': submitResultStatus !== 200 }"
+    v-if="submitResultMessage">
+    {{ submitResultMessage }}
+  </span>
 </template>
 
 <style>
@@ -95,5 +151,23 @@ const deleteButtonClick = ref(false);
   #delete-button {
     width: 100%;
   }
+}
+
+.form-error {
+  color: #ED4337;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.form-success {
+  color: #37ed5e;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#submit-result {
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
 }
 </style>
