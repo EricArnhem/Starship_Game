@@ -21,9 +21,6 @@ const starshipClass = ref(props.formStarshipClass);
 
 let formErrors = reactive([]);
 
-let submitResultMessage = ref('');
-let submitResultStatus = ref('');
-
 // -- Methods --
 
 // Trim the name when the input loses focus
@@ -87,10 +84,11 @@ async function handleSubmit() {
 
   } else {
     // If data is valid
-    console.log('Data ready to be sent to the database.');
 
     if (props.updateForm === true) {
-      // If we are updating
+      // -- IF UPDATING --
+
+      let requestType = 'update';
 
       const starshipData = {
         name: starshipName.value,
@@ -107,16 +105,23 @@ async function handleSubmit() {
 
         if (result.status === 200) {
           // If starship has been updated
-          submitResultMessage.value = result.data.message;
-          submitResultStatus.value = result.status;
 
-          // Refreshing starships list on the parent component
-          emit('starshipUpdated');
+          const submitResultData = {
+            message: result.data.message,
+            status: result.status
+          }
+
+          // Refresh starships list and sending result message + status + request type to the parent component
+          emit('starshipUpdated', submitResultData, requestType);
 
         } else {
-          // If error during update
-          submitResultMessage.value = "Error while updating the Starship.";
-          submitResultStatus.value = result.response.status; // Using .response because Error message has a different structure
+          const submitResultData = {
+            message: "Error while updating the Starship.",
+            status: result.response.status // Using .response because Error message has a different structure
+          }
+
+          // Refresh starships list and sending result message + status + request type to the parent component
+          emit('starshipUpdated', submitResultData, requestType);
         }
 
       } catch (error) {
@@ -124,7 +129,9 @@ async function handleSubmit() {
       }
 
     } else if (props.updateForm === false) {
-      // If we are creating
+      // -- IF CREATING ---
+
+      let requestType = 'create';
 
       const starshipData = {
         name: starshipName.value,
@@ -138,16 +145,24 @@ async function handleSubmit() {
 
         if (result.status === 200) {
           // If starship has been created
-          submitResultMessage.value = result.data.message;
-          submitResultStatus.value = result.status;
 
-          // Refreshing starships list on the parent component
-          emit('starshipCreated');
+          const submitResultData = {
+            message: result.data.message,
+            status: result.status
+          }
+
+          // Refresh starships list and sending result message + status + request type to the parent component
+          emit('starshipCreated', submitResultData, requestType);
 
         } else {
           // If error during creation
-          submitResultMessage.value = "Error while creating the Starship.";
-          submitResultStatus.value = result.response.status; // Using .response because Error message has a different structure
+          const submitResultData = {
+            message: "Error while creating the Starship.",
+            status: result.response.status // Using .response because Error message has a different structure
+          }
+
+          // Refresh starships list and sending result message + status + request type to the parent component
+          emit('starshipCreated', submitResultData, requestType);
         }
 
       } catch (error) {
@@ -294,12 +309,6 @@ watch(() => props.updateForm, () => {
     <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
     <button class="button" type="submit">{{ formSubmitButtonText }}</button>
-    <span
-      id="submit-result"
-      :class="{ 'form-success': submitResultStatus === 200, 'form-error': submitResultStatus !== 200 }"
-      v-if="submitResultMessage">
-      {{ submitResultMessage }}
-    </span>
   </form>
 
 </template>

@@ -10,17 +10,14 @@ const props = defineProps({
 
 const emit = defineEmits(['starshipDeleted']);
 
-const showDeleteButton = ref(true);
 const deleteButtonClick = ref(false);
-
-let submitResultMessage = ref('');
-let submitResultStatus = ref('');
 
 // -- Methods --
 async function handleDelete() {
 
   // Getting starship public id passed as a prop
   let starshipPublicId = props.starshipPublicId;
+  let requestType = 'delete';
 
   // Deleting the starship
   try {
@@ -28,20 +25,26 @@ async function handleDelete() {
     let result = await deleteStarship(starshipPublicId);
 
     if (result.status === 200) {
-      // If starship has been updated
-      submitResultMessage.value = result.data.message;
-      submitResultStatus.value = result.status;
+      // If starship has been deleted
 
-      // Refreshing starships list on the parent component
-      emit('starshipDeleted');
+      const submitResultData = {
+        message: result.data.message,
+        status: result.status
+      }
 
-      // Hides Delete button
-      showDeleteButton.value = false;
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipDeleted', submitResultData, requestType);
 
     } else {
-      // If error during update
-      submitResultMessage.value = "Error while deleting the Starship.";
-      submitResultStatus.value = result.response.status; // Using .response because Error message has a different structure
+      // If error during deletion
+
+      const submitResultData = {
+        message: "Error while deleting the Starship.",
+        status: result.response.status // Using .response because Error message has a different structure
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipDeleted', submitResultData, requestType);
     }
 
   } catch (error) {
@@ -52,7 +55,7 @@ async function handleDelete() {
 </script>
 
 <template>
-  <div v-if="showDeleteButton">
+  <div>
     <div id="delete-starship">
       <button
         class="button"
@@ -80,12 +83,6 @@ async function handleDelete() {
       </div>
     </div>
   </div>
-  <span
-    id="submit-result"
-    :class="{ 'form-success': submitResultStatus === 200, 'form-error': submitResultStatus !== 200 }"
-    v-if="submitResultMessage">
-    {{ submitResultMessage }}
-  </span>
 </template>
 
 <style>
@@ -151,23 +148,5 @@ async function handleDelete() {
   #delete-button {
     width: 100%;
   }
-}
-
-.form-error {
-  color: #ED4337;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-.form-success {
-  color: #37ed5e;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-#submit-result {
-  font-size: 16px;
-  margin-top: 20px;
-  text-align: center;
 }
 </style>

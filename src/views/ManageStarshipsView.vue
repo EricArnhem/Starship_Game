@@ -14,7 +14,6 @@ import ClassesLegend from '@/components/ClassesLegend.vue';
 import MyModal from '@/components/modal/MyModal.vue';
 import { modalOpen, openModal } from '@/components/modal/state';
 
-
 const route = useRoute();
 const router = useRouter();
 
@@ -22,6 +21,17 @@ const state = reactive({
   starshipClassesList: [],
   starshipList: []
 })
+
+const showModalForm = ref(true);
+const showSubmitResult = ref(false);
+
+let submitResultMessage = ref('');
+let submitResultStatus = ref('');
+
+const showDeleteResult = ref(false);
+
+let deleteResultMessage = ref('');
+let deleteResultStatus = ref('');
 
 // When component is mounted
 onMounted(() => {
@@ -71,6 +81,19 @@ function refreshStarshipsList() {
     });
 }
 
+function clearSubmitResult() {
+
+  // Show the form if it was hidden
+  showModalForm.value = true;
+  // Hides the submit result
+  showSubmitResult.value = false;
+
+  // Clear the result message/status
+  submitResultMessage.value = '';
+  submitResultStatus.value = '';
+
+}
+
 // Opens the Update form with the correct starship values
 function openUpdateForm(starshipPublicId, starshipClassId) {
   // If the starship publicId provided has a matching starship
@@ -79,6 +102,9 @@ function openUpdateForm(starshipPublicId, starshipClassId) {
     formStarshipPublicId.value = starshipPublicId;
     formStarshipName.value = state.starshipList.find(element => element.publicId === starshipPublicId).name;
     formStarshipClass.value = state.starshipClassesList.find(element => element.id === starshipClassId).name;
+
+    clearSubmitResult();
+
     // Opens the form in Update mode
     updateForm.value = true;
     openModal();
@@ -90,10 +116,73 @@ function openCreateForm() {
   // Resets the form values
   formStarshipName.value = '';
   formStarshipClass.value = '';
+
+  clearSubmitResult();
+
   // Opens the form in Create mode
   updateForm.value = false;
   openModal();
 }
+
+// Display the result message of a create/update requests + refresh starships list
+function handleSubmitResult(submitResultData, requestType) {
+
+  // Saving values into local variables
+  submitResultMessage.value = submitResultData.message;
+  submitResultStatus.value = submitResultData.status;
+
+  // Refresh starships list
+  refreshStarshipsList();
+
+  // If request was successful
+  if (submitResultData.status === 200) {
+
+    // Hides form content only if the request was not an 'update' request
+    if (requestType !== 'update') {
+      showModalForm.value = false;
+    }
+
+  }
+
+  // Display the submit result
+  showSubmitResult.value = true;
+
+}
+
+// Display the result message of a delete request + refresh starships list
+function handleDeleteResult(submitResultData, requestType) {
+
+  // If request was successful
+  if (submitResultData.status === 200) {
+
+    // Saving values into local variables
+    submitResultMessage.value = submitResultData.message;
+    submitResultStatus.value = submitResultData.status;
+
+    // Refresh starships list
+    refreshStarshipsList();
+
+    // Hides form content
+    showModalForm.value = false;
+
+    showSubmitResult.value = true;
+
+  } else {
+    // If request error
+
+    // Saving values into local variables
+    deleteResultMessage.value = submitResultData.message;
+    deleteResultStatus.value = submitResultData.status;
+
+    // Hides submit result from update request (if there's one)
+    showSubmitResult.value = false;
+
+    // Display the submit result
+    showDeleteResult.value = true;
+  }
+
+}
+
 
 // -- Computed properties --
 
@@ -182,16 +271,29 @@ watch(modalOpen, (modalOpen) => {
           :form-starship-public-id="formStarshipPublicId"
           :form-starship-name="formStarshipName"
           :form-starship-class="formStarshipClass"
-          @starship-created="refreshStarshipsList()"
-          @starship-updated="refreshStarshipsList()"
-          v-if="state.starshipClassesList.length" />
+          @starship-created="handleSubmitResult"
+          @starship-updated="handleSubmitResult"
+          v-if="state.starshipClassesList.length && showModalForm" />
+
+        <span
+          id="submit-result"
+          :class="{ 'form-success': submitResultStatus === 200, 'form-error': submitResultStatus !== 200 }"
+          v-if="showSubmitResult">
+          {{ submitResultMessage }}
+        </span>
 
       </template>
 
-      <template #footer v-if="updateForm">
-        <StarshipDeleteButton 
-        :starship-public-id="formStarshipPublicId"
-        @starship-deleted="refreshStarshipsList()"/>
+      <template #footer v-if="updateForm && showModalForm">
+        <StarshipDeleteButton
+          :starship-public-id="formStarshipPublicId"
+          @starship-deleted="handleDeleteResult" />
+        <span
+          id="delete-error"
+          class="form-error"
+          v-if="showDeleteResult">
+          {{ deleteResultMessage }}
+        </span>
       </template>
 
     </MyModal>
@@ -237,5 +339,24 @@ watch(modalOpen, (modalOpen) => {
 /* Removes the corner on the Create starship card */
 #create-starship-card:after {
   content: none;
+}
+
+.form-error {
+  color: #ED4337;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.form-success {
+  color: #37ed5e;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#submit-result,
+#delete-error {
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
 }
 </style>
