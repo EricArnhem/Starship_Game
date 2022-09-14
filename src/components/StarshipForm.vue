@@ -4,6 +4,9 @@ import { reactive, ref, computed, watch } from 'vue'
 // API methods
 import { createStarship, updateStarship } from "../api/methods/starship.js";
 
+// Vue components
+import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
+
 const props = defineProps({
   updateForm: Boolean,
   starshipClassesList: Array,
@@ -308,7 +311,16 @@ watch(() => props.updateForm, () => {
 
     <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
-    <button class="button" type="submit">{{ formSubmitButtonText }}</button>
+    <div id="submit-buttons-group">
+
+      <button id="starship-create-update-button" class="button" type="submit">{{ formSubmitButtonText }}</button>
+  
+      <StarshipDeleteButton
+        :starship-public-id="formStarshipPublicId"
+        @starship-deleted="handleDeleteResult" />
+
+    </div>
+
   </form>
 
 </template>
@@ -373,6 +385,15 @@ select {
   margin-top: 10px;
 }
 
+#submit-buttons-group {
+  display: flex;
+  padding-left: 35px; /* centers the update/create button. padding value = width of delete button */
+}
+
+#submit-buttons-group>#starship-create-update-button {
+  margin-bottom: 0;
+}
+
 #submit-result {
   font-size: 16px;
   margin-top: 20px;
@@ -408,6 +429,10 @@ select {
 
 /* Changes for mobile version */
 @media (max-width: 480px) {
+  #submit-buttons-group>#starship-create-update-button {
+    margin-right: 35px;
+  }
+
   #selected-class-info-table {
     width: 100%;
   }

@@ -56,16 +56,17 @@ async function handleDelete() {
 
 <template>
   <div>
-    <div id="delete-starship">
-      <button
-        class="button"
-        id="delete-button"
-        @click="deleteButtonClick = true">
-        <img src="@/images/warning-sign-color.svg" alt="warning-sign" id="warning-sign-svg">
-        Delete the Starship
-      </button>
-    </div>
-    <div id="delete-verification" v-if="deleteButtonClick">
+
+    <button
+      type="button"
+       class="button"
+       id="delete-button"
+       title="Delete the Starship"
+       @click="deleteButtonClick = true">
+      <img src="@/images/trashcan.svg" alt="trashcan" id="trashcan-svg">
+    </button>
+
+    <!-- <div id="delete-verification" v-if="deleteButtonClick">
       <span>Are you sure?</span>
       <div id="delete-verification-buttons">
         <button
@@ -81,29 +82,19 @@ async function handleDelete() {
           No
         </button>
       </div>
-    </div>
+    </div> -->
+    
   </div>
 </template>
 
 <style>
-#delete-starship {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-#warning-sign-svg {
-  height: 17px;
-  margin-right: 5px;
-  margin-top: -1px;
+#trashcan-svg {
+  height: 21px;
 }
 
 #delete-button {
   display: flex;
-  justify-content: center;
-  width: 50%;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: auto;
 }
 
 #delete-verification {
@@ -141,12 +132,5 @@ async function handleDelete() {
 
 #delete-button-no:hover {
   background-color: #d53c32;
-}
-
-/* Media query for mobile */
-@media (max-width: 480px) {
-  #delete-button {
-    width: 100%;
-  }
 }
 </style>

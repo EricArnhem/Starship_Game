@@ -284,7 +284,7 @@ watch(modalOpen, (modalOpen) => {
 
       </template>
 
-      <template #footer v-if="updateForm && showModalForm">
+      <!-- <template #footer v-if="updateForm && showModalForm">
         <StarshipDeleteButton
           :starship-public-id="formStarshipPublicId"
           @starship-deleted="handleDeleteResult" />
@@ -294,7 +294,7 @@ watch(modalOpen, (modalOpen) => {
           v-if="showDeleteResult">
           {{ deleteResultMessage }}
         </span>
-      </template>
+      </template> -->
 
     </MyModal>
   </Teleport>
