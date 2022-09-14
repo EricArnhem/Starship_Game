@@ -4,13 +4,14 @@ import { ref } from 'vue'
 // API methods
 import { deleteStarship } from "../api/methods/starship.js";
 
+// Popover
+import Popper from "vue3-popper";
+
 const props = defineProps({
   starshipPublicId: String
 });
 
 const emit = defineEmits(['starshipDeleted']);
-
-const deleteButtonClick = ref(false);
 
 // -- Methods --
 async function handleDelete() {
@@ -56,33 +57,38 @@ async function handleDelete() {
 
 <template>
   <div>
-
-    <button
-      type="button"
-       class="button"
-       id="delete-button"
-       title="Delete the Starship"
-       @click="deleteButtonClick = true">
-      <img src="@/images/trashcan.svg" alt="trashcan" id="trashcan-svg">
-    </button>
-
-    <!-- <div id="delete-verification" v-if="deleteButtonClick">
-      <span>Are you sure?</span>
-      <div id="delete-verification-buttons">
+      
+      <Popper arrow placement="bottom">
         <button
-          class="button"
-          id="delete-button-yes"
-          @click="handleDelete()">
-          Yes
+          type="button"
+           class="button"
+           id="delete-button"
+           title="Delete the Starship">
+          <img src="@/images/trashcan.svg" alt="trashcan" id="trashcan-svg">
         </button>
-        <button
-          class="button"
-          id="delete-button-no"
-          @click="deleteButtonClick = false">
-          No
-        </button>
-      </div>
-    </div> -->
+
+        <template #content="{ close }">
+
+          <span>Do you want to delete the Starship?</span>
+          <div id="delete-verification-buttons">
+            <button
+              type="button"
+              class="button"
+              id="delete-button-yes"
+              @click="handleDelete()">
+              Yes
+            </button>
+            <button
+              type="button"
+              class="button"
+              id="delete-button-no"
+              @click="close">
+              No
+            </button>
+          </div>
+
+        </template>
+      </Popper>
     
   </div>
 </template>
@@ -97,13 +103,6 @@ async function handleDelete() {
   width: auto;
 }
 
-#delete-verification {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 25px;
-}
-
 #delete-verification-buttons {
   display: flex;
   flex-direction: row;
@@ -114,7 +113,8 @@ async function handleDelete() {
 
 #delete-verification-buttons button {
   margin: initial;
-  width: 30%;
+  width: 50%;
+  border: none;
 }
 
 #delete-button-yes {
@@ -132,5 +132,22 @@ async function handleDelete() {
 
 #delete-button-no:hover {
   background-color: #d53c32;
+}
+
+/* Popper style */
+:root {
+  --popper-theme-background-color: var(--button-bg-color);
+  --popper-theme-background-color-hover: var(--button-bg-color);
+  --popper-theme-text-color: inherit;
+  --popper-theme-border-width: 1px;
+  --popper-theme-border-style: solid;
+  --popper-theme-border-radius: 10px;
+  --popper-theme-border-color: var(--main-border-color);
+  --popper-theme-padding: 32px;
+}
+
+.popper {
+  /* hacky fix to remove the horizontal scroll bar when popper is open*/
+  inset: 0px auto auto -5px !important;
 }
 </style>
