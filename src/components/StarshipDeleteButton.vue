@@ -1,94 +1,46 @@
 <script setup>
-import { ref } from 'vue'
-
-// API methods
-import { deleteStarship } from "../api/methods/starship.js";
 
 // Popover
 import Popper from "vue3-popper";
 
-const props = defineProps({
-  starshipPublicId: String
-});
+const emit = defineEmits(['deleteStarship']);
 
-const emit = defineEmits(['starshipDeleted']);
-
-// -- Methods --
-async function handleDelete() {
-
-  // Getting starship public id passed as a prop
-  let starshipPublicId = props.starshipPublicId;
-  let requestType = 'delete';
-
-  // Deleting the starship
-  try {
-
-    let result = await deleteStarship(starshipPublicId);
-
-    if (result.status === 200) {
-      // If starship has been deleted
-
-      const submitResultData = {
-        message: result.data.message,
-        status: result.status
-      }
-
-      // Refresh starships list and sending result message + status + request type to the parent component
-      emit('starshipDeleted', submitResultData, requestType);
-
-    } else {
-      // If error during deletion
-
-      const submitResultData = {
-        message: "Error while deleting the Starship.",
-        status: result.response.status // Using .response because Error message has a different structure
-      }
-
-      // Refresh starships list and sending result message + status + request type to the parent component
-      emit('starshipDeleted', submitResultData, requestType);
-    }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-}
 </script>
 
 <template>
   <div>
       
-      <Popper arrow placement="bottom">
-        <button
-          type="button"
-           class="button"
-           id="delete-button"
-           title="Delete the Starship">
-          <img src="@/images/trashcan.svg" alt="trashcan" id="trashcan-svg">
-        </button>
+    <Popper arrow placement="bottom">
+      <button
+        type="button"
+          class="button"
+          id="delete-button"
+          title="Delete the Starship">
+        <img src="@/images/trashcan.svg" alt="trashcan" id="trashcan-svg">
+      </button>
 
-        <template #content="{ close }">
+      <template #content="{ close }">
 
-          <span>Do you want to delete the Starship?</span>
-          <div id="delete-verification-buttons">
-            <button
-              type="button"
-              class="button"
-              id="delete-button-yes"
-              @click="handleDelete()">
-              Yes
-            </button>
-            <button
-              type="button"
-              class="button"
-              id="delete-button-no"
-              @click="close">
-              No
-            </button>
-          </div>
+        <span>Do you want to delete the Starship?</span>
+        <div id="delete-verification-buttons">
+          <button
+            type="button"
+            class="button"
+            id="delete-button-yes"
+            @click="emit('deleteStarship')">
+            Yes
+          </button>
+          <button
+            type="button"
+            class="button"
+            id="delete-button-no"
+            @click="close">
+            No
+          </button>
+        </div>
 
-        </template>
-      </Popper>
+      </template>
+    </Popper>
     
   </div>
 </template>

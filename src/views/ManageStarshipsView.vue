@@ -28,11 +28,6 @@ const showSubmitResult = ref(false);
 let submitResultMessage = ref('');
 let submitResultStatus = ref('');
 
-const showDeleteResult = ref(false);
-
-let deleteResultMessage = ref('');
-let deleteResultStatus = ref('');
-
 // When component is mounted
 onMounted(() => {
   // Checks if we accessed the create path and if so opens the Create form modal
@@ -149,41 +144,6 @@ function handleSubmitResult(submitResultData, requestType) {
 
 }
 
-// Display the result message of a delete request + refresh starships list
-function handleDeleteResult(submitResultData, requestType) {
-
-  // If request was successful
-  if (submitResultData.status === 200) {
-
-    // Saving values into local variables
-    submitResultMessage.value = submitResultData.message;
-    submitResultStatus.value = submitResultData.status;
-
-    // Refresh starships list
-    refreshStarshipsList();
-
-    // Hides form content
-    showModalForm.value = false;
-
-    showSubmitResult.value = true;
-
-  } else {
-    // If request error
-
-    // Saving values into local variables
-    deleteResultMessage.value = submitResultData.message;
-    deleteResultStatus.value = submitResultData.status;
-
-    // Hides submit result from update request (if there's one)
-    showSubmitResult.value = false;
-
-    // Display the submit result
-    showDeleteResult.value = true;
-  }
-
-}
-
-
 // -- Computed properties --
 
 // Gets the right modal title depending on if we are Updating or Creating
@@ -273,6 +233,7 @@ watch(modalOpen, (modalOpen) => {
           :form-starship-class="formStarshipClass"
           @starship-created="handleSubmitResult"
           @starship-updated="handleSubmitResult"
+          @starship-deleted="handleSubmitResult"
           v-if="state.starshipClassesList.length && showModalForm" />
 
         <span
@@ -283,18 +244,6 @@ watch(modalOpen, (modalOpen) => {
         </span>
 
       </template>
-
-      <!-- <template #footer v-if="updateForm && showModalForm">
-        <StarshipDeleteButton
-          :starship-public-id="formStarshipPublicId"
-          @starship-deleted="handleDeleteResult" />
-        <span
-          id="delete-error"
-          class="form-error"
-          v-if="showDeleteResult">
-          {{ deleteResultMessage }}
-        </span>
-      </template> -->
 
     </MyModal>
   </Teleport>

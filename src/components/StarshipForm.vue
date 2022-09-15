@@ -2,7 +2,7 @@
 import { reactive, ref, computed, watch } from 'vue'
 
 // API methods
-import { createStarship, updateStarship } from "../api/methods/starship.js";
+import { createStarship, updateStarship, deleteStarship } from "../api/methods/starship.js";
 
 // Vue components
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
@@ -15,10 +15,11 @@ const props = defineProps({
   formStarshipClass: String
 });
 
-const emit = defineEmits(['starshipCreated', 'starshipUpdated']);
+const emit = defineEmits(['starshipCreated', 'starshipUpdated', 'starshipDeleted']);
 
 const starshipClassesList = reactive(props.starshipClassesList);
 
+const starshipPublicId = ref(props.formStarshipPublicId);
 const starshipName = ref(props.formStarshipName);
 const starshipClass = ref(props.formStarshipClass);
 
@@ -177,6 +178,45 @@ async function handleSubmit() {
 
 }
 
+async function handleDelete() {
+
+  let requestType = 'delete';
+
+  // Deleting the starship
+  try {
+
+    // Awaiting the starship deletion
+    let result = await deleteStarship(starshipPublicId.value);
+
+    if (result.status === 200) {
+      // If starship has been deleted
+
+      const submitResultData = {
+        message: result.data.message,
+        status: result.status
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipDeleted', submitResultData, requestType);
+
+    } else {
+      // If error during deletion
+
+      const submitResultData = {
+        message: result.response.data.message,
+        status: result.response.status // Using .response because Error message has a different structure
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipDeleted', submitResultData, requestType);
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 
 // -- Computed properties --
 
@@ -311,13 +351,13 @@ watch(() => props.updateForm, () => {
 
     <span class="form-error" v-if="formErrors.includes('classError')">Invalid class.</span>
 
-    <div id="submit-buttons-group">
+    <div id="submit-buttons-group" :class="{ 'added-padding-left': props.updateForm }">
 
       <button id="starship-create-update-button" class="button" type="submit">{{ formSubmitButtonText }}</button>
   
       <StarshipDeleteButton
-        :starship-public-id="formStarshipPublicId"
-        @starship-deleted="handleDeleteResult" />
+        @delete-starship="handleDelete()" 
+        v-if="props.updateForm" />
 
     </div>
 
@@ -387,7 +427,11 @@ select {
 
 #submit-buttons-group {
   display: flex;
-  padding-left: 35px; /* centers the update/create button. padding value = width of delete button */
+}
+
+/* Centers the 'Update' button. padding value = width of delete button */
+.added-padding-left {
+  padding-left: 35px;
 }
 
 #submit-buttons-group>#starship-create-update-button {
