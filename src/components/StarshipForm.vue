@@ -91,89 +91,99 @@ async function handleSubmit() {
 
     if (props.updateForm === true) {
       // -- IF UPDATING --
-
-      let requestType = 'update';
-
-      const starshipData = {
-        name: starshipName.value,
-        starshipClassId: selectedClassId.value
-      }
-
-      // Getting starship public id passed as a prop
-      let starshipPublicId = props.formStarshipPublicId;
-
-      // Updating the starship
-      try {
-
-        let result = await updateStarship(starshipPublicId, starshipData);
-
-        if (result.status === 200) {
-          // If starship has been updated
-
-          const submitResultData = {
-            message: result.data.message,
-            status: result.status
-          }
-
-          // Refresh starships list and sending result message + status + request type to the parent component
-          emit('starshipUpdated', submitResultData, requestType);
-
-        } else {
-          const submitResultData = {
-            message: "Error while updating the Starship.",
-            status: result.response.status // Using .response because Error message has a different structure
-          }
-
-          // Refresh starships list and sending result message + status + request type to the parent component
-          emit('starshipUpdated', submitResultData, requestType);
-        }
-
-      } catch (error) {
-        console.log(error);
-      }
+      handleUpdate()
 
     } else if (props.updateForm === false) {
       // -- IF CREATING ---
-
-      let requestType = 'create';
-
-      const starshipData = {
-        name: starshipName.value,
-        starshipClassId: selectedClassId.value
-      }
-
-      // Creating the starship
-      try {
-
-        let result = await createStarship(starshipData);
-
-        if (result.status === 200) {
-          // If starship has been created
-
-          const submitResultData = {
-            message: result.data.message,
-            status: result.status
-          }
-
-          // Refresh starships list and sending result message + status + request type to the parent component
-          emit('starshipCreated', submitResultData, requestType);
-
-        } else {
-          // If error during creation
-          const submitResultData = {
-            message: "Error while creating the Starship.",
-            status: result.response.status // Using .response because Error message has a different structure
-          }
-
-          // Refresh starships list and sending result message + status + request type to the parent component
-          emit('starshipCreated', submitResultData, requestType);
-        }
-
-      } catch (error) {
-        console.log(error);
-      }
+      handleCreate();
 
     }
+  }
+
+}
+
+async function handleUpdate() {
+
+  let requestType = 'update';
+
+  const starshipData = {
+    name: starshipName.value,
+    starshipClassId: selectedClassId.value
+  }
+
+  // Getting starship public id passed as a prop
+  let starshipPublicId = props.formStarshipPublicId;
+
+  // Updating the starship
+  try {
+
+    let result = await updateStarship(starshipPublicId, starshipData);
+
+    if (result.status === 200) {
+      // If starship has been updated
+
+      const submitResultData = {
+        message: result.data.message,
+        status: result.status
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipUpdated', submitResultData, requestType);
+
+    } else {
+      const submitResultData = {
+        message: "Error while updating the Starship.",
+        status: result.response.status // Using .response because Error message has a different structure
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipUpdated', submitResultData, requestType);
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+async function handleCreate() {
+
+  let requestType = 'create';
+
+  const starshipData = {
+    name: starshipName.value,
+    starshipClassId: selectedClassId.value
+  }
+
+  // Creating the starship
+  try {
+
+    let result = await createStarship(starshipData);
+
+    if (result.status === 200) {
+      // If starship has been created
+
+      const submitResultData = {
+        message: result.data.message,
+        status: result.status
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipCreated', submitResultData, requestType);
+
+    } else {
+      // If error during creation
+      const submitResultData = {
+        message: "Error while creating the Starship.",
+        status: result.response.status // Using .response because Error message has a different structure
+      }
+
+      // Refresh starships list and sending result message + status + request type to the parent component
+      emit('starshipCreated', submitResultData, requestType);
+    }
+
+  } catch (error) {
+    console.log(error);
   }
 
 }
