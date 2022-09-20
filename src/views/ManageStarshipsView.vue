@@ -234,6 +234,7 @@ watch(modalOpen, (modalOpen) => {
           @starship-created="handleSubmitResult"
           @starship-updated="handleSubmitResult"
           @starship-deleted="handleSubmitResult"
+          @clear-submit-result="clearSubmitResult"
           v-if="state.starshipClassesList.length && showModalForm" />
 
         <span

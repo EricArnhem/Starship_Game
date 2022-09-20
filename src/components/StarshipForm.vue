@@ -15,7 +15,12 @@ const props = defineProps({
   formStarshipClass: String
 });
 
-const emit = defineEmits(['starshipCreated', 'starshipUpdated', 'starshipDeleted']);
+const emit = defineEmits([
+  'starshipCreated',
+  'starshipUpdated',
+  'starshipDeleted',
+  'clearSubmitResult'
+]);
 
 const starshipClassesList = reactive(props.starshipClassesList);
 
@@ -305,6 +310,15 @@ watch(() => props.formStarshipClass, () => {
 // Prevents errors from the Create form to appear on the Update form
 watch(() => props.updateForm, () => {
   formErrors.length = 0;
+})
+
+// Clears the update success message (if there's one) when the inputs are modified
+watch(() => starshipName.value, () => {
+  emit('clearSubmitResult');
+})
+
+watch(() => starshipClass.value, () => {
+  emit('clearSubmitResult');
 })
 
 </script>
