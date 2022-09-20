@@ -202,7 +202,7 @@ async function handleDelete() {
       // If starship has been deleted
 
       const submitResultData = {
-        message: result.data.message,
+        message: `The Starship '${starshipName.value}' has been successfully deleted.`,
         status: result.status
       }
 
