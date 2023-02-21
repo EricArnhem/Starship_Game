@@ -79,7 +79,7 @@ h3 {
   font-weight: bold;
   text-align: center;
   text-decoration: underline double 1px;
-  text-underline-offset: 4px;
+  text-underline-offset: 7px;
 }
 
 /* Global classes */
