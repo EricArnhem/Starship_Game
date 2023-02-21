@@ -14,6 +14,12 @@ import TheNavbar from './components/navbar/TheNavbar.vue';
 </template>
 
 <style>
+@font-face {
+  font-family: "Rubik";
+  src: url("./fonts/Rubik-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+}
+
 :root {
   --main-bg-color: #181818;
   --main-text-color: #ebebeb;
@@ -29,7 +35,7 @@ body {
   display: flex;
   min-height: 100vh;
   background-color: var(--main-bg-color);
-  font-family: sans-serif;
+  font-family: Rubik, sans-serif;
   color: var(--main-text-color);
   margin: 0;
 }
