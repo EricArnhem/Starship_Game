@@ -28,6 +28,10 @@ const starshipPublicId = ref(props.formStarshipPublicId);
 const starshipName = ref(props.formStarshipName);
 const starshipClass = ref(props.formStarshipClass);
 
+// Saving the original name and class of the starship (won't be changed when inputs are modified)
+const originalStarshipName = ref(props.formStarshipName);
+const originalStarshipClass = ref(props.formStarshipClass);
+
 let formErrors = reactive([]);
 
 // -- Methods --
@@ -134,6 +138,10 @@ async function handleUpdate() {
 
       // Refresh starships list and sending result message + status + request type to the parent component
       emit('starshipUpdated', submitResultData, requestType);
+
+      // Change the original starship name/class variables to the updated values
+      originalStarshipName.value = starshipName.value;
+      originalStarshipClass.value = starshipClass.value;
 
     } else {
       const submitResultData = {
@@ -251,6 +259,28 @@ const isClassValid = computed(() => {
   } else {
     return false;
   }
+});
+
+// Checks if one or multiple of the inputs has been modified (Only in UPDATE form)
+const isInputModified = computed(() => {
+
+  // If we are on an UPDATE form
+  if (props.updateForm === true) {
+
+    // Compares the inputs values with the original values
+    if (starshipName.value !== originalStarshipName.value || starshipClass.value !== originalStarshipClass.value) {
+      // If at least one of the values is different
+      return true;
+    } else {
+      // If both values are the same as the originals
+      return false;
+    }
+
+  } else {
+    // Returning true to always enable the 'Create' button on the CREATE form
+    return true;
+  }
+
 });
 
 // Gets the Speed of the selected class
@@ -377,7 +407,7 @@ watch(() => starshipClass.value, () => {
 
     <div id="submit-buttons-group" :class="{ 'added-padding-left': props.updateForm }">
 
-      <button id="starship-create-update-button" class="button" type="submit">{{ formSubmitButtonText }}</button>
+      <button id="starship-create-update-button" class="button" type="submit" :disabled="!isInputModified" :title="!isInputModified ? 'Starship details need to modified first.' : ''">{{ formSubmitButtonText }}</button>
   
       <StarshipDeleteButton
         @delete-starship="handleDelete()" 
