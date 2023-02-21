@@ -98,15 +98,21 @@ h3 {
   border-radius: 3px;
 }
 
-.button:hover {
+.button:hover:not([disabled])  {
   background-color: var(--button-bg-hover-color);
   cursor: pointer;
   transition: 0.1s;
 }
 
-.button:active {
+.button:active:not([disabled])  {
   background-color: var(--button-bg-active-color);
   transition: 0.1s;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  transition: 0.1s;
+  cursor: not-allowed;
 }
 
 .wrapper-content-box {
