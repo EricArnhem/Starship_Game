@@ -424,6 +424,7 @@ form {
   display: flex;
   flex-direction: column;
   width: 100%;
+  font-family: inherit;
 }
 
 label {
@@ -445,12 +446,14 @@ input {
   background-color: var(--content-box-bg-color);
   color: inherit;
   font-size: 1rem;
+  font-family: inherit;
 }
 
 select {
   padding: 9px;
   font-size: 1em;
   border-radius: 3px;
+  font-family: inherit;
 }
 
 @media (max-width: 480px) {

@@ -21,6 +21,7 @@ import TheNavbar from './components/navbar/TheNavbar.vue';
 }
 
 :root {
+  --main-font-family: Rubik, sans-serif;
   --main-bg-color: #181818;
   --main-text-color: #ebebeb;
   --main-border-color: rgba(146, 146, 146, 0.75);
@@ -35,7 +36,7 @@ body {
   display: flex;
   min-height: 100vh;
   background-color: var(--main-bg-color);
-  font-family: Rubik, sans-serif;
+  font-family: var(--main-font-family);
   color: var(--main-text-color);
   margin: 0;
 }
@@ -98,6 +99,7 @@ h3 {
   margin: auto;
   margin-top: 25px;
   font-size: 1rem;
+  font-family: inherit;
   color: inherit;
   background-color: var(--button-bg-color);
   border: 1px solid var(--main-border-color);
