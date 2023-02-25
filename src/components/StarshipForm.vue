@@ -2,7 +2,7 @@
 import { reactive, ref, computed, watch } from 'vue'
 
 // API methods
-import { createStarship, updateStarship, deleteStarship } from "../api/methods/starship.js";
+import { getStarshipByName, createStarship, updateStarship, deleteStarship } from "../api/methods/starship.js";
 
 // Vue components
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
@@ -32,6 +32,9 @@ const starshipClass = ref(props.formStarshipClass);
 const originalStarshipName = ref(props.formStarshipName);
 const originalStarshipClass = ref(props.formStarshipClass);
 
+// Turns to TRUE if name is available, FALSE if not. NULL by default to not display any form success/error messages
+const isNameAvailable = ref(null);
+
 let formErrors = reactive([]);
 
 // -- Methods --
@@ -39,6 +42,41 @@ let formErrors = reactive([]);
 // Trim the name when the input loses focus
 function trimStarshipName() {
   starshipName.value = starshipName.value.trim();
+}
+
+// Uses API to check if a Starship with the provided name exists or not
+async function checkNameAvailability() {
+
+  // Only checks if the name is valid
+  if (!formErrors.includes('nameError')) {
+
+    let desiredStarshipName = starshipName.value;
+
+    try {
+
+      let result = await getStarshipByName(desiredStarshipName);
+
+      // If a Starship with the provided name already exists
+      if (result.status === 200) {
+
+        isNameAvailable.value = false;
+        console.log('Name not available');
+
+      }
+
+    } catch (error) {
+      if (error.response.status === 404) {
+
+        isNameAvailable.value = true;
+        console.log('Name available');
+
+      } else {
+        console.log(error);
+      }
+    }
+
+  }
+
 }
 
 function checkNameValidity() {
@@ -61,6 +99,9 @@ function checkNameValidity() {
     if (!formErrors.includes('nameError')) {
       formErrors.push('nameError');
     }
+
+    // Remove the success/error message about the name availability if name is invalid
+    isNameAvailable.value = null;
 
   }
 }
@@ -345,6 +386,11 @@ watch(() => props.updateForm, () => {
 // Clears the update success message (if there's one) when the inputs are modified
 watch(() => starshipName.value, () => {
   emit('clearSubmitResult');
+
+  // Remove the success/error message about the name availability when input is cleared
+  if (starshipName.value === '') {
+    isNameAvailable.value = null;
+  }
 })
 
 watch(() => starshipClass.value, () => {
@@ -366,9 +412,14 @@ watch(() => starshipClass.value, () => {
       name="starship-name"
       id="starship-name"
       v-model="starshipName"
-      v-on:blur="checkNameValidity();"
+      v-on:blur="checkNameValidity(), checkNameAvailability();"
       required>
     <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
+    <span 
+      :class="isNameAvailable === true ? 'form-success' : 'form-error'" 
+      v-if="isNameAvailable !== null">
+      {{ isNameAvailable === true ? 'Name available' : 'Name not available' }}
+    </span>
 
     <div class="form-label-group">
       <label for="starship-class">Class:</label>

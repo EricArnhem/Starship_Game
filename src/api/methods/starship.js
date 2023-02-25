@@ -4,6 +4,10 @@ export function getStarships() {
     return axiosClient.get('/starship');
 }
 
+export function getStarshipByName(starshipName) {
+    return axiosClient.get(`/starship/name/${starshipName}`);
+}
+
 export function createStarship(starshipData) {
     return axiosClient.post('/starship', starshipData)
     .catch(error => {
