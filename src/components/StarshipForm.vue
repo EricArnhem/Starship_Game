@@ -284,15 +284,6 @@ async function handleDelete() {
 
 // -- Computed properties --
 
-// Gets the submit button text depending on if we are Updating or Creating
-const formSubmitButtonText = computed(() => {
-  if (props.updateForm === true) {
-    return 'Update';
-  } else {
-    return 'Create';
-  }
-});
-
 // Checks if the class is valid
 const isClassValid = computed(() => {
   if (starshipClassesList.find(element => element.name === starshipClass.value)) {
@@ -458,7 +449,14 @@ watch(() => starshipClass.value, () => {
 
     <div id="submit-buttons-group" :class="{ 'added-padding-left': props.updateForm }">
 
-      <button id="starship-create-update-button" class="button" type="submit" :disabled="!isInputModified" :title="!isInputModified ? 'Starship details need to modified first.' : ''">{{ formSubmitButtonText }}</button>
+      <button 
+        id="starship-create-update-button" 
+        class="button" 
+        type="submit" 
+        :disabled="!isInputModified" 
+        :title="!isInputModified ? 'Starship details need to modified first.' : ''">
+        {{ props.updateForm === true ? 'Update' : 'Create' }}
+      </button>
   
       <StarshipDeleteButton
         @delete-starship="handleDelete()" 
