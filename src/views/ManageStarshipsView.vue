@@ -8,7 +8,6 @@ import { getStarshipClasses } from "../api/methods/starship-class.js";
 
 // Vue components
 import StarshipForm from '@/components/StarshipForm.vue';
-import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
 import ClassesLegend from '@/components/ClassesLegend.vue';
 
 import MyModal from '@/components/modal/MyModal.vue';
