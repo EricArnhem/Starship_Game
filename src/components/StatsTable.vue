@@ -8,7 +8,8 @@ defineProps({
 <template>
 
   <table id="starship-stats">
-    <thead>
+    <thead
+    :style="{ '--starship-class-color': starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).color }">
       <tr>
         <th colspan="2">Starship stats</th>
       </tr>
@@ -79,7 +80,7 @@ defineProps({
 }
 
 #starship-stats thead {
-  background-color: #222368;
+  background-color: var(--starship-class-color);
 }
 
 #starship-stats tbody {
