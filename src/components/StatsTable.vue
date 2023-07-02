@@ -1,8 +1,7 @@
 <script setup>
 defineProps({
-  starshipName: String,
   starshipInfo: Object,
-  starshipClasses: Object
+  starshipClassesList: Array
 });
 </script>
 
@@ -17,23 +16,23 @@ defineProps({
     <tbody>
       <tr>
         <td>Name</td>
-        <td>{{ starshipName }}</td>
+        <td>{{ starshipInfo.name }}</td>
       </tr>
       <tr>
         <td>Class</td>
-        <td>{{ starshipInfo.Class }}</td>
+        <td>{{ starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).name }}</td>
       </tr>
       <tr>
         <td>Speed</td>
-        <td>{{ starshipClasses[starshipInfo.Class].Speed }} km/h</td>
+        <td>{{ starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).speed }} km/h</td>
       </tr>
       <tr>
         <td>Fuel capacity</td>
-        <td>{{ starshipClasses[starshipInfo.Class]['Fuel capacity'] }} kg</td>
+        <td>{{ starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).fuelCapacity }} kg</td>
       </tr>
       <tr>
         <td>Fuel left</td>
-        <td>{{ starshipInfo['Fuel left'] }} kg</td>
+        <td>{{ starshipInfo.fuelLeft }} kg</td>
       </tr>
     </tbody>
   </table>

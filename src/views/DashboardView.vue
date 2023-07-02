@@ -1,22 +1,47 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onBeforeMount } from 'vue';
+
+// API methods
+import { getStarships } from "../api/methods/starship.js";
+import { getStarshipClasses } from "../api/methods/starship-class.js";
+
+// Vue components
 import StarshipSelectionScreen from '@/components/dashboard/StarshipSelectionScreen.vue';
 import StarshipInGameScreen from '@/components/dashboard/StarshipInGameScreen.vue';
 
-import starshipClassesData from '@/data/starshipClassesData.json';
-import starshipsData from '@/data/starshipsData.json';
-
-// Starship classes list
-const starshipClasses = reactive(starshipClassesData);
-
-// List of existing Starships
-const starshipList = reactive(starshipsData);
+// Starships Data
+const state = reactive({
+  starshipClassesList: [],
+  starshipList: []
+})
 
 const inGame = ref(false);
 
-// Name and info of the starship selected to play (from emits)
-const starshipName = ref('');
+// Informations of the starship selected to play (from emit)
 const starshipInfo = ref({});
+
+// Before the component is to be mounted
+onBeforeMount(() => {
+
+  // Getting the starship classes
+  getStarshipClasses()
+    .then(response => {
+      state.starshipClassesList = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+  // Getting the starships
+  getStarships()
+    .then(response => {
+      state.starshipList = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+});
 
 </script>
 
@@ -26,10 +51,9 @@ const starshipInfo = ref({});
   <div v-if="inGame === false">
 
     <StarshipSelectionScreen
-      :starship-classes="starshipClasses"
-      :starship-list="starshipList"
+      :starship-classes-list="state.starshipClassesList"
+      :starship-list="state.starshipList"
       @game-start="inGame = true"
-      @selected-starship-name="(selectedStarshipName) => starshipName = selectedStarshipName"
       @selected-starship-info="(selectedStarshipInfo) => starshipInfo = selectedStarshipInfo" />
 
   </div>
@@ -39,14 +63,12 @@ const starshipInfo = ref({});
   <div v-if="inGame === true">
 
     <StarshipInGameScreen
-      :starship-name="starshipName"
       :starship-info="starshipInfo"
-      :starship-classes="starshipClasses"
+      :starship-classes-list="state.starshipClassesList"
       @game-stop="inGame = false" />
 
   </div>
 
 </template>
 
-<style>
-</style>
+<style></style>

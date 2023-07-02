@@ -6,9 +6,8 @@ import AlertScreen from '@/components/AlertScreen.vue';
 import StatsTable from '@/components/StatsTable.vue';
 
 defineProps({
-  starshipName: String,
   starshipInfo: Object,
-  starshipClasses: Object
+  starshipClassesList: Array
 });
 
 defineEmits(['gameStop']);
@@ -78,11 +77,10 @@ const enginesStatusTheme = computed(() => {
     <a id="go-back-button" @click="$emit('gameStop'); showNavbar()" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
     <div id="starship-info">
 
-      <h3>{{ starshipName }}</h3>
+      <h3>{{ starshipInfo.name }}</h3>
       <StatsTable
-        :starship-name="starshipName"
         :starship-info="starshipInfo"
-        :starship-classes="starshipClasses" />
+        :starship-classes-list="starshipClassesList" />
 
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
