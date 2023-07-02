@@ -30,6 +30,46 @@ function startGame(starshipPublicId) {
   emit('gameStart');
 }
 
+// Returns the starship class color by providing the classID
+function getStarshipClassColor(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (props.starshipClassesList.length) {
+    return props.starshipClassesList.find(element => element.id === starshipClassId).color;
+  }
+
+}
+
+// Returns the starship class name by providing the classID
+function getStarshipClassName(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (props.starshipClassesList.length) {
+    return props.starshipClassesList.find(element => element.id === starshipClassId).name;
+  }
+
+}
+
+// Returns the starship class speed by providing the classID
+function getStarshipClassSpeed(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (props.starshipClassesList.length) {
+    return props.starshipClassesList.find(element => element.id === starshipClassId).speed;
+  }
+
+}
+
+// Returns the starship class fuel capacity by providing the classID
+function getStarshipClassFuelCapacity(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (props.starshipClassesList.length) {
+    return props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+  }
+
+}
+
 </script>
 
 <template>
@@ -44,21 +84,21 @@ function startGame(starshipPublicId) {
         class="starship-card"
         v-for="(starship, index) in starshipList"
         :key="index"
-        :style="{ '--card-corner-color': (starshipClassesList ? starshipClassesList.find(element => element.id === starship.starshipClassId).color : '') }">
+        :style="{ '--card-corner-color': getStarshipClassColor(starship.starshipClassId) }">
         <span class="starship-card-title">{{ starship.name }}</span>
         <table class="starship-card-stats">
           <tbody>
             <tr>
               <td>Class</td>
-              <td>{{ starshipClassesList.find(element => element.id === starship.starshipClassId).name }}</td>
+              <td>{{ getStarshipClassName(starship.starshipClassId) }}</td>
             </tr>
             <tr>
               <td>Speed</td>
-              <td>{{ starshipClassesList.find(element => element.id === starship.starshipClassId).speed }} km/h</td>
+              <td>{{ getStarshipClassSpeed(starship.starshipClassId) }} km/h</td>
             </tr>
             <tr>
               <td>Fuel capacity</td>
-              <td>{{ starshipClassesList.find(element => element.id === starship.starshipClassId).fuelCapacity }} kg</td>
+              <td>{{ getStarshipClassFuelCapacity(starship.starshipClassId) }} kg</td>
             </tr>
             <tr>
               <td>Fuel left</td>
