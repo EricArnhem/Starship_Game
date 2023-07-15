@@ -143,6 +143,50 @@ function handleSubmitResult(submitResultData, requestType) {
 
 }
 
+
+// - Methods to display starship informations -
+
+// Returns the starship class color by providing the classID
+function getStarshipClassColor(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (state.starshipClassesList.length) {
+    return state.starshipClassesList.find(element => element.id === starshipClassId).color;
+  }
+
+}
+
+// Returns the starship class name by providing the classID
+function getStarshipClassName(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (state.starshipClassesList.length) {
+    return state.starshipClassesList.find(element => element.id === starshipClassId).name;
+  }
+
+}
+
+// Returns the starship class speed by providing the classID
+function getStarshipClassSpeed(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (state.starshipClassesList.length) {
+    return state.starshipClassesList.find(element => element.id === starshipClassId).speed;
+  }
+
+}
+
+// Returns the starship class fuel capacity by providing the classID
+function getStarshipClassFuelCapacity(starshipClassId) {
+
+  // If the array is not empty (prevents error when array is briefly empty)
+  if (state.starshipClassesList.length) {
+    return state.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+  }
+
+}
+
+
 // -- Computed properties --
 
 // Gets the right modal title depending on if we are Updating or Creating
@@ -178,7 +222,7 @@ watch(modalOpen, (modalOpen) => {
       v-for="(starship) in state.starshipList"
       @click="openUpdateForm(starship.publicId, starship.starshipClassId);"
       :key="starship.publicId"
-      :style="{ '--card-corner-color': state.starshipClassesList.find(element => element.id === starship.starshipClassId).color }">
+      :style="{ '--card-corner-color': getStarshipClassColor(starship.starshipClassId) }">
 
       <span class="starship-card-title">{{ starship.name }}</span>
 
@@ -186,15 +230,15 @@ watch(modalOpen, (modalOpen) => {
         <tbody>
           <tr>
             <td>Class</td>
-            <td>{{ state.starshipClassesList.find(element => element.id === starship.starshipClassId).name }}</td>
+            <td>{{ getStarshipClassName(starship.starshipClassId) }}</td>
           </tr>
           <tr>
             <td>Speed</td>
-            <td>{{ state.starshipClassesList.find(element => element.id === starship.starshipClassId).speed }} km/h</td>
+            <td>{{ getStarshipClassSpeed(starship.starshipClassId) }} km/h</td>
           </tr>
           <tr>
             <td>Fuel capacity</td>
-            <td>{{ state.starshipClassesList.find(element => element.id === starship.starshipClassId).fuelCapacity }} kg</td>
+            <td>{{ getStarshipClassFuelCapacity(starship.starshipClassId) }} kg</td>
           </tr>
           <tr>
             <td>Fuel left</td>

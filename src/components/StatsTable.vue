@@ -1,15 +1,58 @@
 <script setup>
-defineProps({
+const props = defineProps({
   starshipInfo: Object,
   starshipClassesList: Array
 });
+
+// -- Methods --
+
+// Returns the starship class color by providing the classID
+function getStarshipClassColor(starshipClassId) {
+
+// If the array is not empty (prevents error when array is briefly empty)
+if (props.starshipClassesList.length) {
+  return props.starshipClassesList.find(element => element.id === starshipClassId).color;
+}
+
+}
+
+// Returns the starship class name by providing the classID
+function getStarshipClassName(starshipClassId) {
+
+// If the array is not empty (prevents error when array is briefly empty)
+if (props.starshipClassesList.length) {
+  return props.starshipClassesList.find(element => element.id === starshipClassId).name;
+}
+
+}
+
+// Returns the starship class speed by providing the classID
+function getStarshipClassSpeed(starshipClassId) {
+
+// If the array is not empty (prevents error when array is briefly empty)
+if (props.starshipClassesList.length) {
+  return props.starshipClassesList.find(element => element.id === starshipClassId).speed;
+}
+
+}
+
+// Returns the starship class fuel capacity by providing the classID
+function getStarshipClassFuelCapacity(starshipClassId) {
+
+// If the array is not empty (prevents error when array is briefly empty)
+if (props.starshipClassesList.length) {
+  return props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+}
+
+}
+
 </script>
 
 <template>
 
   <table id="starship-stats">
     <thead
-    :style="{ '--starship-class-color': starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).color }">
+    :style="{ '--starship-class-color': getStarshipClassColor(starshipInfo.starshipClassId) }">
       <tr>
         <th colspan="2">Starship stats</th>
       </tr>
@@ -21,15 +64,15 @@ defineProps({
       </tr>
       <tr>
         <td>Class</td>
-        <td>{{ starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).name }}</td>
+        <td>{{ getStarshipClassName(starshipInfo.starshipClassId) }}</td>
       </tr>
       <tr>
         <td>Speed</td>
-        <td>{{ starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).speed }} km/h</td>
+        <td>{{ getStarshipClassSpeed(starshipInfo.starshipClassId) }} km/h</td>
       </tr>
       <tr>
         <td>Fuel capacity</td>
-        <td>{{ starshipClassesList.find(element => element.id === starshipInfo.starshipClassId).fuelCapacity }} kg</td>
+        <td>{{ getStarshipClassFuelCapacity(starshipInfo.starshipClassId) }} kg</td>
       </tr>
       <tr>
         <td>Fuel left</td>
