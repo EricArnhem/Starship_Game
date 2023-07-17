@@ -3,8 +3,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { reactive, ref, watch, computed, onMounted } from 'vue'
 
 // API methods
-import { getStarships } from "../api/methods/starship.js";
-import { getStarshipClasses } from "../api/methods/starship-class.js";
+import { getStarships } from "@/api/methods/starship.js";
+import { getStarshipClasses } from "@/api/methods/starship-class.js";
 
 // Vue components
 import StarshipForm from '@/components/StarshipForm.vue';

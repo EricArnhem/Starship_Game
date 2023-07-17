@@ -2,8 +2,8 @@
 import { ref, reactive, onBeforeMount } from 'vue';
 
 // API methods
-import { getStarships } from "../api/methods/starship.js";
-import { getStarshipClasses } from "../api/methods/starship-class.js";
+import { getStarships } from "@/api/methods/starship.js";
+import { getStarshipClasses } from "@/api/methods/starship-class.js";
 
 // Vue components
 import StarshipSelectionScreen from '@/components/dashboard/StarshipSelectionScreen.vue';

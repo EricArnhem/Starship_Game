@@ -2,7 +2,7 @@
 import { reactive, ref, computed, watch } from 'vue'
 
 // API methods
-import { getStarshipByName, createStarship, updateStarship, deleteStarship } from "../api/methods/starship.js";
+import { getStarshipByName, createStarship, updateStarship, deleteStarship } from "@/api/methods/starship.js";
 
 // Vue components
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
