@@ -26,6 +26,15 @@ export function updateStarship(starshipPublicId, starshipData) {
     })
 }
 
+export function updateStarshipFuelLeft(starshipPublicId, starshipData) {
+    return axiosClient.put(`/starship/${starshipPublicId}/fuel-left`, starshipData)
+    .catch(error => {
+        console.log(error);
+        // Returning error to display the correct result message to the client
+        return error;
+    })
+}
+
 export function deleteStarship(starshipPublicId) {
     return axiosClient.delete(`/starship/${starshipPublicId}`)
     .catch(error => {

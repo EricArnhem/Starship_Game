@@ -1,11 +1,14 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { showNavbar } from '@/components/navbar/state';
+
+// API methods
+import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
 
 import AlertScreen from '@/components/AlertScreen.vue';
 import StatsTable from '@/components/StatsTable.vue';
 
-defineProps({
+const props = defineProps({
   starshipInfo: Object,
   starshipClassesList: Array
 });
@@ -15,20 +18,32 @@ defineEmits(['gameStop']);
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
 
+const fuelConsumption = 100;
+let timerId;
+
 // -- Methods --
 
 // Starts or stop the engines
 function startStopEngines() {
 
+  // START ENGINES
   // If the engines are OFF
   if (enginesOn.value === false) {
+
     // We start them and update the Engines status
     enginesOn.value = true;
     enginesStatus.value = 'ON';
+    
   } else {
+    
+    // STOP ENGINES
     // Otherwise we stop them and update the Engines status
     enginesOn.value = false;
     enginesStatus.value = 'OFF';
+
+    // Save the "Fuel left" value to the database
+    updateFuelLeft();
+
   }
 
 }
@@ -36,6 +51,70 @@ function startStopEngines() {
 // Refuels the Starship
 function refuelStarship() {
   enginesStatus.value = 'REFUELING';
+}
+
+// Decreases the "Fuel left" every second
+function startFuelTimer() {
+
+  // Starts a timer that will reduce the amount of fuel by the amount set every second if there's enough fuel left
+  timerId = setInterval(() => {
+
+    // If there's enough fuel to travel
+    if ((props.starshipInfo.fuelLeft - fuelConsumption) >= 0) {
+
+      // Reduces fuel by 100
+      props.starshipInfo.fuelLeft -= fuelConsumption;
+
+    } else {
+
+      // Stops the timer
+      clearInterval(timerId);
+
+    }
+
+  }, 1000);
+
+}
+
+// Updates the Starship's "Fuel left" value in the database
+async function updateFuelLeft() {
+
+  const starshipData = {
+    fuelLeft: props.starshipInfo.fuelLeft
+  }
+
+  // Getting starship public id
+  let starshipPublicId = props.starshipInfo.publicId;
+
+  // Updating the starship "Fuel left"
+  try {
+
+    let result = await updateStarshipFuelLeft(starshipPublicId, starshipData);
+
+    if (result.status === 200) {
+      // If starship "Fuel left" has been updated
+
+      const submitResultData = {
+        message: result.data.message,
+        status: result.status
+      }
+      
+      // console.log(submitResultData);
+
+    } else {
+
+      const submitResultData = {
+        message: result.response.data.message,
+        status: result.response.status // Using .response because Error message has a different structure
+      }
+
+      // console.log(submitResultData);
+
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // -- Computed properties --
@@ -65,6 +144,18 @@ const enginesStatusTheme = computed(() => {
       return 'initial';
   }
 
+});
+
+// -- Watchers --
+
+// Decrease the "Fuel left" when the engines are ON
+watch(enginesOn, (enginesOn) => {
+  if (enginesOn === true) {
+    startFuelTimer();
+  } else {
+    // Stops when engines are turned OFF
+    clearInterval(timerId)
+  }
 });
 
 </script>
