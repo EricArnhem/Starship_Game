@@ -33,9 +33,9 @@ function startStopEngines() {
     // We start them and update the Engines status
     enginesOn.value = true;
     enginesStatus.value = 'ON';
-    
+
   } else {
-    
+
     // STOP ENGINES
     // Otherwise we stop them and update the Engines status
     enginesOn.value = false;
@@ -51,23 +51,41 @@ function startStopEngines() {
 // Refuels the Starship
 function refuelStarship() {
 
+  const starshipFuelLeft = props.starshipInfo.fuelLeft;
+  const starshipClassId = props.starshipInfo.starshipClassId;
+
+  // Getting the class fuel capacity
+  const fuelCapacity = props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+
   // If engines are ON, we turn them OFF
   if (enginesOn.value === true) {
     enginesOn.value = false;
+    enginesStatus.value = 'OFF';
   }
 
-  enginesStatus.value = 'REFUELING';
+  // If the Starship is not already at max fuel capacity
+  if (starshipFuelLeft !== fuelCapacity) {
 
-  // Getting the class fuel capacity
-  const starshipClassId = props.starshipInfo.starshipClassId
+    enginesStatus.value = 'REFUELING';
 
-  const fuelCapacity = props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+    // Simulating refueling time
+    setTimeout(() => {
 
-  // Changing the Starship "Fuel left" value the to max fuel capacity
-  props.starshipInfo.fuelLeft = fuelCapacity;
-  
-  // Updating the value in the database
-  updateFuelLeft();
+      // Changing the Starship "Fuel left" value the to max fuel capacity
+      props.starshipInfo.fuelLeft = fuelCapacity;
+
+      // Updating the value in the database
+      updateFuelLeft();
+
+      enginesStatus.value = 'OFF';
+
+    }, 2000);
+
+  } else {
+
+    // DISPLAY ALERT: "Fuel tank already at maximum capacity."
+
+  }
 
 }
 
@@ -116,7 +134,7 @@ async function updateFuelLeft() {
         message: result.data.message,
         status: result.status
       }
-      
+
       // console.log(submitResultData);
 
     } else {
