@@ -50,7 +50,25 @@ function startStopEngines() {
 
 // Refuels the Starship
 function refuelStarship() {
+
+  // If engines are ON, we turn them OFF
+  if (enginesOn.value === true) {
+    enginesOn.value = false;
+  }
+
   enginesStatus.value = 'REFUELING';
+
+  // Getting the class fuel capacity
+  const starshipClassId = props.starshipInfo.starshipClassId
+
+  const fuelCapacity = props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+
+  // Changing the Starship "Fuel left" value the to max fuel capacity
+  props.starshipInfo.fuelLeft = fuelCapacity;
+  
+  // Updating the value in the database
+  updateFuelLeft();
+
 }
 
 // Decreases the "Fuel left" every second
