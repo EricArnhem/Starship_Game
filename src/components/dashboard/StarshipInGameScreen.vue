@@ -201,7 +201,11 @@ watch(enginesOn, (enginesOn) => {
   <AlertScreen />
 
   <div id="starship-data" class="content-box">
-    <a id="go-back-button" @click="$emit('gameStop'); showNavbar()" title="Go back to the starship selection"><img src="@/images/chevron-back.svg"></a>
+    <a id="go-back-button"
+     @click="$emit('gameStop'); showNavbar(); enginesOn = false" 
+     title="Go back to the starship selection">
+     <img src="@/images/chevron-back.svg">
+    </a>
     <div id="starship-info">
 
       <h3>{{ starshipInfo.name }}</h3>
