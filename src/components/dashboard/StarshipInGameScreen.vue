@@ -38,16 +38,31 @@ function startStopEngines() {
   // If the engines are OFF
   if (enginesOn.value === false) {
 
-    // We start them and update the Engines status
-    enginesOn.value = true;
-    enginesStatus.value = 'ON';
+    displayAlert('Engines starting...');
+
+    setTimeout(() => {
+
+      // We start them and update the Engines status
+      enginesOn.value = true;
+      enginesStatus.value = 'ON';
+      displayAlert('Engines started.');
+
+    }, 2500);
 
   } else {
-
     // STOP ENGINES
     // Otherwise we stop them and update the Engines status
-    enginesOn.value = false;
-    enginesStatus.value = 'OFF';
+
+    displayAlert('Engines shutting down...');
+
+    setTimeout(() => {
+
+      enginesOn.value = false;
+      enginesStatus.value = 'OFF';
+      displayAlert('Engines stopped.');
+
+    }, 2500);
+
 
     // Save the "Fuel left" value to the database
     updateFuelLeft();
@@ -75,6 +90,7 @@ function refuelStarship() {
   if (starshipFuelLeft !== fuelCapacity) {
 
     enginesStatus.value = 'REFUELING';
+    displayAlert('Refueling the starship...');
 
     // Simulating refueling time
     setTimeout(() => {
@@ -86,6 +102,7 @@ function refuelStarship() {
       updateFuelLeft();
 
       enginesStatus.value = 'OFF';
+      displayAlert('Starship refueled.');
 
     }, 2000);
 
