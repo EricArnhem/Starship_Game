@@ -21,6 +21,14 @@ const enginesStatus = ref('OFF');
 const fuelConsumption = 100;
 let timerId;
 
+// Hold the reference to the AlertScreen component
+// Used to import the displayAlert() function
+const myAlertScreen = ref(null);
+
+function displayAlert(textString) {
+  myAlertScreen.value.displayAlert(textString);
+}
+
 // -- Methods --
 
 // Starts or stop the engines
@@ -198,7 +206,7 @@ watch(enginesOn, (enginesOn) => {
 
 <template>
 
-  <AlertScreen />
+  <AlertScreen ref="myAlertScreen"/>
 
   <div id="starship-data" class="content-box">
     <a id="go-back-button"

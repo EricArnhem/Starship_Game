@@ -46,6 +46,10 @@ function displayAlert(textString) {
   });
 }
 
+defineExpose({
+  displayAlert
+});
+
 </script>
 
 <template>
