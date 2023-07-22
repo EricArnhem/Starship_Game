@@ -13,7 +13,7 @@ const props = defineProps({
   starshipClassesList: Array
 });
 
-defineEmits(['gameStop']);
+const emit = defineEmits(['gameStop']);
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
@@ -21,6 +21,7 @@ const enginesOccupied = ref(false);
 
 const fuelConsumption = 100;
 let timerId;
+let enginesTimeoutId;
 
 // Hold the reference to the AlertScreen component
 // Used to import the displayAlert() function
@@ -42,7 +43,7 @@ function startEngines() {
 
     displayAlert('Engines starting...');
 
-    setTimeout(() => {
+    enginesTimeoutId = setTimeout(() => {
 
       // We start them and update the Engines status
       enginesOn.value = true;
@@ -68,7 +69,7 @@ function stopEngines() {
 
     displayAlert('Engines shutting down...');
 
-    setTimeout(() => {
+    enginesTimeoutId = setTimeout(() => {
 
       enginesOn.value = false;
       enginesStatus.value = 'OFF';
@@ -111,7 +112,7 @@ function refuelStarship() {
     displayAlert('Refueling the starship...');
 
     // Simulating refueling time
-    setTimeout(() => {
+    enginesTimeoutId = setTimeout(() => {
 
       // Changing the Starship "Fuel left" value the to max fuel capacity
       props.starshipInfo.fuelLeft = fuelCapacity;
@@ -199,6 +200,16 @@ async function updateFuelLeft() {
   }
 }
 
+// Stops the game
+function stopGame() {
+
+  emit('gameStop');
+  showNavbar();
+  enginesOn.value = false;
+  clearTimeout(enginesTimeoutId);
+
+}
+
 // -- Computed properties --
 
 // Gets the right method to use when clicking on the Start/Stop button
@@ -253,7 +264,7 @@ watch(enginesOn, (enginesOn) => {
 
   <div id="starship-data" class="content-box">
     <a id="go-back-button"
-     @click="$emit('gameStop'); showNavbar(); enginesOn = false" 
+     @click="stopGame()" 
      title="Go back to the starship selection">
      <img src="@/images/chevron-back.svg">
     </a>
