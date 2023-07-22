@@ -17,6 +17,7 @@ defineEmits(['gameStop']);
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
+const enginesOccupied = ref(false);
 
 const fuelConsumption = 100;
 let timerId;
@@ -33,6 +34,9 @@ function displayAlert(textString) {
 
 function startEngines() {
 
+  // Disables the Engines buttons
+  enginesOccupied.value = true;
+
   // If the engines are OFF
   if (enginesOn.value === false) {
 
@@ -45,6 +49,9 @@ function startEngines() {
       enginesStatus.value = 'ON';
       displayAlert('Engines started.');
 
+      // Re-enables the Engines buttons
+      enginesOccupied.value = false;
+
     }, 2500);
 
   }
@@ -52,6 +59,9 @@ function startEngines() {
 }
 
 function stopEngines() {
+
+  // Disables the Engines buttons
+  enginesOccupied.value = true;
 
   // If the engines are ON
   if (enginesOn.value === true) {
@@ -63,6 +73,9 @@ function stopEngines() {
       enginesOn.value = false;
       enginesStatus.value = 'OFF';
       displayAlert('Engines stopped.');
+
+      // Re-enables the Engines buttons
+      enginesOccupied.value = false;
 
     }, 2500);
 
@@ -91,6 +104,9 @@ function refuelStarship() {
   // If the Starship is not already at max fuel capacity
   if (starshipFuelLeft !== fuelCapacity) {
 
+    // Disables the Engines buttons
+    enginesOccupied.value = true;
+
     enginesStatus.value = 'REFUELING';
     displayAlert('Refueling the starship...');
 
@@ -105,6 +121,9 @@ function refuelStarship() {
 
       enginesStatus.value = 'OFF';
       displayAlert('Starship refueled.');
+
+      // Re-enables the Engines buttons
+      enginesOccupied.value = false;
 
     }, 2000);
 
@@ -248,8 +267,8 @@ watch(enginesOn, (enginesOn) => {
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
       <div class="text-center" id="starship-command-buttons">
-        <button class="button" @click="enginesStartStop">{{ enginesButtonText }}</button>
-        <button class="button" @click="refuelStarship()">Refuel</button>
+        <button class="button" :disabled="enginesOccupied" @click="enginesStartStop">{{ enginesButtonText }}</button>
+        <button class="button" :disabled="enginesOccupied" @click="refuelStarship()">Refuel</button>
       </div>
 
     </div>
