@@ -24,7 +24,7 @@ function startGame(starshipPublicId) {
   // Gets the data for the selected starship using the publicID
   selectedStarshipInfo.value = props.starshipList.find(element => element.publicId === starshipPublicId);
   // Sends event with the starship data 
-  emit('selectedStarshipInfo', selectedStarshipInfo);
+  emit('selectedStarshipInfo', selectedStarshipInfo.value);
 
   // Sends event to start the game
   emit('gameStart');
