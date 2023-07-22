@@ -1,50 +1,28 @@
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   starshipInfo: Object,
   starshipClassesList: Array
 });
 
-// -- Methods --
+// -- Computed properties --
 
-// Returns the starship class color by providing the classID
-function getStarshipClassColor(starshipClassId) {
+const starshipClassColor = computed(() => {
+  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).color;
+});
 
-// If the array is not empty (prevents error when array is briefly empty)
-if (props.starshipClassesList.length) {
-  return props.starshipClassesList.find(element => element.id === starshipClassId).color;
-}
+const starshipClassName = computed(() => {
+  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).name;
+});
 
-}
+const starshipClassSpeed = computed(() => {
+  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).speed;
+});
 
-// Returns the starship class name by providing the classID
-function getStarshipClassName(starshipClassId) {
-
-// If the array is not empty (prevents error when array is briefly empty)
-if (props.starshipClassesList.length) {
-  return props.starshipClassesList.find(element => element.id === starshipClassId).name;
-}
-
-}
-
-// Returns the starship class speed by providing the classID
-function getStarshipClassSpeed(starshipClassId) {
-
-// If the array is not empty (prevents error when array is briefly empty)
-if (props.starshipClassesList.length) {
-  return props.starshipClassesList.find(element => element.id === starshipClassId).speed;
-}
-
-}
-
-// Returns the starship class fuel capacity by providing the classID
-function getStarshipClassFuelCapacity(starshipClassId) {
-
-// If the array is not empty (prevents error when array is briefly empty)
-if (props.starshipClassesList.length) {
-  return props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
-}
-
-}
+const starshipClassFuelCapacity = computed(() => {
+  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).fuelCapacity;
+});
 
 </script>
 
@@ -52,7 +30,7 @@ if (props.starshipClassesList.length) {
 
   <table id="starship-stats">
     <thead
-    :style="{ '--starship-class-color': getStarshipClassColor(starshipInfo.starshipClassId) }">
+    :style="{ '--starship-class-color': starshipClassColor }">
       <tr>
         <th colspan="2">Starship stats</th>
       </tr>
@@ -64,15 +42,15 @@ if (props.starshipClassesList.length) {
       </tr>
       <tr>
         <td>Class</td>
-        <td>{{ getStarshipClassName(starshipInfo.starshipClassId) }}</td>
+        <td>{{ starshipClassName }}</td>
       </tr>
       <tr>
         <td>Speed</td>
-        <td>{{ getStarshipClassSpeed(starshipInfo.starshipClassId) }} km/h</td>
+        <td>{{ starshipClassSpeed }} km/h</td>
       </tr>
       <tr>
         <td>Fuel capacity</td>
-        <td>{{ getStarshipClassFuelCapacity(starshipInfo.starshipClassId) }} kg</td>
+        <td>{{ starshipClassFuelCapacity }} kg</td>
       </tr>
       <tr>
         <td>Fuel left</td>
