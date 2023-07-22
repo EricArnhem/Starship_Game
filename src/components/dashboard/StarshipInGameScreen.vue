@@ -31,10 +31,8 @@ function displayAlert(textString) {
 
 // -- Methods --
 
-// Starts or stop the engines
-function startStopEngines() {
+function startEngines() {
 
-  // START ENGINES
   // If the engines are OFF
   if (enginesOn.value === false) {
 
@@ -49,9 +47,14 @@ function startStopEngines() {
 
     }, 2500);
 
-  } else {
-    // STOP ENGINES
-    // Otherwise we stop them and update the Engines status
+  }
+
+}
+
+function stopEngines() {
+
+  // If the engines are ON
+  if (enginesOn.value === true) {
 
     displayAlert('Engines shutting down...');
 
@@ -62,7 +65,6 @@ function startStopEngines() {
       displayAlert('Engines stopped.');
 
     }, 2500);
-
 
     // Save the "Fuel left" value to the database
     updateFuelLeft();
@@ -180,6 +182,11 @@ async function updateFuelLeft() {
 
 // -- Computed properties --
 
+// Gets the right method to use when clicking on the Start/Stop button
+const enginesStartStop = computed(() => {
+  return enginesOn.value === false ? startEngines() : stopEngines();
+});
+
 // Gets the right text to update the engines button depending on the engines status
 const enginesButtonText = computed(() => {
   return enginesOn.value === false ? 'Start' : 'Stop';
@@ -241,7 +248,7 @@ watch(enginesOn, (enginesOn) => {
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
       <div class="text-center" id="starship-command-buttons">
-        <button class="button" @click="startStopEngines()">{{ enginesButtonText }}</button>
+        <button class="button" @click="enginesStartStop">{{ enginesButtonText }}</button>
         <button class="button" @click="refuelStarship()">Refuel</button>
       </div>
 
