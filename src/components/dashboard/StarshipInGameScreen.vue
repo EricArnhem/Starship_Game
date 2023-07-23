@@ -130,7 +130,7 @@ function refuelStarship() {
 
   } else {
 
-    // DISPLAY ALERT: "Fuel tank already at maximum capacity."
+    displayAlert("Fuel tank already at maximum capacity.");
 
   }
 
