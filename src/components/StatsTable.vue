@@ -1,9 +1,11 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
+import { animateNumber } from '@/components/dashboard/animate-number.js';
 
 const props = defineProps({
   starshipInfo: Object,
-  starshipClassesList: Array
+  starshipClassesList: Array,
+  refuelAnimationData: Object
 });
 
 // -- Computed properties --
@@ -22,6 +24,18 @@ const starshipClassSpeed = computed(() => {
 
 const starshipClassFuelCapacity = computed(() => {
   return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).fuelCapacity;
+});
+
+// -- Watchers --
+// Animate the fuelLeft value when the props containing the animation data changes
+watch(() => props.refuelAnimationData, (refuelAnimationData) => {
+  const fuelLeftElement = document.getElementById('stats-fuel-left');
+
+  const fuelLeft = refuelAnimationData.fuelLeft;
+  const fuelCapacity = refuelAnimationData.fuelCapacity;
+  const refuelDuration = refuelAnimationData.refuelDuration;
+
+  animateNumber(fuelLeftElement, fuelLeft, fuelCapacity, refuelDuration);
 });
 
 </script>
@@ -54,7 +68,7 @@ const starshipClassFuelCapacity = computed(() => {
       </tr>
       <tr>
         <td>Fuel left</td>
-        <td>{{ starshipInfo.fuelLeft }} kg</td>
+        <td><span id="stats-fuel-left">{{ starshipInfo.fuelLeft }}</span> kg</td>
       </tr>
     </tbody>
   </table>

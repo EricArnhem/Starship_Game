@@ -23,6 +23,9 @@ const fuelConsumption = 100;
 let timerId;
 let enginesTimeoutId;
 
+const maxRefuelDuration = 5000; // Longest time a refuel can take from 0 to max (in milliseconds)
+let refuelAnimationData = ref({});
+
 // Hold the reference to the AlertScreen component
 // Used to import the displayAlert() function
 const myAlertScreen = ref(null);
@@ -87,13 +90,12 @@ function stopEngines() {
 
 }
 
-// Refuels the Starship
 function refuelStarship() {
 
-  const starshipFuelLeft = props.starshipInfo.fuelLeft;
-  const starshipClassId = props.starshipInfo.starshipClassId;
+  const fuelLeft = props.starshipInfo.fuelLeft;
 
   // Getting the class fuel capacity
+  const starshipClassId = props.starshipInfo.starshipClassId;
   const fuelCapacity = props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
 
   // If engines are ON, we turn them OFF
@@ -103,13 +105,25 @@ function refuelStarship() {
   }
 
   // If the Starship is not already at max fuel capacity
-  if (starshipFuelLeft !== fuelCapacity) {
+  if (fuelLeft !== fuelCapacity) {
 
     // Disables the Engines buttons
     enginesOccupied.value = true;
 
     enginesStatus.value = 'REFUELING';
     displayAlert('Refueling the starship...');
+
+    // Calculating the time it takes to refuel
+    const fuelNeeded = fuelCapacity - fuelLeft;
+
+    const refuelDuration = (fuelNeeded * maxRefuelDuration) / fuelCapacity;
+
+    // Puts refuel data into an object to pass it as a prop to the StatsTable
+    refuelAnimationData.value = {
+      fuelLeft: fuelLeft,
+      fuelCapacity: fuelCapacity,
+      refuelDuration: refuelDuration
+    }
 
     // Simulating refueling time
     enginesTimeoutId = setTimeout(() => {
@@ -126,7 +140,7 @@ function refuelStarship() {
       // Re-enables the Engines buttons
       enginesOccupied.value = false;
 
-    }, 2000);
+    }, refuelDuration);
 
   } else {
 
@@ -273,7 +287,8 @@ watch(enginesOn, (enginesOn) => {
       <h3>{{ starshipInfo.name }}</h3>
       <StatsTable
         :starship-info="starshipInfo"
-        :starship-classes-list="starshipClassesList" />
+        :starship-classes-list="starshipClassesList" 
+        :refuel-animation-data="refuelAnimationData"/>
 
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
