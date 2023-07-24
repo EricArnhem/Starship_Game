@@ -80,10 +80,10 @@ function stopEngines() {
   if (enginesOn.value === true) {
 
     displayAlert('Engines shutting down...');
+    enginesOn.value = false;
 
     enginesTimeoutId = setTimeout(() => {
 
-      enginesOn.value = false;
       enginesStatus.value = 'OFF';
       displayAlert('Engines stopped.');
 
