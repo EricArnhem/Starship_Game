@@ -38,25 +38,34 @@ function displayAlert(textString) {
 
 function startEngines() {
 
-  // Disables the Engines buttons
-  enginesOccupied.value = true;
+  // If the starship has enough fuel
+  if (props.starshipInfo.fuelLeft > 0) {
 
-  // If the engines are OFF
-  if (enginesOn.value === false) {
+    // Disables the Engines buttons
+    enginesOccupied.value = true;
 
-    displayAlert('Engines starting...');
+    // If the engines are OFF
+    if (enginesOn.value === false) {
 
-    enginesTimeoutId = setTimeout(() => {
+      displayAlert('Engines starting...');
 
-      // We start them and update the Engines status
-      enginesOn.value = true;
-      enginesStatus.value = 'ON';
-      displayAlert('Engines started.');
+      enginesTimeoutId = setTimeout(() => {
 
-      // Re-enables the Engines buttons
-      enginesOccupied.value = false;
+        // We start them and update the Engines status
+        enginesOn.value = true;
+        enginesStatus.value = 'ON';
+        displayAlert('Engines started.');
 
-    }, 2500);
+        // Re-enables the Engines buttons
+        enginesOccupied.value = false;
+
+      }, 2500);
+
+    }
+
+  } else {
+
+    displayAlert('Not enough fuel to start the engines.');
 
   }
 
