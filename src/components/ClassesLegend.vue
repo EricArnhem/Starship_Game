@@ -2,6 +2,11 @@
 defineProps({
   starshipClassesList: Array
 })
+
+const emit = defineEmits([
+  'starshipClassFilter'
+]);
+
 </script>
 
 <template>
@@ -9,7 +14,8 @@ defineProps({
     <div
       class="starship-class-legend"
       v-for="(starshipClass) in starshipClassesList"
-      :key="starshipClass.id">
+      :key="starshipClass.id"
+      @click="$emit('starshipClassFilter', starshipClass.id)">
       <span>{{ starshipClass.name }}</span>
       <div
         class="starship-class-color"
