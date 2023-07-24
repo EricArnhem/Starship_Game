@@ -163,9 +163,21 @@ function startFuelTimer() {
       props.starshipInfo.fuelLeft -= fuelConsumption;
 
     } else {
+      // If we run out of fuel
+      // Disables the Engines buttons
+      enginesOccupied.value = true;
+
+      displayAlert("The starship ran of out fuel.");
 
       // Stops the timer
       clearInterval(timerId);
+
+      // Stopping the engines
+      enginesTimeoutId = setTimeout(() => {
+
+        stopEngines();
+
+      }, 2500);
 
     }
 
