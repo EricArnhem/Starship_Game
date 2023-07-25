@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { onBeforeUpdate, onBeforeMount } from 'vue';
 
 const props = defineProps({
   starshipClassesList: Array,
@@ -10,37 +10,35 @@ const emit = defineEmits([
   'starshipListFilter'
 ]);
 
-let starshipFilterClassId = ref(0);
+// -- Methods --
 
-// -- Computed properties --
-
-// Get a filtered version of the starship list
-const filteredStarshipList = computed(() => {
+// Filters starships by the class provided (unfiltered if no class id is provided)
+function filterStarshipList(classId) {
 
   let starshipList = props.starshipList;
 
   // If we didn't select any class
-  if (starshipFilterClassId.value === 0) {
+  if (!classId) {
 
-    return starshipList; // Returns the original/unfiltered list
+    emit('starshipListFilter', starshipList); // Sends the original/unfiltered list
 
   } else {
-    // If a class is selected, returns a filtered list that only contains starships of that class
-    const filteredList = starshipList.filter((starship) => starship.starshipClassId === starshipFilterClassId.value);
-    return filteredList
+    // If a class is selected, sends a filtered list that only contains starships of that class
+    const filteredList = starshipList.filter((starship) => starship.starshipClassId === classId);
+    emit('starshipListFilter', filteredList);
 
   }
+}
 
+// To display the full starship list when we load the page
+onBeforeUpdate(() => {
+  filterStarshipList();
 });
 
-// -- Watchers --
-
-// Sends the starship list to the parents component
-watch(starshipFilterClassId, () => {
-
-  emit('starshipListFilter', filteredStarshipList)
-
-}, { immediate: true });
+// To display the full starship list when we go from the GameScreen to the SelectionScreen
+onBeforeMount(() => {
+  filterStarshipList();
+});
 
 </script>
 
@@ -50,7 +48,7 @@ watch(starshipFilterClassId, () => {
       class="starship-class-legend"
       v-for="(starshipClass) in starshipClassesList"
       :key="starshipClass.id"
-      @click="starshipFilterClassId = starshipClass.id">
+      @click="filterStarshipList(starshipClass.id)">
       <span>{{ starshipClass.name }}</span>
       <div
         class="starship-class-color"
