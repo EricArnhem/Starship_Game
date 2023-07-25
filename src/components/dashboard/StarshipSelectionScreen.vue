@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { hideNavbar } from '@/components/navbar/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
@@ -16,7 +16,7 @@ const emit = defineEmits([
 
 const selectedStarshipInfo = ref({});
 
-let starshipFilterClassId = ref(0);
+let filteredStarshipList = ref([]);
 
 // -- Methods --
 
@@ -72,27 +72,6 @@ function getStarshipClassFuelCapacity(starshipClassId) {
 
 }
 
-
-// -- Computed properties --
-
-// Filters the starship list to only contain starships of the selected class (shows all classes by default / unfiltered)
-const filteredStarshipList = computed(() => {
-
-  let starshipList = props.starshipList;
-
-  if (starshipFilterClassId.value === 0) {
-
-    return starshipList;
-
-  } else {
-
-    const filteredList = starshipList.filter((starship) => starship.starshipClassId === starshipFilterClassId.value);
-    return filteredList
-
-  }
-
-});
-
 </script>
 
 <template>
@@ -103,7 +82,8 @@ const filteredStarshipList = computed(() => {
     <h2>Select a Starship to start the game</h2>
     <ClassesLegend 
     :starship-classes-list="starshipClassesList" 
-    @starship-class-filter="(classId) => starshipFilterClassId = classId" />
+    :starship-list="starshipList"
+    @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
     <div class="starship-cards-container">
       <div
         class="starship-card"

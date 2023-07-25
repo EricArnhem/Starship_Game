@@ -1,11 +1,46 @@
 <script setup>
-defineProps({
-  starshipClassesList: Array
+import { ref, computed, watch } from 'vue';
+
+const props = defineProps({
+  starshipClassesList: Array,
+  starshipList: Array
 })
 
 const emit = defineEmits([
-  'starshipClassFilter'
+  'starshipListFilter'
 ]);
+
+let starshipFilterClassId = ref(0);
+
+// -- Computed properties --
+
+// Get a filtered version of the starship list
+const filteredStarshipList = computed(() => {
+
+  let starshipList = props.starshipList;
+
+  // If we didn't select any class
+  if (starshipFilterClassId.value === 0) {
+
+    return starshipList; // Returns the original/unfiltered list
+
+  } else {
+    // If a class is selected, returns a filtered list that only contains starships of that class
+    const filteredList = starshipList.filter((starship) => starship.starshipClassId === starshipFilterClassId.value);
+    return filteredList
+
+  }
+
+});
+
+// -- Watchers --
+
+// Sends the starship list to the parents component
+watch(starshipFilterClassId, () => {
+
+  emit('starshipListFilter', filteredStarshipList)
+
+}, { immediate: true });
 
 </script>
 
@@ -15,7 +50,7 @@ const emit = defineEmits([
       class="starship-class-legend"
       v-for="(starshipClass) in starshipClassesList"
       :key="starshipClass.id"
-      @click="$emit('starshipClassFilter', starshipClass.id)">
+      @click="starshipFilterClassId = starshipClass.id">
       <span>{{ starshipClass.name }}</span>
       <div
         class="starship-class-color"
