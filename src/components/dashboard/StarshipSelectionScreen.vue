@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { hideNavbar } from '@/components/navbar/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
@@ -72,6 +72,26 @@ function getStarshipClassFuelCapacity(starshipClassId) {
 
 }
 
+// -- Computed properties --
+
+const displayStarshipList = computed(() => {
+
+  // If a class filter is selected (filtered list empty)
+  if (filteredStarshipList.value.length === 0) {
+
+    // Returns the full starship list (original)
+    return props.starshipList;
+
+  } else {
+    // If a class filter a selected
+
+    // Returns the filtered list
+    return filteredStarshipList.value;
+
+  }
+
+});
+
 </script>
 
 <template>
@@ -87,7 +107,7 @@ function getStarshipClassFuelCapacity(starshipClassId) {
     <div class="starship-cards-container">
       <div
         class="starship-card"
-        v-for="(starship, index) in filteredStarshipList"
+        v-for="(starship, index) in displayStarshipList"
         :key="index"
         :style="{ '--card-corner-color': getStarshipClassColor(starship.starshipClassId) }">
         <span class="starship-card-title">{{ starship.name }}</span>

@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeUpdate, onBeforeMount } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   starshipClassesList: Array,
@@ -10,35 +10,55 @@ const emit = defineEmits([
   'starshipListFilter'
 ]);
 
+const selectedClassId = ref(0);
+
 // -- Methods --
 
-// Filters starships by the class provided (unfiltered if no class id is provided)
-function filterStarshipList(classId) {
+// Checks if the selected id is the same or different from the last one selected
+function checkClassId(classId) {
 
-  let starshipList = props.starshipList;
+  // Get the old value (not modified yet)
+  let lastSelectedClassId = selectedClassId.value;
 
-  // If we didn't select any class
-  if (!classId) {
+  // If the ids are different (new class selected)
+  if (classId !== lastSelectedClassId) {
 
-    emit('starshipListFilter', starshipList); // Sends the original/unfiltered list
+    // Save the new value into the variable
+    selectedClassId.value = classId;
 
   } else {
-    // If a class is selected, sends a filtered list that only contains starships of that class
+    // If the values are the same
+    // This will tell filterStarshipList() to send an empty array instead of filtering
+    selectedClassId.value = 0;
+
+  }
+
+  // Calls the filter method with the value determined
+  filterStarshipList(selectedClassId.value);
+
+}
+
+// Filters starships by the class provided (sends (emit) empty array if classId = 0)
+function filterStarshipList(classId) {
+
+  // Sends empty array to tell the parent component to display the full starship list
+  if (classId === 0) {
+
+    emit('starshipListFilter', []);
+
+  } else {
+
+    let starshipList = props.starshipList;
+
+    // Get a filtered list containing only starships of the selected class
     const filteredList = starshipList.filter((starship) => starship.starshipClassId === classId);
+
+    // Send that list to the parent component
     emit('starshipListFilter', filteredList);
 
   }
+
 }
-
-// To display the full starship list when we load the page
-onBeforeUpdate(() => {
-  filterStarshipList();
-});
-
-// To display the full starship list when we go from the GameScreen to the SelectionScreen
-onBeforeMount(() => {
-  filterStarshipList();
-});
 
 </script>
 
@@ -48,7 +68,7 @@ onBeforeMount(() => {
       class="starship-class-legend"
       v-for="(starshipClass) in starshipClassesList"
       :key="starshipClass.id"
-      @click="filterStarshipList(starshipClass.id)">
+      @click="checkClassId(starshipClass.id)">
       <span>{{ starshipClass.name }}</span>
       <div
         class="starship-class-color"
