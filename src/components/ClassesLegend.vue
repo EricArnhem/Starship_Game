@@ -66,6 +66,7 @@ function filterStarshipList(classId) {
   <div id="starship-classes-legend">
     <div
       class="starship-class-legend"
+      :class="{ 'highlight-class': selectedClassId === starshipClass.id }"
       v-for="(starshipClass) in starshipClassesList"
       :key="starshipClass.id"
       @click="checkClassId(starshipClass.id)">
@@ -95,6 +96,12 @@ function filterStarshipList(classId) {
   margin-right: 20px;
   margin-bottom: 5px;
   font-size: 1.1em;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.starship-class-legend:last-child {
+  margin-right: 0;
 }
 
 .starship-class-color {
@@ -105,5 +112,10 @@ function filterStarshipList(classId) {
   background-color: var(--starship-class-color);
   border: 1px solid black;
   border-radius: 3px;
+}
+
+.highlight-class {
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px;
 }
 </style>
