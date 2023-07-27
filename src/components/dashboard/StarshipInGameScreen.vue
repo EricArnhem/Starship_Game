@@ -207,28 +207,7 @@ async function updateFuelLeft() {
   // Updating the starship "Fuel left"
   try {
 
-    let result = await updateStarshipFuelLeft(starshipPublicId, starshipData);
-
-    if (result.status === 200) {
-      // If starship "Fuel left" has been updated
-
-      const submitResultData = {
-        message: result.data.message,
-        status: result.status
-      }
-
-      // console.log(submitResultData);
-
-    } else {
-
-      const submitResultData = {
-        message: result.response.data.message,
-        status: result.response.status // Using .response because Error message has a different structure
-      }
-
-      // console.log(submitResultData);
-
-    }
+    await updateStarshipFuelLeft(starshipPublicId, starshipData);
 
   } catch (error) {
     console.log(error);
