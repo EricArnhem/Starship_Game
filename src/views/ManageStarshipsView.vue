@@ -27,6 +27,8 @@ const showSubmitResult = ref(false);
 let submitResultMessage = ref('');
 let submitResultStatus = ref('');
 
+let filteredStarshipList = ref([]);
+
 // When component is mounted
 onMounted(() => {
   // Checks if we accessed the create path and if so opens the Create form modal
@@ -198,6 +200,24 @@ const modalTitle = computed(() => {
   }
 });
 
+const displayStarshipList = computed(() => {
+
+  // If a class filter is selected (filtered list empty)
+  if (filteredStarshipList.value.length === 0) {
+
+    // Returns the full starship list (original)
+    return state.starshipList;
+
+  } else {
+    // If a class filter a selected
+
+    // Returns the filtered list
+    return filteredStarshipList.value;
+
+  }
+
+});
+
 // -- Watchers --
 
 // Applies a class to prevent scrolling the body when the modal is opened
@@ -213,13 +233,16 @@ watch(modalOpen, (modalOpen) => {
 
 <template>
   <h1>Manage your Starships</h1>
-  <ClassesLegend :starship-classes-list="state.starshipClassesList" />
+  <ClassesLegend 
+  :starship-classes-list="state.starshipClassesList" 
+  :starship-list="state.starshipList"
+  @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
 
   <div class="starship-cards-container">
 
     <div
       class="starship-card"
-      v-for="(starship) in state.starshipList"
+      v-for="(starship) in displayStarshipList"
       @click="openUpdateForm(starship.publicId, starship.starshipClassId);"
       :key="starship.publicId"
       :style="{ '--card-corner-color': getStarshipClassColor(starship.starshipClassId) }">
