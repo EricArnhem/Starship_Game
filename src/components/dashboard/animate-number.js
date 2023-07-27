@@ -4,19 +4,16 @@ export const animateNumber = (obj, initVal, lastVal, duration) => {
 
   let startTime = null;
 
-  // Get the current timestamp and assign it to the currentTime variable
-  let currentTime = Date.now();
+  // The currentTimestamp will be passed automatically as an argument to the 'step' function by the 'window.requestAnimationFrame' function
+  const step = (currentTimestamp) => {
 
-  // Pass the current timestamp to the step function
-  const step = (currentTime) => {
-
-    // If the start time is null, assign the current time to startTime
+    // If the start time is null, assign the currentTimestamp to startTime
     if (!startTime) {
-      startTime = currentTime;
+      startTime = currentTimestamp;
     }
 
     // Calculate the value to be used in calculating the number to be displayed
-    const progress = Math.min((currentTime - startTime) / duration, 1);
+    const progress = Math.min((currentTimestamp - startTime) / duration, 1);
 
     // Calculate what to be displayed using the value gotten above
     obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
