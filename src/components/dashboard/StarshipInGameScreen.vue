@@ -15,6 +15,8 @@ const props = defineProps({
 
 const emit = defineEmits(['gameStop']);
 
+const rawStarshipInfo = ref(props.starshipInfo);
+
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
 const enginesOccupied = ref(false);
@@ -39,7 +41,7 @@ function displayAlert(textString) {
 function startEngines() {
 
   // If the starship has enough fuel
-  if (props.starshipInfo.fuelLeft > 0) {
+  if (rawStarshipInfo.value.fuelLeft > 0) {
 
     // Disables the Engines buttons
     enginesOccupied.value = true;
@@ -101,10 +103,10 @@ function stopEngines() {
 
 function refuelStarship() {
 
-  const fuelLeft = props.starshipInfo.fuelLeft;
+  const fuelLeft = rawStarshipInfo.value.fuelLeft;
 
   // Getting the class fuel capacity
-  const starshipClassId = props.starshipInfo.starshipClassId;
+  const starshipClassId = rawStarshipInfo.value.starshipClassId;
   const fuelCapacity = props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
 
   // If engines are ON, we turn them OFF
@@ -137,8 +139,8 @@ function refuelStarship() {
     // Simulating refueling time
     enginesTimeoutId = setTimeout(() => {
 
-      // Changing the Starship "Fuel left" value the to max fuel capacity
-      props.starshipInfo.fuelLeft = fuelCapacity;
+      // Changing the Starship "Fuel left" value to the max fuel capacity
+      rawStarshipInfo.value.fuelLeft = fuelCapacity;
 
       // Updating the value in the database
       updateFuelLeft();
@@ -166,10 +168,10 @@ function startFuelTimer() {
   timerId = setInterval(() => {
 
     // If there's enough fuel to travel
-    if ((props.starshipInfo.fuelLeft - fuelConsumption) >= 0) {
+    if ((rawStarshipInfo.value.fuelLeft - fuelConsumption) >= 0) {
 
       // Reduces fuel by 100
-      props.starshipInfo.fuelLeft -= fuelConsumption;
+      rawStarshipInfo.value.fuelLeft -= fuelConsumption;
 
     } else {
       // If we run out of fuel
@@ -198,11 +200,11 @@ function startFuelTimer() {
 async function updateFuelLeft() {
 
   const starshipData = {
-    fuelLeft: props.starshipInfo.fuelLeft
+    fuelLeft: rawStarshipInfo.value.fuelLeft
   }
 
   // Getting starship public id
-  let starshipPublicId = props.starshipInfo.publicId;
+  let starshipPublicId = rawStarshipInfo.value.publicId;
 
   // Updating the starship "Fuel left"
   try {
