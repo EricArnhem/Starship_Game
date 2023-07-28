@@ -228,11 +228,6 @@ function stopGame() {
 
 // -- Computed properties --
 
-// Gets the right method to use when clicking on the Start/Stop button
-const enginesStartStop = computed(() => {
-  return enginesOn.value === false ? startEngines() : stopEngines();
-});
-
 // Gets the right text to update the engines button depending on the engines status
 const enginesButtonText = computed(() => {
   return enginesOn.value === false ? 'Start' : 'Stop';
@@ -295,7 +290,7 @@ watch(enginesOn, (enginesOn) => {
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
       <div class="text-center" id="starship-command-buttons">
-        <button class="button" :disabled="enginesOccupied" @click="enginesStartStop">{{ enginesButtonText }}</button>
+        <button class="button" :disabled="enginesOccupied" @click="enginesOn === false ? startEngines() : stopEngines()">{{ enginesButtonText }}</button>
         <button class="button" :disabled="enginesOccupied" @click="refuelStarship()">Refuel</button>
       </div>
 
