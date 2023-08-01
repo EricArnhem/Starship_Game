@@ -129,29 +129,35 @@ function refuelStarship() {
 
     const refuelDuration = (fuelNeeded * maxRefuelDuration) / fuelCapacity;
 
-    // Puts refuel data into an object to pass it as a prop to the StatsTable
-    refuelAnimationData.value = {
-      fuelLeft: fuelLeft,
-      fuelCapacity: fuelCapacity,
-      refuelDuration: refuelDuration
-    }
-
-    // Simulating refueling time
+    // Wait a bit before starting the refueling process (time for the 'Refueling...' alert to display)
     enginesTimeoutId = setTimeout(() => {
 
-      // Changing the Starship "Fuel left" value to the max fuel capacity
-      rawStarshipInfo.value.fuelLeft = fuelCapacity;
+      // Puts refuel data into an object to pass it as a prop to the StatsTable
+      // When the 'refuelAnimationData' prop value changes the animation in automatically started
+      refuelAnimationData.value = {
+        fuelLeft: fuelLeft,
+        fuelCapacity: fuelCapacity,
+        refuelDuration: refuelDuration
+      }
 
-      // Updating the value in the database
-      updateFuelLeft();
+      // After the refueling is done (animation ended)
+      enginesTimeoutId = setTimeout(() => {
 
-      enginesStatus.value = 'OFF';
-      displayAlert('Starship refueled.');
+        // Changing the Starship "Fuel left" value to the max fuel capacity
+        rawStarshipInfo.value.fuelLeft = fuelCapacity;
 
-      // Re-enables the Engines buttons
-      enginesOccupied.value = false;
+        // Updating the value in the database
+        updateFuelLeft();
 
-    }, refuelDuration);
+        enginesStatus.value = 'OFF';
+        displayAlert('Starship refueled.');
+
+        // Re-enables the Engines buttons
+        enginesOccupied.value = false;
+
+      }, refuelDuration);
+
+    }, 2500);
 
   } else {
 
