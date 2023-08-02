@@ -98,6 +98,9 @@ function filterStarshipList(classId) {
   font-size: 1.1em;
   padding: 4px;
   cursor: pointer;
+  user-select: none;
+  /* Safari */
+  -webkit-user-select: none;
 }
 
 .starship-class-legend:last-child {
