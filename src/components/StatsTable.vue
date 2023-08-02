@@ -96,8 +96,7 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
 
 @media (max-width: 480px) {
   #starship-stats {
-    width: auto;
-    margin: 0 10px;
+    width: 95vw;
   }
 
   #starship-stats th,
