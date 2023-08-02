@@ -73,35 +73,48 @@ function startEngines() {
 
 }
 
-function stopEngines() {
+async function stopEngines() {
 
-  // Disables the Engines buttons
-  enginesOccupied.value = true;
+  return new Promise((resolve) => {
 
-  // If the engines are ON
-  if (enginesOn.value === true) {
+    // Disables the Engines buttons
+    enginesOccupied.value = true;
 
-    displayAlert('Engines shutting down...');
-    enginesOn.value = false;
+    // If the engines are ON
+    if (enginesOn.value === true) {
 
-    enginesTimeoutId = setTimeout(() => {
+      displayAlert('Engines shutting down...');
+      enginesOn.value = false;
 
-      enginesStatus.value = 'OFF';
-      displayAlert('Engines stopped.');
+      enginesTimeoutId = setTimeout(() => {
 
-      // Re-enables the Engines buttons
-      enginesOccupied.value = false;
+        enginesStatus.value = 'OFF';
+        displayAlert('Engines stopped.');
 
-    }, 2500);
+        // Re-enables the Engines buttons
+        enginesOccupied.value = false;
 
-    // Save the "Fuel left" value to the database
-    updateFuelLeft();
+        // Timeout to let the 'Engines stopped' alert display before refueling
+        setTimeout(() => {
 
-  }
+          resolve(); // Resolve the promise to signal completion
+
+        }, 2500);
+
+      }, 2500);
+
+      // Save the "Fuel left" value to the database
+      updateFuelLeft();
+
+    } else {
+      resolve(); // Resolve the promise if engines were already off
+    }
+
+  });
 
 }
 
-function refuelStarship() {
+async function refuelStarship() {
 
   const fuelLeft = rawStarshipInfo.value.fuelLeft;
 
@@ -111,8 +124,7 @@ function refuelStarship() {
 
   // If engines are ON, we turn them OFF
   if (enginesOn.value === true) {
-    enginesOn.value = false;
-    enginesStatus.value = 'OFF';
+    await stopEngines();
   }
 
   // If the Starship is not already at max fuel capacity
