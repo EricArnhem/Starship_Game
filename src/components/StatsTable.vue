@@ -80,18 +80,21 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   width: 70vw;
   max-width: 400px;
   margin: auto;
+  border: 0;
+  border-spacing: 0;
 }
 
-#starship-stats,
 #starship-stats th,
 #starship-stats td {
   border: 1px solid var(--main-border-color);
-  border-collapse: collapse;
+  border-bottom: 0;
+  padding: 12px 24px;
 }
 
-#starship-stats th,
-#starship-stats td {
-  padding: 12px 24px;
+/* Rounds top of the table */
+#starship-stats th {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 @media (max-width: 480px) {
@@ -109,8 +112,25 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   font-weight: bold;
 }
 
+#starship-stats td:first-child {
+  /* Prevents double borders in table cells */
+  border-right: 0;
+}
+
 #starship-stats td:last-of-type {
   overflow-wrap: anywhere;
+}
+
+/* Rounds bottom left corner of the table */
+#starship-stats tr:last-of-type td:first-child {
+  border-bottom: 1px solid var(--main-border-color);
+  border-bottom-left-radius: 10px;
+}
+
+/* Rounds bottom right corner of the table */
+#starship-stats tr:last-of-type td:last-child {
+  border-bottom: 1px solid var(--main-border-color);
+  border-bottom-right-radius: 10px;
 }
 
 #starship-stats thead {
