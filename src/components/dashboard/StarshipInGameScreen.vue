@@ -24,6 +24,7 @@ const enginesOccupied = ref(false);
 const fuelConsumption = 100;
 let timerId;
 let enginesTimeoutId;
+let alertTimeout;
 
 const maxRefuelDuration = 5000; // Longest time a refuel can take from 0 to max (in milliseconds)
 let refuelAnimationData = ref({});
@@ -95,7 +96,7 @@ async function stopEngines() {
         enginesOccupied.value = false;
 
         // Timeout to let the 'Engines stopped' alert display before refueling
-        setTimeout(() => {
+        alertTimeout = setTimeout(() => {
 
           resolve(); // Resolve the promise to signal completion
 
@@ -241,6 +242,7 @@ function stopGame() {
   showNavbar();
   enginesOn.value = false;
   clearTimeout(enginesTimeoutId);
+  clearTimeout(alertTimeout);
 
 }
 
