@@ -62,8 +62,11 @@ main {
 
 h1 {
   text-align: center;
-  text-decoration: underline double 1px;
-  text-underline-offset: 9px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%) 1;
+  width: fit-content;
+  margin-inline: auto;
+  padding-bottom: 10px;
   /* Padding equal to the width of the open/close navbar button */
   padding-left: 35px;
   padding-right: 35px;
@@ -106,13 +109,13 @@ h3 {
   border-radius: 3px;
 }
 
-.button:hover:not([disabled])  {
+.button:hover:not([disabled]) {
   background-color: var(--button-bg-hover-color);
   cursor: pointer;
   transition: 0.1s;
 }
 
-.button:active:not([disabled])  {
+.button:active:not([disabled]) {
   background-color: var(--button-bg-active-color);
   transition: 0.1s;
 }
