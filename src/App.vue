@@ -62,11 +62,6 @@ main {
 
 h1 {
   text-align: center;
-  border-bottom: 2px solid;
-  border-image: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%) 1;
-  width: fit-content;
-  margin-inline: auto;
-  padding-bottom: 10px;
   /* Padding equal to the width of the open/close navbar button */
   padding-left: 35px;
   padding-right: 35px;
@@ -82,8 +77,17 @@ h3 {
   font-size: 1.4em;
   font-weight: bold;
   text-align: center;
-  text-decoration: underline double 1px;
-  text-underline-offset: 7px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+h1,
+h3 {
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%) 1;
+  width: fit-content;
+  margin-inline: auto;
+  padding-bottom: 10px;
 }
 
 /* Global classes */
