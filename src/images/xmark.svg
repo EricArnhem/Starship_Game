@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 64 64"
+   fill="none"
+   stroke="#000000"
+   version="1.1"
+   id="svg838"
+   sodipodi:docname="xmark.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs842" />
+  <sodipodi:namedview
+     id="namedview840"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.01"
+     inkscape:cx="550.9901"
+     inkscape:cy="452.47525"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg838" />
+  <line
+     x1="16"
+     y1="16"
+     x2="48"
+     y2="48"
+     id="line834"
+     style="stroke:#ebebeb;stroke-opacity:1" />
+  <line
+     x1="48"
+     y1="16"
+     x2="16"
+     y2="48"
+     id="line836"
+     style="stroke:#ebebeb;stroke-opacity:1" />
+</svg>

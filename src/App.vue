@@ -52,6 +52,8 @@ main {
   flex: auto;
   flex-direction: column;
   padding-bottom: 30px;
+  /* Compensate for the navbar height */
+  margin-top: 50px;
 }
 
 @media (max-width: 480px) {

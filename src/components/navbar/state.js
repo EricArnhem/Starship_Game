@@ -13,7 +13,7 @@ export const hideNavbar = () => (navbarCollapsed.value = true);
 
 // Margins sizes when collapsed or not
 export const NAVBAR_MARGIN = 0;
-export const NAVBAR_MARGIN_COLLAPSED = -60;
+export const NAVBAR_MARGIN_COLLAPSED = -210;
 
 // Calculate which margin value to use depending on the navbar status
 export const navbarMargin = computed(
