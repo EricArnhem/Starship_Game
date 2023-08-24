@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { hideNavbar } from '@/components/navbar/state';
+import { hideNavbar, windowWidth } from '@/components/navbar/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
 
@@ -30,6 +30,12 @@ function startGame(starshipPublicId) {
 
   // Sends event to start the game
   emit('gameStart');
+
+  // Hides navbar on small screens
+  if (windowWidth.value <= 900) {
+    hideNavbar();
+  }
+
 }
 
 // Returns the starship class color by providing the classID
@@ -131,7 +137,7 @@ const displayStarshipList = computed(() => {
             </tr>
           </tbody>
         </table>
-        <button class="button play-button" @click="startGame(starship.publicId); hideNavbar()">Play</button>
+        <button class="button play-button" @click="startGame(starship.publicId)">Play</button>
 
       </div>
     </div>
