@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { showNavbar } from '@/components/navbar/state';
 
 // API methods
 import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
@@ -239,7 +238,6 @@ async function updateFuelLeft() {
 function stopGame() {
 
   emit('gameStop');
-  showNavbar();
   enginesOn.value = false;
   clearTimeout(enginesTimeoutId);
   clearTimeout(alertTimeout);
