@@ -56,6 +56,13 @@ main {
   margin-top: 50px;
 }
 
+@media screen and (min-width: 900px) {
+  main {
+    margin: 0;
+    margin-left: 201px;
+  }
+}
+
 @media (max-width: 480px) {
   main {
     padding-bottom: 0;

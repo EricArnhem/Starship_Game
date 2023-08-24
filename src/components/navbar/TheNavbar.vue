@@ -92,6 +92,20 @@ nav {
   cursor: pointer;
 }
 
+/* On screens smaller than 900px in width */
+@media screen and (min-width: 900px) {
+
+  /* Hide top navbar and remove close button on sidebar */
+  .nav-topbar,
+  #close-sidebar-button {
+    display: none;
+  }
+
+  .navbar-brand {
+    justify-content: center;
+  }
+}
+
 #navigation-links {
   list-style: none;
   margin: 0;
