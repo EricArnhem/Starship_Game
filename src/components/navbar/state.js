@@ -1,6 +1,15 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
-export const navbarCollapsed = ref(false);
+export const windowWidth = ref(window.innerWidth)
+
+const handleResize = () => {
+  windowWidth.value = window.innerWidth
+}
+
+// Updates window width and height variable on window resize
+window.addEventListener('resize', handleResize);
+
+export const navbarCollapsed = ref(true);
 
 // Toggles the navbar state
 export const toggleNavbar = () => (navbarCollapsed.value = !navbarCollapsed.value);
@@ -19,3 +28,12 @@ export const NAVBAR_MARGIN_COLLAPSED = -210;
 export const navbarMargin = computed(
   () => `${navbarCollapsed.value ? NAVBAR_MARGIN_COLLAPSED : NAVBAR_MARGIN}px`
 );
+
+// Shows side navbar if screen is over 900px in width
+watch(windowWidth, (newWidth) => {
+  if (newWidth > 900) {
+    navbarCollapsed.value = false;
+  } else {
+    navbarCollapsed.value = true;
+  }
+}, { immediate: true })
