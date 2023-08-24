@@ -1,20 +1,26 @@
 <script setup>
+import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { toggleNavbar, navbarMargin } from './state';
+import { toggleNavbar, navbarMargin, windowWidth } from './state';
+
+// -- Computed properties --
+const smallScreenLayout = computed(() => {
+  return (windowWidth.value <= 900) ? true : false;
+});
+
 </script>
 
 <template>
-
   <nav>
 
-    <div class="nav-topbar">
+    <div class="nav-topbar" v-if="smallScreenLayout">
       <img id="open-sidebar-button" src="@/images/hamburger-menu.svg" @click="toggleNavbar" />
       <span class="brand-name">Starship Game</span>
     </div>
 
     <div class="nav-sidebar" :style="{ 'margin-left': navbarMargin }">
       <div class="navbar-brand">
-        <img id="close-sidebar-button" src="@/images/xmark.svg" @click="toggleNavbar" />
+        <img id="close-sidebar-button" src="@/images/xmark.svg" @click="toggleNavbar" v-if="smallScreenLayout" />
         <span class="brand-name">Starship Game</span>
       </div>
       <ul id="navigation-links">
@@ -74,6 +80,16 @@ nav {
   border-bottom: 1px solid var(--main-border-color);
 }
 
+@media screen and (min-width: 901px) {
+  .nav-sidebar {
+    position: relative;
+  }
+
+  .navbar-brand {
+    justify-content: center;
+  }
+}
+
 .brand-name {
   border-bottom: 2px solid;
   border-image: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%) 1;
@@ -92,19 +108,6 @@ nav {
   cursor: pointer;
 }
 
-/* On screens smaller than 900px in width */
-@media screen and (min-width: 900px) {
-
-  /* Hide top navbar and remove close button on sidebar */
-  .nav-topbar,
-  #close-sidebar-button {
-    display: none;
-  }
-
-  .navbar-brand {
-    justify-content: center;
-  }
-}
 
 #navigation-links {
   list-style: none;

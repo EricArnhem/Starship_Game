@@ -56,10 +56,9 @@ main {
   margin-top: 50px;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 901px) {
   main {
     margin: 0;
-    margin-left: 201px;
   }
 }
 
