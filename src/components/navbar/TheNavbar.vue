@@ -1,7 +1,17 @@
 <script setup>
-import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
-import { toggleNavbar, navbarMargin, windowWidth } from './state';
+import { computed, watch } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
+import { toggleNavbar, hideNavbar, navbarMargin, windowWidth } from './state';
+
+const route = useRoute();
+
+// -- Watchers --
+// Hides navbar (sidebar) on route change (click on router link)
+watch(() => route.name, () => {
+  if (smallScreenLayout.value) {
+    hideNavbar();
+  }
+})
 
 // -- Computed properties --
 const smallScreenLayout = computed(() => {
