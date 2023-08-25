@@ -1,9 +1,33 @@
 <script setup>
-import { computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { toggleNavbar, hideNavbar, navbarMargin, windowWidth } from './state';
 
 const route = useRoute();
+
+const hideTopbar = ref(false);
+
+onMounted(() => {
+  // Hides topbar on scroll down / Shows on scroll up
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    // Offset by which we need to scroll down before the navbar hides/shows
+    if (Math.abs(window.scrollY - lastScrollY) < 15) {
+      return
+    }
+
+    if (lastScrollY < window.scrollY) {
+      // If we scroll down
+      hideTopbar.value = true;
+    } else {
+      // If we scroll up
+      hideTopbar.value = false;
+    }
+
+    lastScrollY = window.scrollY;
+  });
+})
 
 // -- Watchers --
 // Hides navbar (sidebar) on route change (click on router link)
@@ -23,7 +47,7 @@ const smallScreenLayout = computed(() => {
 <template>
   <nav>
 
-    <div class="nav-topbar" v-if="smallScreenLayout">
+    <div class="nav-topbar" :class="(hideTopbar) ? 'nav-topbar-hidden' : ''" v-if="smallScreenLayout">
       <img id="open-sidebar-button" src="@/images/hamburger-menu.svg" @click="toggleNavbar" />
       <span class="brand-name">Starship Game</span>
     </div>
@@ -61,13 +85,20 @@ nav {
 .nav-topbar {
   z-index: 100;
   position: fixed;
-  height: 50px;
+  top: 0;
+  height: var(--nav-topbar-height);
   width: 100%;
   display: flex;
   align-items: center;
   background-color: var(--main-bg-color);
   border-bottom: 1px solid var(--main-border-color);
   box-shadow: 0 1px 1px var(--main-border-color);
+  transition: transform 0.2s ease-in-out;
+}
+
+.nav-topbar-hidden {
+  transform: translate3d(0, -100%, 0);
+  box-shadow: none;
 }
 
 .nav-sidebar {

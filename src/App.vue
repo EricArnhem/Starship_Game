@@ -30,6 +30,7 @@ import TheNavbar from './components/navbar/TheNavbar.vue';
   --button-bg-hover-color: #3a3a3a;
   --button-bg-active-color: #474747;
   --table-bg-color: #242424;
+  --nav-topbar-height: 50px;
 }
 
 body {
@@ -53,7 +54,7 @@ main {
   flex-direction: column;
   padding-bottom: 30px;
   /* Compensate for the navbar height */
-  margin-top: 50px;
+  margin-top: var(--nav-topbar-height);
 }
 
 @media screen and (min-width: 901px) {
