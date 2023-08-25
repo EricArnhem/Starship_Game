@@ -31,7 +31,7 @@ function startGame(starshipPublicId) {
   // Sends event to start the game
   emit('gameStart');
 
-  // Hides navbar on small screens
+  // Hides sidebar on small screens
   if (windowWidth.value <= 900) {
     hideNavbar();
   }
