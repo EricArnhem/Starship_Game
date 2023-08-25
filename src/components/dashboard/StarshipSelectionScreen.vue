@@ -36,6 +36,9 @@ function startGame(starshipPublicId) {
     hideNavbar();
   }
 
+  // Scrolls to top of the page
+  window.scrollTo({ top: 0 });
+
 }
 
 // Returns the starship class color by providing the classID
