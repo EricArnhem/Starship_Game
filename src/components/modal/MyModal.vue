@@ -78,7 +78,7 @@ const router = useRouter();
 }
 
 /* Media query for mobile */
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .modal-container {
     border: 1px solid var(--main-border-color);
     border-radius: 10px;

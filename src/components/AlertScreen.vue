@@ -80,7 +80,7 @@ defineExpose({
   text-align: center;
 }
 
-@media (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   #alert-display {
     width: 70%;
   }

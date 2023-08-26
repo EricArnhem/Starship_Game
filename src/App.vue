@@ -65,7 +65,7 @@ main {
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   main {
     padding-bottom: 0;
   }
@@ -164,7 +164,7 @@ h3 {
   max-width: 650px;
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .content-box {
     margin: 0;
     border-left: 0;

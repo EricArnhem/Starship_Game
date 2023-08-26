@@ -369,7 +369,7 @@ watch(enginesOn, (enginesOn) => {
 }
 
 /* Small screens style */
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   #starship-data {
     flex-wrap: wrap;
   }
@@ -396,7 +396,7 @@ watch(enginesOn, (enginesOn) => {
 }
 
 /* Larger buttons on tablets and mobile devices */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   #starship-command-buttons button {
     width: 40% !important;
   }

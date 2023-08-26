@@ -335,7 +335,7 @@ watch(modalOpen, (modalOpen) => {
 }
 
 /* Changes for mobile version */
-@media (max-width: 355px) {
+@media screen and (max-width: 355px) {
   #create-starship-card {
     max-width: 240px;
   }

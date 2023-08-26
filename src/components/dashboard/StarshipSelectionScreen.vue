@@ -171,7 +171,7 @@ h2 {
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   h2 {
     margin-left: 15px;
     margin-right: 15px;

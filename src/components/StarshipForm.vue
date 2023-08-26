@@ -505,7 +505,7 @@ select {
   font-family: inherit;
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   button[type="submit"] {
     width: 100%;
   }
@@ -578,7 +578,7 @@ select {
 }
 
 /* Changes for mobile version */
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   #submit-buttons-group>#starship-create-update-button {
     margin-right: 35px;
   }
