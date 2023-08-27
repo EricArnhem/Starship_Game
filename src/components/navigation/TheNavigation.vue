@@ -7,8 +7,9 @@ const route = useRoute();
 
 const hideTopbar = ref(false);
 
-onMounted(() => {
-  // Hides topbar on scroll down / Shows on scroll up
+// Hides topbar on scroll down / Shows on scroll up
+const toggleTopbarOnScroll = () => {
+
   let lastScrollY = window.scrollY;
 
   window.addEventListener("scroll", () => {
@@ -27,6 +28,11 @@ onMounted(() => {
 
     lastScrollY = window.scrollY;
   });
+
+}
+
+onMounted(() => {
+  toggleTopbarOnScroll();
 })
 
 // -- Watchers --
