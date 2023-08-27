@@ -47,12 +47,12 @@ const smallScreenLayout = computed(() => {
 <template>
   <nav>
 
-    <div class="nav-topbar" :class="(hideTopbar) ? 'nav-topbar-hidden' : ''" v-if="smallScreenLayout">
+    <div id="nav-topbar" :class="(hideTopbar) ? 'nav-topbar-hidden' : ''" v-if="smallScreenLayout">
       <img id="open-sidebar-button" src="@/images/hamburger-menu.svg" @click="toggleNavbar" />
       <span class="brand-name">Starship Game</span>
     </div>
 
-    <div class="nav-sidebar" :style="{ 'margin-left': navbarMargin }">
+    <div id="nav-sidebar" :style="{ 'margin-left': navbarMargin }">
       <div class="navbar-brand">
         <img id="close-sidebar-button" src="@/images/xmark.svg" @click="toggleNavbar" v-if="smallScreenLayout" />
         <span class="brand-name">Starship Game</span>
@@ -82,7 +82,7 @@ nav {
   height: 100%;
 }
 
-.nav-topbar {
+#nav-topbar {
   z-index: 100;
   position: fixed;
   top: 0;
@@ -98,10 +98,10 @@ nav {
 
 .nav-topbar-hidden {
   transform: translate3d(0, -100%, 0);
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
-.nav-sidebar {
+#nav-sidebar {
   z-index: 101;
   position: fixed;
   height: 100vh;
@@ -122,7 +122,7 @@ nav {
 }
 
 @media screen and (min-width: 901px) {
-  .nav-sidebar {
+  #nav-sidebar {
     position: relative;
   }
 
