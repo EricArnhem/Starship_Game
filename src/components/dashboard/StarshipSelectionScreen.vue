@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { hideNavbar, windowWidth } from '@/components/navbar/state';
+import { hideNavbar, windowWidth } from '@/components/navigation/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
 
