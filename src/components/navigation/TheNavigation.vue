@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
-import { toggleNavbar, hideNavbar, navbarMargin, windowWidth } from './state';
+import { toggleSideNav, hideSideNav, sideNavMargin, windowWidth } from './state';
 
 const route = useRoute();
 
@@ -12,7 +12,7 @@ onMounted(() => {
   let lastScrollY = window.scrollY;
 
   window.addEventListener("scroll", () => {
-    // Offset by which we need to scroll down before the navbar hides/shows
+    // Offset by which we need to scroll down before the topbar hides/shows
     if (Math.abs(window.scrollY - lastScrollY) < 15) {
       return
     }
@@ -30,10 +30,10 @@ onMounted(() => {
 })
 
 // -- Watchers --
-// Hides navbar (sidebar) on route change (click on router link)
+// Hides side navigation on route change (click on router link)
 watch(() => route.name, () => {
   if (smallScreenLayout.value) {
-    hideNavbar();
+    hideSideNav();
   }
 })
 
@@ -48,13 +48,13 @@ const smallScreenLayout = computed(() => {
   <nav>
 
     <div id="nav-topbar" :class="(hideTopbar) ? 'nav-topbar-hidden' : ''" v-if="smallScreenLayout">
-      <img id="open-sidebar-button" src="@/images/hamburger-menu.svg" @click="toggleNavbar" />
+      <img id="open-sidenav-button" src="@/images/hamburger-menu.svg" @click="toggleSideNav" />
       <span class="brand-name">Starship Game</span>
     </div>
 
-    <div id="nav-sidebar" :style="{ 'margin-left': navbarMargin }">
-      <div class="navbar-brand">
-        <img id="close-sidebar-button" src="@/images/xmark.svg" @click="toggleNavbar" v-if="smallScreenLayout" />
+    <div id="nav-sidenav" :style="{ 'margin-left': sideNavMargin }">
+      <div class="nav-brand">
+        <img id="close-sidenav-button" src="@/images/xmark.svg" @click="toggleSideNav" v-if="smallScreenLayout" />
         <span class="brand-name">Starship Game</span>
       </div>
       <ul id="navigation-links">
@@ -101,7 +101,7 @@ nav {
   box-shadow: none !important;
 }
 
-#nav-sidebar {
+#nav-sidenav {
   z-index: 101;
   position: fixed;
   height: 100vh;
@@ -114,7 +114,7 @@ nav {
   transition: margin 0.5s ease;
 }
 
-.navbar-brand {
+.nav-brand {
   display: flex;
   height: 50px;
   align-items: center;
@@ -122,11 +122,11 @@ nav {
 }
 
 @media screen and (min-width: 901px) {
-  #nav-sidebar {
+  #nav-sidenav {
     position: relative;
   }
 
-  .navbar-brand {
+  .nav-brand {
     justify-content: center;
   }
 }
@@ -137,13 +137,13 @@ nav {
   padding-bottom: 3px;
 }
 
-#open-sidebar-button {
+#open-sidenav-button {
   height: 100%;
   margin: 0 10px;
   cursor: pointer;
 }
 
-#close-sidebar-button {
+#close-sidenav-button {
   height: 75%;
   margin: 0 10px;
   cursor: pointer;

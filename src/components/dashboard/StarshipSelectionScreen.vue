@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { hideNavbar, windowWidth } from '@/components/navigation/state';
+import { hideSideNav, windowWidth } from '@/components/navigation/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
 
@@ -31,9 +31,9 @@ function startGame(starshipPublicId) {
   // Sends event to start the game
   emit('gameStart');
 
-  // Hides sidebar on small screens
+  // Hides side navigation on small screens
   if (windowWidth.value <= 900) {
-    hideNavbar();
+    hideSideNav();
   }
 
   // Scrolls to top of the page

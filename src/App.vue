@@ -55,7 +55,7 @@ main {
   flex: auto;
   flex-direction: column;
   padding-bottom: 30px;
-  /* Compensate for the navbar height */
+  /* Compensate for the topbar height */
   margin-top: var(--nav-topbar-height);
 }
 
@@ -73,7 +73,6 @@ main {
 
 h1 {
   text-align: center;
-  /* Padding equal to the width of the open/close navbar button */
   padding-left: 35px;
   padding-right: 35px;
 }

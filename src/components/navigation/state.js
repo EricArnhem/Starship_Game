@@ -9,31 +9,31 @@ const handleResize = () => {
 // Updates window width and height variable on window resize
 window.addEventListener('resize', handleResize);
 
-export const navbarCollapsed = ref(true);
+export const sideNavCollapsed = ref(true);
 
-// Toggles the navbar state
-export const toggleNavbar = () => (navbarCollapsed.value = !navbarCollapsed.value);
+// Toggles the side navigation state
+export const toggleSideNav = () => (sideNavCollapsed.value = !sideNavCollapsed.value);
 
-// Shows the navbar
-export const showNavbar = () => (navbarCollapsed.value = false);
+// Shows the side navigation
+export const showSideNav = () => (sideNavCollapsed.value = false);
 
-// Hides the navbar
-export const hideNavbar = () => (navbarCollapsed.value = true);
+// Hides the side navigation
+export const hideSideNav = () => (sideNavCollapsed.value = true);
 
 // Margins sizes when collapsed or not
-export const NAVBAR_MARGIN = 0;
-export const NAVBAR_MARGIN_COLLAPSED = -210;
+export const SIDENAV_MARGIN = 0;
+export const SIDENAV_MARGIN_COLLAPSED = -210;
 
-// Calculate which margin value to use depending on the navbar status
-export const navbarMargin = computed(
-  () => `${navbarCollapsed.value ? NAVBAR_MARGIN_COLLAPSED : NAVBAR_MARGIN}px`
+// Calculate which margin value to use depending on the side navigation status
+export const sideNavMargin = computed(
+  () => `${sideNavCollapsed.value ? SIDENAV_MARGIN_COLLAPSED : SIDENAV_MARGIN}px`
 );
 
-// Shows side navbar if screen is over 900px in width
+// Shows side navigation if screen is over 900px in width
 watch(windowWidth, (newWidth) => {
   if (newWidth > 900) {
-    navbarCollapsed.value = false;
+    sideNavCollapsed.value = false;
   } else {
-    navbarCollapsed.value = true;
+    sideNavCollapsed.value = true;
   }
 }, { immediate: true })
