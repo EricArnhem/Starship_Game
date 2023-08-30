@@ -73,8 +73,9 @@ main {
 
 h1 {
   text-align: center;
-  padding-left: 35px;
-  padding-right: 35px;
+  padding-left: 30px;
+  padding-right: 30px;
+  max-width: 60vw;
 }
 
 h2 {
