@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   starshipStats: Object,
@@ -11,23 +11,17 @@ const emit = defineEmits([
   'selectedStarshipId'
 ]);
 
-const starshipName = ref(props.starshipStats.name);
-const starshipFuelLeft = ref(props.starshipStats.fuelLeft);
-const starshipPublicId = ref(props.starshipStats.publicId);
-
-const classList = ref(props.starshipClassesList);
-const classId = ref(props.starshipStats.starshipClassId);
-
-const showPlayButton = ref(props.showPlayButton);
-
 // -- Computed properties --
 
 const starshipClassColor = computed(() => {
 
-  if (classList.value && classId.value) {
+  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+
+    let classList = props.starshipClassesList;
+    let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
-    const starshipClass = classList.value.find(element => element.id === classId.value);
+    const starshipClass = classList.find(element => element.id === classId);
 
     // If the class has been found
     if (starshipClass) {
@@ -41,10 +35,13 @@ const starshipClassColor = computed(() => {
 
 const starshipClassName = computed(() => {
 
-  if (classList.value && classId.value) {
+  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+
+    let classList = props.starshipClassesList;
+    let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
-    const starshipClass = classList.value.find(element => element.id === classId.value);
+    const starshipClass = classList.find(element => element.id === classId);
 
     // If the class has been found
     if (starshipClass) {
@@ -58,10 +55,13 @@ const starshipClassName = computed(() => {
 
 const starshipClassSpeed = computed(() => {
 
-  if (classList.value && classId.value) {
+  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+
+    let classList = props.starshipClassesList;
+    let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
-    const starshipClass = classList.value.find(element => element.id === classId.value);
+    const starshipClass = classList.find(element => element.id === classId);
 
     // If the class has been found
     if (starshipClass) {
@@ -75,10 +75,13 @@ const starshipClassSpeed = computed(() => {
 
 const starshipClassFuelCapacity = computed(() => {
 
-  if (classList.value && classId.value) {
+  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+
+    let classList = props.starshipClassesList;
+    let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
-    const starshipClass = classList.value.find(element => element.id === classId.value);
+    const starshipClass = classList.find(element => element.id === classId);
 
     // If the class has been found
     if (starshipClass) {
@@ -97,7 +100,7 @@ const starshipClassFuelCapacity = computed(() => {
     class="starship-card"
     :style="{ '--card-corner-color': starshipClassColor }">
 
-    <span class="starship-card-title">{{ starshipName }}</span>
+    <span class="starship-card-title">{{ starshipStats.name }}</span>
     <table class="starship-card-stats">
       <tbody>
         <tr>
@@ -114,14 +117,14 @@ const starshipClassFuelCapacity = computed(() => {
         </tr>
         <tr>
           <td>Fuel left</td>
-          <td>{{ starshipFuelLeft }} kg</td>
+          <td>{{ starshipStats.fuelLeft }} kg</td>
         </tr>
       </tbody>
      </table>
     <button
       v-if="showPlayButton"
       class="button play-button" 
-      @click="emit('selectedStarshipId', starshipPublicId)"
+      @click="emit('selectedStarshipId', starshipStats.publicId)"
     >
       Play
     </button>
