@@ -277,17 +277,6 @@ watch(modalOpen, (modalOpen) => {
   }
 }
 
-/* Colored corners depending on the starship class */
-.starship-card:after {
-  content: "";
-  position: absolute;
-  margin: -50px;
-  width: 60px;
-  height: 60px;
-  transform: rotate(45deg);
-  background-color: var(--card-corner-color);
-}
-
 /* Removes the corner on the Create starship card */
 #create-starship-card:after {
   content: none;
