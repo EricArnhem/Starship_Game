@@ -10,6 +10,7 @@ import { getStarshipClasses } from "@/api/methods/starship-class.js";
 import StarshipForm from '@/components/StarshipForm.vue';
 import ClassesLegend from '@/components/ClassesLegend.vue';
 import StarshipCard from '@/components/cards/StarshipCard.vue';
+import CreateStarshipCard from '@/components/cards/CreateStarshipCard.vue';
 
 import MyModal from '@/components/modal/MyModal.vue';
 import { modalOpen, openModal } from '@/components/modal/state';
@@ -207,13 +208,9 @@ watch(modalOpen, (modalOpen) => {
       @selected-starship-id="(starshipId) => startGame(starshipId)"
     />
 
-    <div
-      class="starship-card"
-      id="create-starship-card"
-      @click="openCreateForm(); router.push('/manage-starships/create')">
-      <span id="create-starship-card-title">Create a new Starship</span>
-      <img id="plus-svg" src="@/images/plus.svg" title="Create a new Starship" alt="Plus icon">
-    </div>
+    <CreateStarshipCard 
+      @click="openCreateForm(); router.push('/manage-starships/create')" 
+    />
 
   </div>
 
@@ -254,34 +251,6 @@ watch(modalOpen, (modalOpen) => {
 </template>
 
 <style scoped>
-#create-starship-card {
-  justify-content: center;
-  min-height: 245px;
-}
-
-#create-starship-card-title {
-  text-align: center;
-  font-size: 1.4em;
-  font-weight: bold;
-}
-
-#plus-svg {
-  margin-top: 20px;
-  height: 85px;
-}
-
-/* Changes for mobile version */
-@media screen and (max-width: 355px) {
-  #create-starship-card {
-    max-width: 240px;
-  }
-}
-
-/* Removes the corner on the Create starship card */
-#create-starship-card:after {
-  content: none;
-}
-
 .form-error {
   color: #ED4337;
   font-size: 14px;
@@ -294,8 +263,7 @@ watch(modalOpen, (modalOpen) => {
   margin-top: 10px;
 }
 
-#submit-result,
-#delete-error {
+#submit-result {
   font-size: 16px;
   margin-top: 20px;
   text-align: center;
