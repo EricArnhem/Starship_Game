@@ -3,7 +3,8 @@ import { ref, computed } from 'vue';
 
 const props = defineProps({
   starshipStats: Object,
-  starshipClassesList: Array
+  starshipClassesList: Array,
+  showPlayButton: Boolean
 });
 
 const emit = defineEmits([
@@ -16,6 +17,8 @@ const starshipPublicId = ref(props.starshipStats.publicId);
 
 const classList = ref(props.starshipClassesList);
 const classId = ref(props.starshipStats.starshipClassId);
+
+const showPlayButton = ref(props.showPlayButton);
 
 // -- Computed properties --
 
@@ -115,7 +118,13 @@ const starshipClassFuelCapacity = computed(() => {
         </tr>
       </tbody>
      </table>
-    <button class="button play-button" @click="emit('selectedStarshipId', starshipPublicId)">Play</button>
+    <button
+      v-if="showPlayButton"
+      class="button play-button" 
+      @click="emit('selectedStarshipId', starshipPublicId)"
+    >
+      Play
+    </button>
 
     </div>
 

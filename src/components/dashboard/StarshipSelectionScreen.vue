@@ -82,6 +82,7 @@ const displayStarshipList = computed(() => {
         :key="starship.publicId"
         :starship-stats="starship"
         :starship-classes-list="starshipClassesList" 
+        :show-play-button="true"
         @selected-starship-id="(starshipId) => startGame(starshipId)"
       />
 
