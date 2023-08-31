@@ -109,11 +109,6 @@ h2 {
   padding-bottom: 15px;
 }
 
-.play-button {
-  margin-top: 20px;
-  cursor: pointer;
-}
-
 @media screen and (max-width: 480px) {
   h2 {
     margin-left: 15px;

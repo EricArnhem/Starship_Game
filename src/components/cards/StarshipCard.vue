@@ -208,4 +208,9 @@ const starshipClassFuelCapacity = computed(() => {
   transform: rotate(45deg);
   background-color: var(--card-corner-color);
 }
+
+.play-button {
+  margin-top: 20px;
+  cursor: pointer;
+}
 </style>
