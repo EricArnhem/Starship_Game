@@ -14,7 +14,7 @@ import TheNavigation from './components/navigation/TheNavigation.vue';
 </template>
 
 <style>
-@import url(@/css/starship-cards.css);
+@import url(@/css/cards.css);
 
 @font-face {
   font-family: "Rubik";

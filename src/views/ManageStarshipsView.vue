@@ -196,7 +196,7 @@ watch(modalOpen, (modalOpen) => {
   :starship-list="state.starshipList"
   @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
 
-  <div class="starship-cards-container">
+  <div class="cards-container">
 
     <StarshipCard 
       v-for="(starship) in displayStarshipList"
@@ -251,6 +251,10 @@ watch(modalOpen, (modalOpen) => {
 </template>
 
 <style scoped>
+.card:hover {
+  cursor: pointer;
+}
+
 .form-error {
   color: #ED4337;
   font-size: 14px;

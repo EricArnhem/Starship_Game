@@ -75,7 +75,7 @@ const displayStarshipList = computed(() => {
     :starship-list="starshipList"
     @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
 
-    <div class="starship-cards-container">
+    <div class="cards-container">
       
       <StarshipCard 
         v-for="(starship) in displayStarshipList"
@@ -104,8 +104,7 @@ h2 {
   margin-bottom: 15px;
 }
 
-.starship-card {
-  cursor: initial;
+.card {
   padding-bottom: 15px;
 }
 

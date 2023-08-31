@@ -97,11 +97,11 @@ const starshipClassFuelCapacity = computed(() => {
 
 <template>
   <div
-    class="starship-card"
+    class="card starship-card"
     :style="{ '--card-corner-color': starshipClassColor }">
 
-    <span class="starship-card-title">{{ starshipStats.name }}</span>
-    <table class="starship-card-stats">
+    <span class="card-title">{{ starshipStats.name }}</span>
+    <table class="card-stats-table">
       <tbody>
         <tr>
           <td>Class</td>
@@ -133,74 +133,7 @@ const starshipClassFuelCapacity = computed(() => {
 
 </template>
 
-<style>
-/* -- Starships cards -- */
-.starship-card {
-  background-color: var(--content-box-bg-color);
-  border: 1px solid var(--main-border-color);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  width: 275px;
-  padding: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-}
-
-.starship-card:hover {
-  cursor: pointer;
-  transform: translate(5px, -5px);
-  filter: drop-shadow(-8px 8px 1px var(--main-border-color));
-  transition: 200ms;
-}
-
-/* Card title */
-.starship-card-title {
-  text-align: center;
-  font-size: 1.4em;
-  font-weight: bold;
-  border-bottom: 1px solid var(--main-border-color);
-  padding-bottom: 5px;
-}
-
-/* Stats table */
-.starship-card-stats {
-  margin-top: 16px;
-  border-collapse: collapse;
-}
-
-/* Table borders */
-.starship-card-stats tr:not(:last-of-type) {
-  border-bottom: 1px solid var(--main-border-color);
-}
-
-.starship-card-stats td:first-of-type {
-  border-right: 1px solid var(--main-border-color);
-  font-weight: bold;
-}
-
-/* Padding and text alignment */
-.starship-card-stats td {
-  padding: 10px 3px;
-}
-
-.starship-card-stats td:last-of-type {
-  text-align: right;
-}
-
-/* Changes for mobile version */
-@media screen and (max-width: 355px) {
-  .starship-card {
-    width: auto;
-    min-width: 200px;
-    max-width: 275px;
-  }
-}
-
+<style scoped>
 /* Colored corners depending on the starship class */
 .starship-card:after {
   content: "";
