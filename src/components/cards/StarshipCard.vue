@@ -1,9 +1,8 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 
 const props = defineProps({
   starshipStats: Object,
-  starshipClassesList: Array,
   showPlayButton: Boolean
 });
 
@@ -11,13 +10,15 @@ const emit = defineEmits([
   'selectedStarshipId'
 ]);
 
+const starshipClassesList = inject('starshipClassesList');
+
 // -- Computed properties --
 
 const starshipClassColor = computed(() => {
 
-  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+  if (starshipClassesList.value && props.starshipStats.starshipClassId) {
 
-    let classList = props.starshipClassesList;
+    let classList = starshipClassesList.value;
     let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
@@ -35,9 +36,9 @@ const starshipClassColor = computed(() => {
 
 const starshipClassName = computed(() => {
 
-  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+  if (starshipClassesList.value && props.starshipStats.starshipClassId) {
 
-    let classList = props.starshipClassesList;
+    let classList = starshipClassesList.value;
     let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
@@ -55,9 +56,9 @@ const starshipClassName = computed(() => {
 
 const starshipClassSpeed = computed(() => {
 
-  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+  if (starshipClassesList.value && props.starshipStats.starshipClassId) {
 
-    let classList = props.starshipClassesList;
+    let classList = starshipClassesList.value;
     let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id
@@ -75,9 +76,9 @@ const starshipClassSpeed = computed(() => {
 
 const starshipClassFuelCapacity = computed(() => {
 
-  if (props.starshipClassesList && props.starshipStats.starshipClassId) {
+  if (starshipClassesList.value && props.starshipStats.starshipClassId) {
 
-    let classList = props.starshipClassesList;
+    let classList = starshipClassesList.value;
     let classId = props.starshipStats.starshipClassId;
 
     // Get the starship class from its id

@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { reactive, ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted, provide } from 'vue'
 
 // API methods
 import { getStarships } from "@/api/methods/starship.js";
@@ -18,10 +18,12 @@ import { modalOpen, openModal } from '@/components/modal/state';
 const route = useRoute();
 const router = useRouter();
 
-const state = reactive({
-  starshipClassesList: [],
-  starshipList: []
-})
+const starshipClassesList = ref([]);
+const starshipList = ref([]);
+
+// Provide the starship list and classes list to all child components
+provide('starshipClassesList', starshipClassesList);
+provide('starshipList', starshipList);
 
 const showModalForm = ref(true);
 const showSubmitResult = ref(false);
@@ -41,7 +43,7 @@ onMounted(() => {
   // Getting the starship classes
   getStarshipClasses()
     .then(response => {
-      state.starshipClassesList = response.data;
+      starshipClassesList.value = response.data;
     })
     .catch(error => {
       console.log(error);
@@ -50,7 +52,7 @@ onMounted(() => {
   // Getting the starships
   getStarships()
     .then(response => {
-      state.starshipList = response.data;
+      starshipList.value = response.data;
     })
     .catch(error => {
       console.log(error);
@@ -72,7 +74,7 @@ const formStarshipClass = ref('');
 function refreshStarshipsList() {
   getStarships()
     .then(response => {
-      state.starshipList = response.data;
+      starshipList.value = response.data;
     })
     .catch(error => {
       console.log(error);
@@ -95,11 +97,11 @@ function clearSubmitResult() {
 // Opens the Update form with the correct starship values
 function openUpdateForm(starshipPublicId, starshipClassId) {
   // If the starship publicId provided has a matching starship
-  if (state.starshipList.find(element => element.publicId === starshipPublicId)) {
+  if (starshipList.value.find(element => element.publicId === starshipPublicId)) {
     // We give the starship's info to the form variables
     formStarshipPublicId.value = starshipPublicId;
-    formStarshipName.value = state.starshipList.find(element => element.publicId === starshipPublicId).name;
-    formStarshipClass.value = state.starshipClassesList.find(element => element.id === starshipClassId).name;
+    formStarshipName.value = starshipList.value.find(element => element.publicId === starshipPublicId).name;
+    formStarshipClass.value = starshipClassesList.value.find(element => element.id === starshipClassId).name;
 
     clearSubmitResult();
 
@@ -164,7 +166,7 @@ const displayStarshipList = computed(() => {
   if (filteredStarshipList.value.length === 0) {
 
     // Returns the full starship list (original)
-    return state.starshipList;
+    return starshipList.value;
 
   } else {
     // If a class filter a selected
@@ -191,9 +193,7 @@ watch(modalOpen, (modalOpen) => {
 
 <template>
   <h1>Manage your Starships</h1>
-  <ClassesLegend 
-  :starship-classes-list="state.starshipClassesList" 
-  :starship-list="state.starshipList"
+  <ClassesLegend
   @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
 
   <div class="cards-container">
@@ -203,7 +203,6 @@ watch(modalOpen, (modalOpen) => {
       @click="openUpdateForm(starship.publicId, starship.starshipClassId)"
       :key="starship.publicId"
       :starship-stats="starship"
-      :starship-classes-list="state.starshipClassesList" 
       :show-play-button="false"
       @selected-starship-id="(starshipId) => startGame(starshipId)"
     />
@@ -225,7 +224,7 @@ watch(modalOpen, (modalOpen) => {
       <template #body>
 
         <StarshipForm
-          :starship-classes-list="state.starshipClassesList"
+          :starship-classes-list="starshipClassesList"
           :update-form="updateForm"
           :form-starship-public-id="formStarshipPublicId"
           :form-starship-name="formStarshipName"
@@ -234,7 +233,7 @@ watch(modalOpen, (modalOpen) => {
           @starship-updated="handleSubmitResult"
           @starship-deleted="handleSubmitResult"
           @clear-submit-result="clearSubmitResult"
-          v-if="state.starshipClassesList.length && showModalForm" />
+          v-if="starshipClassesList.length && showModalForm" />
 
         <span
           id="submit-result"

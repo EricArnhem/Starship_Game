@@ -1,14 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-
-const props = defineProps({
-  starshipClassesList: Array,
-  starshipList: Array
-})
+import { ref, inject } from 'vue';
 
 const emit = defineEmits([
   'starshipListFilter'
 ]);
+
+const starshipClassesList = inject('starshipClassesList');
+const starshipList = inject('starshipList');
 
 const selectedClassId = ref(0);
 
@@ -48,10 +46,8 @@ function filterStarshipList(classId) {
 
   } else {
 
-    let starshipList = props.starshipList;
-
     // Get a filtered list containing only starships of the selected class
-    const filteredList = starshipList.filter((starship) => starship.starshipClassId === classId);
+    const filteredList = starshipList.value.filter((starship) => starship.starshipClassId === classId);
 
     // Send that list to the parent component
     emit('starshipListFilter', filteredList);

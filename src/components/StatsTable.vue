@@ -1,29 +1,30 @@
 <script setup>
-import { computed, watch } from 'vue';
+import { computed, watch, inject } from 'vue';
 import { animateNumber } from '@/components/dashboard/animate-number.js';
 
 const props = defineProps({
   starshipInfo: Object,
-  starshipClassesList: Array,
   refuelAnimationData: Object
 });
+
+const starshipClassesList = inject('starshipClassesList');
 
 // -- Computed properties --
 
 const starshipClassColor = computed(() => {
-  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).color;
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).color;
 });
 
 const starshipClassName = computed(() => {
-  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).name;
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).name;
 });
 
 const starshipClassSpeed = computed(() => {
-  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).speed;
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).speed;
 });
 
 const starshipClassFuelCapacity = computed(() => {
-  return props.starshipClassesList.find(element => element.id === props.starshipInfo.starshipClassId).fuelCapacity;
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).fuelCapacity;
 });
 
 // -- Watchers --

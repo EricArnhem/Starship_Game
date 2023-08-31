@@ -8,8 +8,7 @@ import AlertScreen from '@/components/AlertScreen.vue';
 import StatsTable from '@/components/StatsTable.vue';
 
 const props = defineProps({
-  starshipInfo: Object,
-  starshipClassesList: Array
+  starshipInfo: Object
 });
 
 const emit = defineEmits(['gameStop']);
@@ -302,7 +301,6 @@ watch(enginesOn, (enginesOn) => {
       <h3>{{ starshipInfo.name }}</h3>
       <StatsTable
         :starship-info="starshipInfo"
-        :starship-classes-list="starshipClassesList" 
         :refuel-animation-data="refuelAnimationData"/>
 
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>

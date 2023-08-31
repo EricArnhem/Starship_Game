@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, provide } from 'vue';
 
 // API methods
 import { getStarships } from "@/api/methods/starship.js";
@@ -10,10 +10,12 @@ import StarshipSelectionScreen from '@/components/dashboard/StarshipSelectionScr
 import StarshipInGameScreen from '@/components/dashboard/StarshipInGameScreen.vue';
 
 // Starships Data
-const state = reactive({
-  starshipClassesList: [],
-  starshipList: []
-})
+const starshipClassesList = ref([]);
+const starshipList = ref([]);
+
+// Provide the starship list and classes list to all child components
+provide('starshipClassesList', starshipClassesList);
+provide('starshipList', starshipList);
 
 const inGame = ref(false);
 
@@ -26,7 +28,7 @@ onBeforeMount(() => {
   // Getting the starship classes
   getStarshipClasses()
     .then(response => {
-      state.starshipClassesList = response.data;
+      starshipClassesList.value = response.data;
     })
     .catch(error => {
       console.log(error);
@@ -35,7 +37,7 @@ onBeforeMount(() => {
   // Getting the starships
   getStarships()
     .then(response => {
-      state.starshipList = response.data;
+      starshipList.value = response.data;
     })
     .catch(error => {
       console.log(error);
@@ -51,8 +53,6 @@ onBeforeMount(() => {
   <div v-if="inGame === false">
 
     <StarshipSelectionScreen
-      :starship-classes-list="state.starshipClassesList"
-      :starship-list="state.starshipList"
       @game-start="inGame = true"
       @selected-starship-info="(selectedStarshipInfo) => starshipInfo = selectedStarshipInfo" />
 
@@ -64,7 +64,6 @@ onBeforeMount(() => {
 
     <StarshipInGameScreen
       :starship-info="starshipInfo"
-      :starship-classes-list="state.starshipClassesList"
       @game-stop="inGame = false" />
 
   </div>

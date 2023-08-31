@@ -1,19 +1,16 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { hideSideNav, windowWidth } from '@/components/navigation/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
 import StarshipCard from '@/components/cards/StarshipCard.vue';
 
-const props = defineProps({
-  starshipClassesList: Array,
-  starshipList: Array
-});
-
 const emit = defineEmits([
   'gameStart',
   'selectedStarshipInfo'
 ]);
+
+const starshipList = inject('starshipList');
 
 const selectedStarshipInfo = ref({});
 
@@ -25,7 +22,7 @@ let filteredStarshipList = ref([]);
 function startGame(starshipPublicId) {
 
   // Gets the data for the selected starship using the publicID
-  selectedStarshipInfo.value = props.starshipList.find(element => element.publicId === starshipPublicId);
+  selectedStarshipInfo.value = starshipList.value.find(element => element.publicId === starshipPublicId);
   // Sends event with the starship data 
   emit('selectedStarshipInfo', selectedStarshipInfo.value);
 
@@ -50,7 +47,7 @@ const displayStarshipList = computed(() => {
   if (filteredStarshipList.value.length === 0) {
 
     // Returns the full starship list (original)
-    return props.starshipList;
+    return starshipList.value;
 
   } else {
     // If a class filter a selected
@@ -70,9 +67,7 @@ const displayStarshipList = computed(() => {
 
     <h1>Starship Game</h1>
     <h2>Select a Starship to start the game</h2>
-    <ClassesLegend 
-    :starship-classes-list="starshipClassesList" 
-    :starship-list="starshipList"
+    <ClassesLegend
     @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
 
     <div class="cards-container">
@@ -81,7 +76,6 @@ const displayStarshipList = computed(() => {
         v-for="(starship) in displayStarshipList"
         :key="starship.publicId"
         :starship-stats="starship"
-        :starship-classes-list="starshipClassesList" 
         :show-play-button="true"
         @selected-starship-id="(starshipId) => startGame(starshipId)"
       />
