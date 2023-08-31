@@ -78,8 +78,8 @@ const displayStarshipList = computed(() => {
     <div class="starship-cards-container">
       
       <StarshipCard 
-        v-for="(starship, index) in displayStarshipList"
-        :key="index"
+        v-for="(starship) in displayStarshipList"
+        :key="starship.publicId"
         :starship-stats="starship"
         :starship-classes-list="starshipClassesList" 
         @selected-starship-id="(starshipId) => startGame(starshipId)"
