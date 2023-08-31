@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { hideSideNav, windowWidth } from '@/components/navigation/state';
 
 import ClassesLegend from '@/components/ClassesLegend.vue';
+import StarshipCard from '@/components/cards/StarshipCard.vue';
 
 const props = defineProps({
   starshipClassesList: Array,
@@ -41,46 +42,6 @@ function startGame(starshipPublicId) {
 
 }
 
-// Returns the starship class color by providing the classID
-function getStarshipClassColor(starshipClassId) {
-
-  // If the array is not empty (prevents error when array is briefly empty)
-  if (props.starshipClassesList.length) {
-    return props.starshipClassesList.find(element => element.id === starshipClassId).color;
-  }
-
-}
-
-// Returns the starship class name by providing the classID
-function getStarshipClassName(starshipClassId) {
-
-  // If the array is not empty (prevents error when array is briefly empty)
-  if (props.starshipClassesList.length) {
-    return props.starshipClassesList.find(element => element.id === starshipClassId).name;
-  }
-
-}
-
-// Returns the starship class speed by providing the classID
-function getStarshipClassSpeed(starshipClassId) {
-
-  // If the array is not empty (prevents error when array is briefly empty)
-  if (props.starshipClassesList.length) {
-    return props.starshipClassesList.find(element => element.id === starshipClassId).speed;
-  }
-
-}
-
-// Returns the starship class fuel capacity by providing the classID
-function getStarshipClassFuelCapacity(starshipClassId) {
-
-  // If the array is not empty (prevents error when array is briefly empty)
-  if (props.starshipClassesList.length) {
-    return props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
-  }
-
-}
-
 // -- Computed properties --
 
 const displayStarshipList = computed(() => {
@@ -113,36 +74,17 @@ const displayStarshipList = computed(() => {
     :starship-classes-list="starshipClassesList" 
     :starship-list="starshipList"
     @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
+
     <div class="starship-cards-container">
-      <div
-        class="starship-card"
+      
+      <StarshipCard 
         v-for="(starship, index) in displayStarshipList"
         :key="index"
-        :style="{ '--card-corner-color': getStarshipClassColor(starship.starshipClassId) }">
-        <span class="starship-card-title">{{ starship.name }}</span>
-        <table class="starship-card-stats">
-          <tbody>
-            <tr>
-              <td>Class</td>
-              <td>{{ getStarshipClassName(starship.starshipClassId) }}</td>
-            </tr>
-            <tr>
-              <td>Speed</td>
-              <td>{{ getStarshipClassSpeed(starship.starshipClassId) }} km/h</td>
-            </tr>
-            <tr>
-              <td>Fuel capacity</td>
-              <td>{{ getStarshipClassFuelCapacity(starship.starshipClassId) }} kg</td>
-            </tr>
-            <tr>
-              <td>Fuel left</td>
-              <td>{{ starship.fuelLeft }} kg</td>
-            </tr>
-          </tbody>
-        </table>
-        <button class="button play-button" @click="startGame(starship.publicId)">Play</button>
+        :starship-stats="starship"
+        :starship-classes-list="starshipClassesList" 
+        @selected-starship-id="(starshipId) => startGame(starshipId)"
+      />
 
-      </div>
     </div>
 
   </div>
@@ -176,16 +118,5 @@ h2 {
     margin-left: 15px;
     margin-right: 15px;
   }
-}
-
-/* Colored corners depending on the starship class */
-.starship-card:after {
-  content: "";
-  position: absolute;
-  margin: -50px;
-  width: 60px;
-  height: 60px;
-  transform: rotate(45deg);
-  background-color: var(--card-corner-color);
 }
 </style>
