@@ -60,7 +60,6 @@ async function checkNameAvailability() {
       if (result.status === 200) {
 
         isNameAvailable.value = false;
-        console.log('Name not available');
 
       }
 
@@ -68,7 +67,6 @@ async function checkNameAvailability() {
       if (error.response.status === 404) {
 
         isNameAvailable.value = true;
-        console.log('Name available');
 
       } else {
         console.log(error);
