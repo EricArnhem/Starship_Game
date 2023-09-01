@@ -55,9 +55,7 @@ main {
 
 h1 {
   text-align: center;
-  padding-left: 30px;
-  padding-right: 30px;
-  max-width: 60vw;
+  max-width: 90vw;
 }
 
 h2 {
