@@ -4,6 +4,7 @@ import { ref, computed, watch, inject } from 'vue';
 // API methods
 import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
 
+// Vue components
 import AlertScreen from '@/components/AlertScreen.vue';
 import StatsTable from '@/components/StatsTable.vue';
 
@@ -11,7 +12,10 @@ const props = defineProps({
   starshipInfo: Object
 });
 
-const emit = defineEmits(['gameStop']);
+const emit = defineEmits([
+  'gameStop'
+]);
+
 const starshipClassesList = inject('starshipClassesList');
 
 const rawStarshipInfo = ref(props.starshipInfo);
@@ -32,11 +36,11 @@ let refuelAnimationData = ref({});
 // Used to import the displayAlert() function
 const myAlertScreen = ref(null);
 
+// -- Methods --
+
 function displayAlert(textString) {
   myAlertScreen.value.displayAlert(textString);
 }
-
-// -- Methods --
 
 function startEngines() {
 
@@ -292,23 +296,43 @@ watch(enginesOn, (enginesOn) => {
   <AlertScreen ref="myAlertScreen"/>
 
   <div id="starship-data" class="content-box">
-    <a id="go-back-button"
-     @click="stopGame()" 
-     title="Go back to the starship selection">
-     <img src="@/images/chevron-back.svg">
+
+    <a 
+      id="go-back-button"
+      @click="stopGame()" 
+      title="Go back to the starship selection" 
+    >
+      <img src="@/images/chevron-back.svg">
     </a>
+
     <div id="starship-info">
 
       <h3>{{ starshipInfo.name }}</h3>
       <StatsTable
         :starship-info="starshipInfo"
-        :refuel-animation-data="refuelAnimationData"/>
+        :refuel-animation-data="refuelAnimationData" 
+      />
 
       <p class="text-center">Engines: <span id="starship-engines-status">{{ enginesStatus }}</span></p>
 
       <div class="text-center" id="starship-command-buttons">
-        <button class="button" :disabled="enginesOccupied" @click="enginesOn === false ? startEngines() : stopEngines()">{{ enginesButtonText }}</button>
-        <button class="button" :disabled="enginesOccupied" @click="refuelStarship()">Refuel</button>
+
+        <button 
+          class="button" 
+          :disabled="enginesOccupied" 
+          @click="enginesOn === false ? startEngines() : stopEngines()"
+        >
+          {{ enginesButtonText }}
+        </button>
+
+        <button 
+          class="button" 
+          :disabled="enginesOccupied" 
+          @click="refuelStarship()"
+        >
+          Refuel
+        </button>
+        
       </div>
 
     </div>

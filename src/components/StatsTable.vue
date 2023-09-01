@@ -28,6 +28,7 @@ const starshipClassFuelCapacity = computed(() => {
 });
 
 // -- Watchers --
+
 // Animate the fuelLeft value when the props containing the animation data changes
 watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   const fuelLeftElement = document.getElementById('stats-fuel-left');

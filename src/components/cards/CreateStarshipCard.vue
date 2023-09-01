@@ -4,7 +4,12 @@
 <template>
   <div id="create-starship-card" class="card">
     <span id="create-starship-card-title">Create a new Starship</span>
-    <img id="plus-svg" src="@/images/plus.svg" title="Create a new Starship" alt="Plus icon">
+    <img 
+      id="plus-svg" 
+      src="@/images/plus.svg" 
+      title="Create a new Starship" 
+      alt="Plus icon"
+    >
    </div>
 </template>
 

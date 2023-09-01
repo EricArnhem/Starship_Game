@@ -31,11 +31,14 @@ const toggleTopbarOnScroll = () => {
 
 }
 
+// -- Lifecycle Hooks --
+
 onMounted(() => {
   toggleTopbarOnScroll();
 })
 
 // -- Watchers --
+
 // Hides side navigation on route change (click on router link)
 watch(() => route.name, () => {
   if (smallScreenLayout.value) {
@@ -44,6 +47,7 @@ watch(() => route.name, () => {
 })
 
 // -- Computed properties --
+
 const smallScreenLayout = computed(() => {
   return (windowWidth.value <= 900) ? true : false;
 });
@@ -54,13 +58,22 @@ const smallScreenLayout = computed(() => {
   <nav>
 
     <div id="nav-topbar" :class="(hideTopbar) ? 'nav-topbar-hidden' : ''" v-if="smallScreenLayout">
-      <img id="open-sidenav-button" src="@/images/hamburger-menu.svg" @click="toggleSideNav" />
+      <img 
+        id="open-sidenav-button" 
+        src="@/images/hamburger-menu.svg" 
+        @click="toggleSideNav" 
+      />
       <span class="brand-name">Starship Game</span>
     </div>
 
     <div id="nav-sidenav" :style="{ 'margin-left': sideNavMargin }">
       <div class="nav-brand">
-        <img id="close-sidenav-button" src="@/images/xmark.svg" @click="toggleSideNav" v-if="smallScreenLayout" />
+        <img 
+          id="close-sidenav-button" 
+          src="@/images/xmark.svg" 
+          @click="toggleSideNav" 
+          v-if="smallScreenLayout" 
+        />
         <span class="brand-name">Starship Game</span>
       </div>
       <ul id="navigation-links">

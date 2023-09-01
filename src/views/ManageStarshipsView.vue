@@ -1,6 +1,6 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { ref, watch, computed, onMounted, provide } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
+import { ref, watch, computed, onMounted, provide } from 'vue';
 
 // API methods
 import { getStarships } from "@/api/methods/starship.js";
@@ -18,6 +18,7 @@ import { modalOpen, openModal } from '@/components/modal/state';
 const route = useRoute();
 const router = useRouter();
 
+// Starships Data
 const starshipClassesList = ref([]);
 const starshipList = ref([]);
 
@@ -33,7 +34,16 @@ let submitResultStatus = ref('');
 
 let filteredStarshipList = ref([]);
 
-// When component is mounted
+// true if the form is in update mode
+const updateForm = ref(false);
+
+// Values used to fill the form
+const formStarshipPublicId = ref(''); // Used to select the starship to update
+const formStarshipName = ref('');
+const formStarshipClass = ref('');
+
+// -- Lifecycle Hooks --
+
 onMounted(() => {
   // Checks if we accessed the create path and if so opens the Create form modal
   if (route.path === '/manage-starships/create') {
@@ -59,15 +69,6 @@ onMounted(() => {
     });
 
 });
-
-// true if the form is in update mode
-const updateForm = ref(false);
-
-
-// Values used to fill the form
-const formStarshipPublicId = ref(''); // Used to select the starship to update
-const formStarshipName = ref('');
-const formStarshipClass = ref('');
 
 // -- Methods --
 
@@ -193,8 +194,10 @@ watch(modalOpen, (modalOpen) => {
 
 <template>
   <h1>Manage your Starships</h1>
+  
   <ClassesLegend
-  @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
+    @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" 
+  />
 
   <div class="cards-container">
 
@@ -233,12 +236,14 @@ watch(modalOpen, (modalOpen) => {
           @starship-updated="handleSubmitResult"
           @starship-deleted="handleSubmitResult"
           @clear-submit-result="clearSubmitResult"
-          v-if="starshipClassesList.length && showModalForm" />
+          v-if="starshipClassesList.length && showModalForm" 
+        />
 
         <span
           id="submit-result"
           :class="{ 'form-success': submitResultStatus === 200, 'form-error': submitResultStatus !== 200 }"
-          v-if="showSubmitResult">
+          v-if="showSubmitResult"
+        >
           {{ submitResultMessage }}
         </span>
 

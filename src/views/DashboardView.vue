@@ -22,7 +22,8 @@ const inGame = ref(false);
 // Informations of the starship selected to play (from emit)
 const starshipInfo = ref({});
 
-// Before the component is to be mounted
+// -- Lifecycle Hooks --
+
 onBeforeMount(() => {
 
   // Getting the starship classes
@@ -54,7 +55,8 @@ onBeforeMount(() => {
 
     <StarshipSelectionScreen
       @game-start="inGame = true"
-      @selected-starship-info="(selectedStarshipInfo) => starshipInfo = selectedStarshipInfo" />
+      @selected-starship-info="(selectedStarshipInfo) => starshipInfo = selectedStarshipInfo" 
+    />
 
   </div>
 
@@ -64,7 +66,8 @@ onBeforeMount(() => {
 
     <StarshipInGameScreen
       :starship-info="starshipInfo"
-      @game-stop="inGame = false" />
+      @game-stop="inGame = false" 
+    />
 
   </div>
 

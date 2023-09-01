@@ -5,6 +5,7 @@ const emit = defineEmits([
   'starshipListFilter'
 ]);
 
+// Starships Data
 const starshipClassesList = inject('starshipClassesList');
 const starshipList = inject('starshipList');
 
@@ -65,13 +66,16 @@ function filterStarshipList(classId) {
       :class="{ 'highlight-class': selectedClassId === starshipClass.id }"
       v-for="(starshipClass) in starshipClassesList"
       :key="starshipClass.id"
-      @click="checkClassId(starshipClass.id)">
+      @click="checkClassId(starshipClass.id)"
+    >
+
       <span>{{ starshipClass.name }}</span>
       <div
         class="starship-class-color"
-        :style="{ '--starship-class-color': starshipClass.color }">
-
+        :style="{ '--starship-class-color': starshipClass.color }"
+      >
       </div>
+      
     </div>
   </div>
 </template>

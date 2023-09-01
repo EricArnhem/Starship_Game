@@ -99,7 +99,8 @@ const starshipClassFuelCapacity = computed(() => {
 <template>
   <div
     class="card starship-card"
-    :style="{ '--card-corner-color': starshipClassColor }">
+    :style="{ '--card-corner-color': starshipClassColor }" 
+  >
 
     <span class="card-title">{{ starshipStats.name }}</span>
     <table class="card-stats-table">

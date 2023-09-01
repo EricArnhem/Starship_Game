@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { modalOpen, closeModal } from '@/components/modal/state';
+import { modalOpen, closeModal } from './state';
 
 const route = useRoute();
 const router = useRouter();
@@ -18,7 +18,13 @@ const router = useRouter();
             <h2>
               <slot name="title"></slot>
             </h2>
-            <img src="@/images/close-cross.svg" alt="Close cross" title="Close" @click="closeModal(); router.push(route.matched[0])" id="modal-close-cross">
+            <img 
+              id="modal-close-cross"
+              src="@/images/close-cross.svg" 
+              title="Close" 
+              alt="Close cross" 
+              @click="closeModal(); router.push(route.matched[0])" 
+            >
           </div>
 
           <div class="body-content-box modal-body">

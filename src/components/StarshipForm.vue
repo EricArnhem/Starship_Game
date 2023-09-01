@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed, watch } from 'vue'
+import { reactive, ref, computed, watch } from 'vue';
 
 // API methods
 import { getStarshipByName, createStarship, updateStarship, deleteStarship } from "@/api/methods/starship.js";
@@ -404,7 +404,8 @@ watch(() => starshipClass.value, () => {
       id="starship-name"
       v-model="starshipName"
       v-on:blur="checkNameValidity(), checkNameAvailability();"
-      required>
+      required
+    >
     <span class="form-error" v-if="formErrors.includes('nameError')">Invalid name.</span>
     <span 
       :class="isNameAvailable === true ? 'form-success' : 'form-error'" 
@@ -420,10 +421,16 @@ watch(() => starshipClass.value, () => {
       id="starship-class"
       v-model="starshipClass"
       @change="checkClassValidity();"
-      required>
+      required
+    >
 
       <option disabled value="">Select a class</option>
-      <option v-for="(starshipClass) in starshipClassesList" :key="starshipClass.id">{{ starshipClass.name }}</option>
+      <option 
+        v-for="(starshipClass) in starshipClassesList" 
+        :key="starshipClass.id"
+      >
+        {{ starshipClass.name }}
+      </option>
 
     </select>
 
@@ -454,13 +461,15 @@ watch(() => starshipClass.value, () => {
         class="button" 
         type="submit" 
         :disabled="!isInputModified" 
-        :title="!isInputModified ? 'Starship details need to modified first.' : ''">
+        :title="!isInputModified ? 'Starship details need to modified first.' : ''"
+      >
         {{ props.updateForm === true ? 'Update' : 'Create' }}
       </button>
   
       <StarshipDeleteButton
         @delete-starship="handleDelete()" 
-        v-if="props.updateForm" />
+        v-if="props.updateForm" 
+      />
 
     </div>
 

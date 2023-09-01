@@ -1,6 +1,5 @@
 <script setup>
-// imports ref to make variables reactive
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // Variable that will contain the alert message
 // Made reactive with ref(). Modifiable by updating alertMessage.value
@@ -8,6 +7,8 @@ let alertMessage = ref('');
 
 // Array that stores the setTimeouts for each letter
 let lettersTimeoutsArray = [];
+
+// -- Methods --
 
 // Function used to clear the timeouts and the alert message
 function clearAlert() {

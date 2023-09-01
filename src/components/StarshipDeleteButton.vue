@@ -3,7 +3,9 @@
 // Popover
 import Popper from "vue3-popper";
 
-const emit = defineEmits(['deleteStarship']);
+const emit = defineEmits([
+  'deleteStarship'
+]);
 
 </script>
 
@@ -13,10 +15,11 @@ const emit = defineEmits(['deleteStarship']);
     <Popper arrow placement="bottom">
       <button
         type="button"
-          class="button"
-          id="delete-button"
-          title="Delete the Starship">
-        <img src="@/images/trashcan.svg" alt="trashcan" id="trashcan-svg">
+        class="button"
+        id="delete-button"
+        title="Delete the Starship"
+      >
+        <img id="trashcan-svg" src="@/images/trashcan.svg" alt="trashcan">
       </button>
 
       <template #content="{ close }">
@@ -27,14 +30,16 @@ const emit = defineEmits(['deleteStarship']);
             type="button"
             class="button"
             id="delete-button-yes"
-            @click="emit('deleteStarship')">
+            @click="emit('deleteStarship')"
+          >
             Yes
           </button>
           <button
             type="button"
             class="button"
             id="delete-button-no"
-            @click="close">
+            @click="close"
+          >
             No
           </button>
         </div>

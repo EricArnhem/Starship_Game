@@ -2,6 +2,7 @@
 import { ref, computed, inject } from 'vue';
 import { hideSideNav, windowWidth } from '@/components/navigation/state';
 
+// Vue components
 import ClassesLegend from '@/components/ClassesLegend.vue';
 import StarshipCard from '@/components/cards/StarshipCard.vue';
 
@@ -68,7 +69,8 @@ const displayStarshipList = computed(() => {
     <h1>Starship Game</h1>
     <h2>Select a Starship to start the game</h2>
     <ClassesLegend
-    @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" />
+      @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" 
+    />
 
     <div class="cards-container">
       
