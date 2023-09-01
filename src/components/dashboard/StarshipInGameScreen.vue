@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, inject } from 'vue';
 
 // API methods
 import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
@@ -12,6 +12,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['gameStop']);
+const starshipClassesList = inject('starshipClassesList');
 
 const rawStarshipInfo = ref(props.starshipInfo);
 
@@ -119,7 +120,7 @@ async function refuelStarship() {
 
   // Getting the class fuel capacity
   const starshipClassId = rawStarshipInfo.value.starshipClassId;
-  const fuelCapacity = props.starshipClassesList.find(element => element.id === starshipClassId).fuelCapacity;
+  const fuelCapacity = starshipClassesList.value.find(element => element.id === starshipClassId).fuelCapacity;
 
   // If engines are ON, we turn them OFF
   if (enginesOn.value === true) {
