@@ -109,12 +109,9 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
 }
 
 #starship-stats td:first-of-type {
-  font-weight: bold;
-}
-
-#starship-stats td:first-child {
   /* Prevents double borders in table cells */
   border-right: 0;
+  font-weight: bold;
 }
 
 #starship-stats td:last-of-type {
