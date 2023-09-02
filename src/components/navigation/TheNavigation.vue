@@ -169,7 +169,7 @@ nav {
 
 #nav-sidenav-backdrop {
   z-index: 101;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   left: 0;
