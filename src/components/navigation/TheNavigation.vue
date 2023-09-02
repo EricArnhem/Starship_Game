@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
-import { toggleSideNav, hideSideNav, sideNavMargin, windowWidth } from './state';
+import { toggleSideNav, hideSideNav, sideNavMargin, sideNavCollapsed, windowWidth } from './state';
 
 const route = useRoute();
 
@@ -37,6 +37,12 @@ onMounted(() => {
   toggleTopbarOnScroll();
 })
 
+// -- Computed properties --
+
+const smallScreenLayout = computed(() => {
+  return (windowWidth.value <= 900) ? true : false;
+});
+
 // -- Watchers --
 
 // Hides side navigation on route change (click on router link)
@@ -46,11 +52,14 @@ watch(() => route.name, () => {
   }
 })
 
-// -- Computed properties --
-
-const smallScreenLayout = computed(() => {
-  return (windowWidth.value <= 900) ? true : false;
-});
+// Disables scrolling on the body when sidenav is opened
+watch(() => sideNavCollapsed.value, () => {
+  if (smallScreenLayout.value && (sideNavCollapsed.value === false)) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'visible';
+  }
+})
 
 </script>
 
@@ -92,6 +101,14 @@ const smallScreenLayout = computed(() => {
       </ul>
     </div>
 
+    <div 
+      role="presentation" 
+      id="nav-sidenav-backdrop" 
+      @click="toggleSideNav"
+      v-if="smallScreenLayout && !sideNavCollapsed"
+    >
+    </div>
+
   </nav>
 
 </template>
@@ -121,7 +138,7 @@ nav {
 }
 
 #nav-sidenav {
-  z-index: 101;
+  z-index: 102;
   position: fixed;
   height: 100vh;
   width: 200px;
@@ -131,6 +148,18 @@ nav {
   border-bottom-right-radius: 10px;
   box-shadow: 1px 0 1px var(--main-border-color);
   transition: margin 0.5s ease;
+}
+
+#nav-sidenav-backdrop {
+  z-index: 101;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, .6);
+  transition: opacity .1s ease;
 }
 
 .nav-brand {
