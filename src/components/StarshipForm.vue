@@ -2,7 +2,7 @@
 import { reactive, ref, computed, watch } from 'vue';
 
 // API methods
-import { getStarshipByName, createStarship, updateStarship, deleteStarship } from "@/api/methods/starship.js";
+import { checkStarshipName, createStarship, updateStarship, deleteStarship } from "@/api/methods/starship.js";
 
 // Vue components
 import StarshipDeleteButton from '@/components/StarshipDeleteButton.vue';
@@ -54,23 +54,21 @@ async function checkNameAvailability() {
 
     try {
 
-      let result = await getStarshipByName(desiredStarshipName);
+      let result = await checkStarshipName(desiredStarshipName);
 
       // If a Starship with the provided name already exists
-      if (result.status === 200) {
+      if (result.data.available === false) {
 
         isNameAvailable.value = false;
+
+      } else if (result.data.available === true) {
+
+        isNameAvailable.value = true;
 
       }
 
     } catch (error) {
-      if (error.response.status === 404) {
-
-        isNameAvailable.value = true;
-
-      } else {
-        console.log(error);
-      }
+      console.log(error);
     }
 
   }
