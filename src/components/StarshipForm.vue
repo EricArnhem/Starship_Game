@@ -561,25 +561,54 @@ select {
   margin-top: 15px;
   width: 80%;
   max-width: 300px;
-  border-collapse: collapse;
+  border: 0;
+  border-spacing: 0;
+}
+
+#class-info-table tbody {
+  background-color: var(--table-bg-color);
 }
 
 #class-info-table th,
 #class-info-table td {
   border: 1px solid var(--main-border-color);
-  padding: 10px 5px;
+  /* Prevents double borders in table cells */
+  border-bottom: 0;
+  padding: 10px;
 }
 
 #class-info-table th {
   background-color: v-bind('selectedClassColor');
 }
 
-#class-info-table td {
-  background-color: var(--table-bg-color);
-}
-
 #class-info-table td:first-child {
   font-weight: bold;
+  /* Prevents double borders in table cells */
+  border-right: 0;
+}
+
+/* -- Rounds table corners -- */
+
+/* Top left corner */
+#class-info-table tr:first-of-type th:first-child {
+  border-top-left-radius: var(--stats-table-border-radius);
+}
+
+/* Top right corner */
+#class-info-table tr:first-of-type th:last-child {
+  border-top-right-radius: var(--stats-table-border-radius);
+}
+
+/* Bottom left corner */
+#class-info-table tr:last-of-type td:first-child {
+  border-bottom: 1px solid var(--main-border-color);
+  border-bottom-left-radius: var(--stats-table-border-radius);
+}
+
+/* Bottom right corner */
+#class-info-table tr:last-of-type td:last-child {
+  border-bottom: 1px solid var(--main-border-color);
+  border-bottom-right-radius: var(--stats-table-border-radius);
 }
 
 /* Changes for mobile version */
