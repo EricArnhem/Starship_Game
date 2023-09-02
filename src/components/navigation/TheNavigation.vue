@@ -52,7 +52,7 @@ watch(() => route.name, () => {
   }
 })
 
-// Disables scrolling on the body when sidenav is opened
+// Disables scrolling on the body when sidenav is opened on small screens
 watch(() => sideNavCollapsed.value, () => {
   if (smallScreenLayout.value && (sideNavCollapsed.value === false)) {
     document.body.style.overflow = 'hidden';
