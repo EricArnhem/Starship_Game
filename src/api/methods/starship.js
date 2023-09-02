@@ -20,6 +20,16 @@ export function getStarshipByName(starshipName) {
 }
 
 /**
+ * Checks the availability of a starship name by sending a request to the API.
+ * 
+ * @param {string} starshipName - The name of the starship to check for availability.
+ * @returns {Promise} A Promise that resolves with the API response indicating whether the name is available or not.
+ */
+export function checkStarshipName(starshipName) {
+  return axiosClient.get(`/starship/checkname/${starshipName}`);
+}
+
+/**
  * Creates a new starship using the provided data.
  *
  * @param {object} starshipData - The data for creating the new starship.
