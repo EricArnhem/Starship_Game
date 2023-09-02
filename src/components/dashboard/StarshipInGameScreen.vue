@@ -307,7 +307,7 @@ watch(enginesOn, (enginesOn) => {
 
     <div id="starship-info">
 
-      <h3>{{ starshipInfo.name }}</h3>
+      <h3>Starships stats</h3>
       <StatsTable
         :starship-info="starshipInfo"
         :refuel-animation-data="refuelAnimationData" 

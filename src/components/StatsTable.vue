@@ -45,12 +45,6 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
 <template>
 
   <table id="starship-stats">
-    <thead
-    :style="{ '--starship-class-color': starshipClassColor }">
-      <tr>
-        <th colspan="2">Starship stats</th>
-      </tr>
-    </thead>
     <tbody>
       <tr>
         <td>Name</td>
@@ -58,7 +52,14 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
       </tr>
       <tr>
         <td>Class</td>
-        <td>{{ starshipClassName }}</td>
+        <td>
+          {{ starshipClassName }} 
+          <div
+            class="starship-class-color"
+            :style="{ '--starship-class-color': starshipClassColor }" 
+          >
+          </div>
+        </td>
       </tr>
       <tr>
         <td>Speed</td>
@@ -86,17 +87,15 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   border-spacing: 0;
 }
 
-#starship-stats th,
-#starship-stats td {
-  border: 1px solid var(--main-border-color);
-  border-bottom: 0;
-  padding: 12px 24px;
+#starship-stats tbody {
+  background-color: var(--table-bg-color);
 }
 
-/* Rounds top of the table */
-#starship-stats th {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+#starship-stats td {
+  border: 1px solid var(--main-border-color);
+  /* Prevents double borders in table cells */
+  border-bottom: 0;
+  padding: 12px 24px;
 }
 
 @media screen and (max-width: 480px) {
@@ -104,7 +103,6 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
     width: 95vw;
   }
 
-  #starship-stats th,
   #starship-stats td {
     padding: 12px 12px;
   }
@@ -123,23 +121,37 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   overflow-wrap: anywhere;
 }
 
-/* Rounds bottom left corner of the table */
+/* -- Rounds table corners -- */
+
+/* Top left corner */
+#starship-stats tr:first-of-type td:first-child {
+  border-top-left-radius: 10px;
+}
+
+/* Top right corner */
+#starship-stats tr:first-of-type td:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* Bottom left corner */
 #starship-stats tr:last-of-type td:first-child {
   border-bottom: 1px solid var(--main-border-color);
   border-bottom-left-radius: 10px;
 }
 
-/* Rounds bottom right corner of the table */
+/* Bottom right corner */
 #starship-stats tr:last-of-type td:last-child {
   border-bottom: 1px solid var(--main-border-color);
   border-bottom-right-radius: 10px;
 }
 
-#starship-stats thead {
+.starship-class-color {
+  display: inline-block;
+  vertical-align: middle;
+  height: 13px;
+  width: 13px;
   background-color: var(--starship-class-color);
-}
-
-#starship-stats tbody {
-  background-color: var(--table-bg-color);
+  border: 1px solid black;
+  border-radius: 3px;
 }
 </style>
