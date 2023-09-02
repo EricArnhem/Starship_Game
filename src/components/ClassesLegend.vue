@@ -107,10 +107,12 @@ function filterStarshipList(classId) {
   margin-right: 0;
 }
 
-.starship-class-legend:hover {
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 1px;
-  transition: .1s;
+@media only screen and (min-width: 901px) {
+  .starship-class-legend:hover {
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px;
+    transition: .1s;
+  }
 }
 
 .starship-class-color {
