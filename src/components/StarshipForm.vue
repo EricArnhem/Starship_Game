@@ -430,7 +430,7 @@ watch(() => starshipClass.value, () => {
 
     </select>
 
-    <table v-if="isClassValid" id="selected-class-info-table">
+    <table v-if="isClassValid" id="class-info-table">
       <thead>
         <tr>
           <th colspan="2">{{ starshipClass }} class</th>
@@ -453,7 +453,7 @@ watch(() => starshipClass.value, () => {
     <div id="submit-buttons-group" :class="{ 'added-padding-left': props.updateForm }">
 
       <button 
-        id="starship-create-update-button" 
+        id="create-update-button" 
         class="button" 
         type="submit" 
         :disabled="!isInputModified" 
@@ -545,7 +545,7 @@ select {
   padding-left: 35px;
 }
 
-#submit-buttons-group>#starship-create-update-button {
+#submit-buttons-group>#create-update-button {
   margin-bottom: 0;
 }
 
@@ -556,7 +556,7 @@ select {
 }
 
 /* -- Class info table -- */
-#selected-class-info-table {
+#class-info-table {
   margin: auto;
   margin-top: 15px;
   width: 80%;
@@ -564,21 +564,21 @@ select {
   border-collapse: collapse;
 }
 
-#selected-class-info-table th,
-#selected-class-info-table td {
+#class-info-table th,
+#class-info-table td {
   border: 1px solid var(--main-border-color);
   padding: 10px 5px;
 }
 
-#selected-class-info-table th {
+#class-info-table th {
   background-color: v-bind('selectedClassColor');
 }
 
-#selected-class-info-table td {
+#class-info-table td {
   background-color: var(--table-bg-color);
 }
 
-#selected-class-info-table td:first-child {
+#class-info-table td:first-child {
   font-weight: bold;
 }
 
@@ -588,7 +588,7 @@ select {
     margin-right: 35px;
   }
 
-  #selected-class-info-table {
+  #class-info-table {
     width: 100%;
   }
 }
