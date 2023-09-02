@@ -10,9 +10,9 @@ const router = useRouter();
 
   <Transition name="modal">
 
-    <div class="modal-mask" v-if="modalOpen">
+    <div class="modal-mask" v-if="modalOpen" @click="closeModal()">
       <div class="modal-wrapper">
-        <div class="modal-container content-box">
+        <div class="modal-container content-box" @click.stop>
 
           <div class="modal-header">
             <h2>
@@ -49,7 +49,7 @@ const router = useRouter();
 /* -- Modal styling -- */
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 110;
   top: 0;
   left: 0;
   width: 100%;
