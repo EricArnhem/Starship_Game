@@ -510,12 +510,6 @@ select {
   font-family: inherit;
 }
 
-@media screen and (max-width: 480px) {
-  button[type="submit"] {
-    width: 100%;
-  }
-}
-
 .form-help-text {
   color: rgb(165, 165, 165);
   font-size: 14px;
@@ -613,8 +607,9 @@ select {
 
 /* Changes for mobile version */
 @media screen and (max-width: 480px) {
-  #submit-buttons-group>#starship-create-update-button {
-    margin-right: 35px;
+  #submit-buttons-group>#create-update-button {
+    margin-right: 25px;
+    width: 100%;
   }
 
   #class-info-table {
