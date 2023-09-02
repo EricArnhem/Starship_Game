@@ -125,24 +125,24 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
 
 /* Top left corner */
 #starship-stats tr:first-of-type td:first-child {
-  border-top-left-radius: 10px;
+  border-top-left-radius: var(--stats-table-border-radius);
 }
 
 /* Top right corner */
 #starship-stats tr:first-of-type td:last-child {
-  border-top-right-radius: 10px;
+  border-top-right-radius: var(--stats-table-border-radius);
 }
 
 /* Bottom left corner */
 #starship-stats tr:last-of-type td:first-child {
   border-bottom: 1px solid var(--main-border-color);
-  border-bottom-left-radius: 10px;
+  border-bottom-left-radius: var(--stats-table-border-radius);
 }
 
 /* Bottom right corner */
 #starship-stats tr:last-of-type td:last-child {
   border-bottom: 1px solid var(--main-border-color);
-  border-bottom-right-radius: 10px;
+  border-bottom-right-radius: var(--stats-table-border-radius);
 }
 
 .starship-class-color {

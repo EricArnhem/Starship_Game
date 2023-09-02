@@ -15,6 +15,7 @@
   --button-bg-active-color: #474747;
   --table-bg-color: #242424;
   --nav-topbar-height: 50px;
+  --stats-table-border-radius: 3px;
 }
 
 body {
