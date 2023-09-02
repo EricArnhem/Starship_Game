@@ -40,6 +40,7 @@ main {
   padding-bottom: 30px;
   /* Compensate for the topbar height */
   margin-top: var(--nav-topbar-height);
+  transition: margin-left 0.5s ease;
 }
 
 @media screen and (min-width: 901px) {
