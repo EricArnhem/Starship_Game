@@ -107,7 +107,7 @@ function filterStarshipList(classId) {
   margin-right: 0;
 }
 
-@media only screen and (min-width: 901px) {
+@media screen and (min-width: 901px) {
   .starship-class-legend:hover {
     border-radius: 5px;
     box-shadow: 0px 0px 5px 1px;
