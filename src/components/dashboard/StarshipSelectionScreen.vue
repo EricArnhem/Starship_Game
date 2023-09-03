@@ -96,7 +96,8 @@ const displayStarshipList = computed(() => {
 }
 
 h2 {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 15px;
 }
 
