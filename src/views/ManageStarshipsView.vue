@@ -194,6 +194,7 @@ watch(modalOpen, (modalOpen) => {
 
 <template>
   <h1>Manage your Starships</h1>
+  <h2>Select a Starship to update</h2>
   
   <ClassesLegend
     @starship-list-filter="(filteredList) => filteredStarshipList = filteredList" 
@@ -275,5 +276,18 @@ watch(modalOpen, (modalOpen) => {
   font-size: 16px;
   margin-top: 20px;
   text-align: center;
+}
+
+h2 {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 480px) {
+  h2 {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 }
 </style>
