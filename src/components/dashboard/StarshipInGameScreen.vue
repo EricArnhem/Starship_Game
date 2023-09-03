@@ -337,6 +337,7 @@ watch(enginesOn, (enginesOn) => {
 
     </div>
 
+<!-- HIDDEN UNTIL MORE STATS ARE ADDED FOR ENCOUNTERS TO BE MEANINGFUL
     <div id="starship-encounters">
       <h3>Encounters log</h3>
       <div id="starship-encounters-choices">
@@ -347,7 +348,7 @@ watch(enginesOn, (enginesOn) => {
           <li><button class="button">Option C</button></li>
         </ul>
       </div>
-    </div>
+    </div> -->
 
   </div>
 
@@ -416,6 +417,7 @@ watch(enginesOn, (enginesOn) => {
 #starship-command-buttons button {
   margin: 0 5px;
   width: 20%;
+  max-width: 150px;
 }
 
 /* Larger buttons on tablets and mobile devices */
