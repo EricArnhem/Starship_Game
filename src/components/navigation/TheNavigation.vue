@@ -35,21 +35,6 @@ const toggleTopbarOnScroll = () => {
 
 onMounted(() => {
   toggleTopbarOnScroll();
-
-  // Adds a margin left on main tag to compensate for the navbar on large screens
-  watch(() => smallScreenLayout.value, () => {
-
-    let mainElement = document.querySelector('main');
-    // If large screen
-    if (!smallScreenLayout.value) {
-      mainElement.style.marginLeft = '201px';
-    } else {
-      // If small screen
-      mainElement.style.marginLeft = '0';
-    }
-
-  }, { immediate: true })
-
 })
 
 // -- Computed properties --
@@ -158,9 +143,9 @@ nav {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 200px;
+  width: var(--sidenav-width);
   background-color: var(--main-bg-color);
-  border-right: 1px solid var(--main-border-color);
+  border-right: var(--sidenav-border-width) solid var(--main-border-color);
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 1px 0 1px var(--main-border-color);
