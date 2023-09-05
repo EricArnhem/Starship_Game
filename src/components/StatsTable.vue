@@ -66,12 +66,10 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
         <td>{{ starshipClassSpeed }} km/h</td>
       </tr>
       <tr>
-        <td>Fuel capacity</td>
-        <td>{{ starshipClassFuelCapacity }} kg</td>
-      </tr>
-      <tr>
-        <td>Fuel left</td>
-        <td><span id="stats-fuel-left">{{ starshipInfo.fuelLeft }}</span> kg</td>
+        <td>Fuel</td>
+        <td>
+          <span id="stats-fuel-left">{{ starshipInfo.fuelLeft }}</span>/{{ starshipClassFuelCapacity }} kg
+        </td>
       </tr>
     </tbody>
   </table>
@@ -96,6 +94,7 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   /* Prevents double borders in table cells */
   border-bottom: 0;
   padding: 12px 24px;
+  width: 50%;
 }
 
 @media screen and (max-width: 480px) {

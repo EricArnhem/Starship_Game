@@ -109,17 +109,13 @@ const starshipClassFuelCapacity = computed(() => {
           <td>Class</td>
            <td>{{ starshipClassName }}</td>
         </tr>
-         <tr>
+        <tr>
           <td>Speed</td>
-           <td>{{ starshipClassSpeed }} km/h</td>
-         </tr>
-         <tr>
-           <td>Fuel capacity</td>
-           <td>{{ starshipClassFuelCapacity }} kg</td>
+          <td>{{ starshipClassSpeed }} km/h</td>
         </tr>
         <tr>
-          <td>Fuel left</td>
-          <td>{{ starshipStats.fuelLeft }} kg</td>
+          <td>Fuel</td>
+          <td>{{ `${starshipStats.fuelLeft}/${starshipClassFuelCapacity}` }} kg</td>
         </tr>
       </tbody>
      </table>
