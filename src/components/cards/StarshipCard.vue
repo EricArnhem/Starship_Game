@@ -115,7 +115,7 @@ const starshipClassFuelCapacity = computed(() => {
         </tr>
         <tr>
           <td>Fuel</td>
-          <td>{{ `${starshipStats.fuelLeft}/${starshipClassFuelCapacity}` }} kg</td>
+          <td>{{ `${starshipStats.fuelLeft}/${starshipClassFuelCapacity}` }} L</td>
         </tr>
       </tbody>
      </table>

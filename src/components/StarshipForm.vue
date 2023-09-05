@@ -443,7 +443,7 @@ watch(() => starshipClass.value, () => {
         </tr>
         <tr>
           <td>Fuel capacity</td>
-          <td>{{ selectedClassFuelCapacity }} kg</td>
+          <td>{{ selectedClassFuelCapacity }} L</td>
         </tr>
       </tbody>
     </table>

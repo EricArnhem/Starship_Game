@@ -68,7 +68,7 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
       <tr>
         <td>Fuel</td>
         <td>
-          <span id="stats-fuel-left">{{ starshipInfo.fuelLeft }}</span>/{{ starshipClassFuelCapacity }} kg
+          <span id="stats-fuel-left">{{ starshipInfo.fuelLeft }}</span>/{{ starshipClassFuelCapacity }} L
         </td>
       </tr>
     </tbody>
