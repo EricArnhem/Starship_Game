@@ -337,7 +337,6 @@ watch(enginesOn, (enginesOn) => {
 
     </div>
 
-<!-- HIDDEN UNTIL MORE STATS ARE ADDED FOR ENCOUNTERS TO BE MEANINGFUL
     <div id="starship-encounters">
       <h3>Encounters log</h3>
       <div id="starship-encounters-choices">
@@ -348,7 +347,7 @@ watch(enginesOn, (enginesOn) => {
           <li><button class="button">Option C</button></li>
         </ul>
       </div>
-    </div> -->
+    </div>
 
   </div>
 
