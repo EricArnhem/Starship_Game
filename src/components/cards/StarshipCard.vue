@@ -94,6 +94,26 @@ const starshipClassFuelCapacity = computed(() => {
 
 });
 
+const starshipClassHullPoints = computed(() => {
+
+  if (starshipClassesList.value && props.starshipStats.starshipClassId) {
+
+    let classList = starshipClassesList.value;
+    let classId = props.starshipStats.starshipClassId;
+
+    // Get the starship class from its id
+    const starshipClass = classList.find(element => element.id === classId);
+
+    // If the class has been found
+    if (starshipClass) {
+      return starshipClass.hullPoints;
+    }
+  }
+
+  return '';
+
+});
+
 </script>
 
 <template>
@@ -116,6 +136,14 @@ const starshipClassFuelCapacity = computed(() => {
         <tr>
           <td>Fuel</td>
           <td>{{ `${starshipStats.fuelLeft}/${starshipClassFuelCapacity}` }} L</td>
+        </tr>
+        <tr>
+          <td>Hull condition</td>
+          <td>{{ `${starshipStats.hullPoints}/${starshipClassHullPoints}` }}</td>
+        </tr>
+        <tr>
+          <td>Credits</td>
+          <td>{{ starshipStats.credits }}</td>
         </tr>
       </tbody>
      </table>
