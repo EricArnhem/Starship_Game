@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, inject } from 'vue';
+import { ref, computed, watch, inject, onBeforeUnmount } from 'vue';
 
 // API methods
 import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
@@ -35,6 +35,16 @@ let refuelAnimationData = ref({});
 // Hold the reference to the AlertScreen component
 // Used to import the displayAlert() function
 const myAlertScreen = ref(null);
+
+// -- Lifecycle Hooks --
+
+onBeforeUnmount(() => {
+
+  // Clears timeout when exiting the game
+  clearTimeout(enginesTimeoutId);
+  clearTimeout(alertTimeout);
+
+});
 
 // -- Methods --
 
@@ -243,8 +253,6 @@ function stopGame() {
 
   emit('gameStop');
   enginesOn.value = false;
-  clearTimeout(enginesTimeoutId);
-  clearTimeout(alertTimeout);
 
 }
 
