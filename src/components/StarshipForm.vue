@@ -321,7 +321,7 @@ const selectedClassSpeed = computed(() => {
   }
 });
 
-// Gets the Speed of the selected class
+// Gets the Fuel Capacity of the selected class
 const selectedClassFuelCapacity = computed(() => {
   // If the class is valid and exists
   if (starshipClassesList.find(element => element.name === starshipClass.value)) {
