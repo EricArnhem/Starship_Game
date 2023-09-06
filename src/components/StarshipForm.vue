@@ -331,6 +331,16 @@ const selectedClassFuelCapacity = computed(() => {
   }
 });
 
+// Gets the Hull points of the selected class
+const selectedClassHullPoints = computed(() => {
+  // If the class is valid and exists
+  if (starshipClassesList.find(element => element.name === starshipClass.value)) {
+    return starshipClassesList.find(element => element.name === starshipClass.value).hullPoints;
+  } else {
+    return '';
+  }
+});
+
 // Gets the color of the selected class
 const selectedClassColor = computed(() => {
   // If the class is valid and exists
@@ -444,6 +454,10 @@ watch(() => starshipClass.value, () => {
         <tr>
           <td>Fuel capacity</td>
           <td>{{ selectedClassFuelCapacity }} L</td>
+        </tr>
+        <tr>
+          <td>Hull points</td>
+          <td>{{ selectedClassHullPoints }}</td>
         </tr>
       </tbody>
     </table>
