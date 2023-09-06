@@ -27,6 +27,10 @@ const starshipClassFuelCapacity = computed(() => {
   return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).fuelCapacity;
 });
 
+const starshipClassHullPoints = computed(() => {
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).hullPoints;
+});
+
 // -- Watchers --
 
 // Animate the fuelLeft value when the props containing the animation data changes
@@ -69,6 +73,18 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
         <td>Fuel</td>
         <td>
           <span id="stats-fuel-left">{{ starshipInfo.fuelLeft }}</span>/{{ starshipClassFuelCapacity }} L
+        </td>
+      </tr>
+      <tr>
+        <td>Hull condition</td>
+        <td>
+          {{ starshipInfo.hullPoints }}/{{ starshipClassHullPoints }}
+        </td>
+      </tr>
+      <tr>
+        <td>Credits</td>
+        <td>
+          {{ starshipInfo.credits }}
         </td>
       </tr>
     </tbody>
