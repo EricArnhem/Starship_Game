@@ -91,9 +91,11 @@ watch(locationCount, (count) => {
   if (count > 4) {
     // Resets locationCount
     locationCount.value = 0;
+
     // Moves the ship back to the start without transition
     setTransitionDuration(0);
-    nextLocation();
+    const shipElement = document.getElementById('ship-svg');
+    shipElement.style.transform = 'translateX(0px)';
 
   } else {
     setTimeout(() => {
