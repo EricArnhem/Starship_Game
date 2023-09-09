@@ -9,6 +9,10 @@ const emit = defineEmits([
   'pauseEngines'
 ]);
 
+defineExpose({
+  nextSegment
+});
+
 const starshipClassesList = inject('starshipClassesList');
 
 const segmentCount = ref(0);
@@ -53,6 +57,8 @@ function checkSegmentCount() {
 
     // Increases the location count
     locationCount.value++
+
+    emit('pauseEngines');
 
   }
 

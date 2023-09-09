@@ -37,6 +37,10 @@ let refuelAnimationData = ref({});
 // Used to import the displayAlert() function
 const myAlertScreen = ref(null);
 
+// Hold the reference to the PathTimeline component
+// Used to import the nextSegment() function
+const myPathTimeline = ref(null);
+
 // -- Lifecycle Hooks --
 
 onBeforeUnmount(() => {
@@ -51,6 +55,10 @@ onBeforeUnmount(() => {
 
 function displayAlert(textString) {
   myAlertScreen.value.displayAlert(textString);
+}
+
+function nextSegment() {
+  myPathTimeline.value.nextSegment();
 }
 
 function startEngines() {
@@ -200,6 +208,9 @@ function startFuelTimer() {
   // Starts a timer that will reduce the amount of fuel by the amount set every second if there's enough fuel left
   timerId = setInterval(() => {
 
+    // Calls the method used to animate the starship to the next segment
+    nextSegment();
+
     // If there's enough fuel to travel
     if ((rawStarshipInfo.value.fuelLeft - fuelConsumption) >= 0) {
 
@@ -345,6 +356,7 @@ watch(enginesOn, (enginesOn) => {
       </div>
       
       <PathTimeline
+        ref="myPathTimeline"
         :starship-info="starshipInfo"
         @pause-engines="stopEngines()"
       />
