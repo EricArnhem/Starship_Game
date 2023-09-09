@@ -88,7 +88,7 @@ const shipTransitionDuration = computed(() => {
 watch(locationCount, (count) => {
 
   // If we try to move while on last location
-  if (count > 4) {
+  if (count > 3) {
     // Resets locationCount
     locationCount.value = 0;
 
@@ -138,10 +138,6 @@ watch(() => props.animateShip, () => {
       </div>
       <div class="location">
         <div class="location-dot"></div>
-        <div class="location-path"></div>
-      </div>
-      <div class="location">
-        <div class="location-dot"></div>
       </div>
     </div>
   </div>
@@ -153,7 +149,7 @@ watch(() => props.animateShip, () => {
 <style>
 #timeline {
   --location-dot-size: 30px;
-  --location-path-width: 100px;
+  --location-path-width: 70px;
   --location-dot-color: #2d2d8d;
   --location-dot-center-color: #b8b8b8;
   --location-path-color: #474747;
@@ -164,7 +160,7 @@ watch(() => props.animateShip, () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 30px;
+  margin: 0 15px;
 }
 
 #ship-container {
@@ -207,21 +203,12 @@ watch(() => props.animateShip, () => {
   margin: 0 -2px;
 }
 
-/* Reduces path size on small screens */
-@media screen and (max-width: 600px) {
-
-  #timeline {
-    --location-path-width: 70px;
-    padding: 0;
-  }
-
-}
-
+/* Reduces scale on small screens */
 @media screen and (max-width: 480px) {
 
   #timeline {
-    --location-path-width: 40px;
-    padding: 0 15px;
+    scale: 0.9;
+    margin: 0;
   }
 
 }
