@@ -36,7 +36,7 @@ onUnmounted(() => {
 // Changes the ship transition duration
 function setTransitionDuration(duration) {
 
-  let shipElement = document.getElementById('ship-svg');
+  const shipElement = document.getElementById('ship-svg');
   shipElement.style.transitionDuration = `${duration}s`;
 
 }
@@ -52,10 +52,10 @@ function nextLocation() {
   // -4 to compensate for the margin on .location-path 
   let shipAnimationWidth = (locationDotSize + locationPathWidth - 4) * locationCount.value;
 
-  const ship = document.getElementById('ship-svg');
+  const shipElement = document.getElementById('ship-svg');
 
   // Animation the ship up to the location wanted
-  ship.style.transform = `translateX(${shipAnimationWidth}px)`;
+  shipElement.style.transform = `translateX(${shipAnimationWidth}px)`;
 
   // Pause the engines when we arrived at the location
   shipTransitionTimeout = setTimeout(() => {
