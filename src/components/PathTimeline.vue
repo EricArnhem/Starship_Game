@@ -171,8 +171,6 @@ const pathSegmentWidth = computed(() => {
     </div>
   </div>
 
-  <button @click="nextSegment()" >Move</button>
-
 </template>
 
 <style>
