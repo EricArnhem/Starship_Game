@@ -7,6 +7,7 @@ import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
 // Vue components
 import AlertScreen from '@/components/AlertScreen.vue';
 import StatsTable from '@/components/StatsTable.vue';
+import PathTimeline from '@/components/PathTimeline.vue';
 
 const props = defineProps({
   starshipInfo: Object
@@ -342,7 +343,9 @@ watch(enginesOn, (enginesOn) => {
         </button>
         
       </div>
-
+      
+      <PathTimeline />
+      
     </div>
 
     <div id="starship-encounters">
@@ -358,6 +361,7 @@ watch(enginesOn, (enginesOn) => {
     </div>
 
   </div>
+
 
 </template>
 
