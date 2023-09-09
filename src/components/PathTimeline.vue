@@ -1,4 +1,37 @@
 <script setup>
+import { ref, watch } from 'vue';
+
+const locationCount = ref(0);
+
+// -- Methods --
+
+function nextLocation() {
+
+  let timelineElement = document.getElementById('timeline');
+  // Getting elements sizes from CSS to calculate the distance for the ship to move
+  let locationDotSize = parseInt(getComputedStyle(timelineElement).getPropertyValue("--location-dot-size"));
+  let locationPathWidth = parseInt(getComputedStyle(timelineElement).getPropertyValue("--location-path-width"));
+
+  // -4 to compensate for the margin on .location-path 
+  let shipAnimationWidth = (locationDotSize + locationPathWidth - 4) * locationCount.value;
+
+  const ship = document.getElementById('ship-svg');
+
+  // Animation the ship up to the location wanted
+  ship.style.transform = `translateX(${shipAnimationWidth}px)`;
+
+}
+
+// -- Watchers --
+
+// Resets locationCount when it reaches 5 (trying to move while on last location)
+watch(locationCount, (count) => {
+  if (count > 4) {
+    locationCount.value = 0;
+    nextLocation();
+  }
+});
+
 </script>
 
 <template>
@@ -28,6 +61,8 @@
     </div>
   </div>
 
+  <button @click="locationCount++; nextLocation()" >Move</button>
+
 </template>
 
 <style>
@@ -37,6 +72,8 @@
   --location-dot-color: #2d2d8d;
   --location-dot-center-color: #b8b8b8;
   --location-path-color: #474747;
+  /* -4px to compensate for the margin on .location-path */
+  --ship-animation-width: calc(var(--location-dot-size) + var(--location-path-width) - 4px);
 }
 
 #timeline {
@@ -63,8 +100,7 @@
 }
 
 #ship-svg:hover {
-  /* -4px to compensate for the margin on .location-path */
-  transform: translateX(calc(var(--location-dot-size) + var(--location-path-width) - 4px));
+  transform: translateX(var(--ship-animation-width));
 }
 
 .location {
