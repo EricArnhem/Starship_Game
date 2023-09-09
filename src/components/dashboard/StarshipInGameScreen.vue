@@ -344,7 +344,9 @@ watch(enginesOn, (enginesOn) => {
         
       </div>
       
-      <PathTimeline />
+      <PathTimeline
+        :starship-info="starshipInfo"
+      />
       
     </div>
 

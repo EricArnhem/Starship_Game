@@ -1,10 +1,35 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed, inject, onMounted } from 'vue';
+
+const props = defineProps({
+  starshipInfo: Object
+});
+
+const starshipClassesList = inject('starshipClassesList');
 
 const locationCount = ref(0);
 
+const pathDistance = 15000;
+
+// -- Lifecycle Hooks --
+
+onMounted(() => {
+  // Sets ship transition duration based on the current ship speed
+  setTransitionDuration(shipTransitionDuration.value);
+
+});
+
 // -- Methods --
 
+// Changes the ship transition duration
+function setTransitionDuration(duration) {
+
+  let shipElement = document.getElementById('ship-svg');
+  shipElement.style.transitionDuration = `${duration}s`;
+
+}
+
+// Moves the ship to the next location (dot)
 function nextLocation() {
 
   let timelineElement = document.getElementById('timeline');
@@ -21,6 +46,22 @@ function nextLocation() {
   ship.style.transform = `translateX(${shipAnimationWidth}px)`;
 
 }
+
+// -- Computed properties --
+
+const starshipSpeed = computed(() => {
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).speed;
+});
+
+// Rounded duration used for the ship transition
+const shipTransitionDuration = computed(() => {
+
+  // Path distance / Ship speed
+  let duration = pathDistance / starshipSpeed.value;
+  let roundedDuration = Math.round(duration);
+  return roundedDuration;
+
+});
 
 // -- Watchers --
 
@@ -72,8 +113,6 @@ watch(locationCount, (count) => {
   --location-dot-color: #2d2d8d;
   --location-dot-center-color: #b8b8b8;
   --location-path-color: #474747;
-  /* -4px to compensate for the margin on .location-path */
-  --ship-animation-width: calc(var(--location-dot-size) + var(--location-path-width) - 4px);
 }
 
 #timeline {
@@ -96,11 +135,9 @@ watch(locationCount, (count) => {
   position: absolute;
   left: -12px;
   z-index: 3;
-  transition: transform 1s linear;
-}
-
-#ship-svg:hover {
-  transform: translateX(var(--ship-animation-width));
+  transition-property: transform;
+  transition-timing-function: linear;
+  transition-duration: 1s;
 }
 
 .location {
