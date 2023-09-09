@@ -1,13 +1,11 @@
 <script setup>
-import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
+import { ref, computed, inject, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
-  starshipInfo: Object,
-  animateShip: Boolean
+  starshipInfo: Object
 });
 
 const emit = defineEmits([
-  'resetAnimateShip',
   'pauseEngines'
 ]);
 
@@ -23,9 +21,6 @@ let shipTransitionTimeout;
 // -- Lifecycle Hooks --
 
 onMounted(() => {
-
-  console.log(pathSegmentWidth.value);
-  console.log(pathSegmentsCount.value);
 
   // Put the starship at the start if it was previously moved
   resetStarshipPosition();
@@ -45,42 +40,57 @@ function resetStarshipPosition() {
   shipElement.style.transform = 'translate(0)';
 
   // Set back the default transition duration
-  setTimeout(() => {
+  shipTransitionTimeout = setTimeout(() => {
     shipElement.style.transitionDuration = '1s';
   }, 100);
 }
 
-// Moves the ship to the next location (dot)
-function nextLocation() {
+// Checks segment count and increases the location count if we arrived on a location
+function checkSegmentCount() {
 
-  // If we try to move while on the last location
-  if (locationCount.value > 3) {
+  // Checks if segmentCount is divisible by pathSegmentsCount (example at 2nd location: 4 % 2 = 0)
+  if ((segmentCount.value % pathSegmentsCount.value) === 0) {
+
+    // Increases the location count
+    locationCount.value++
+
+  }
+
+}
+
+// Moves the ship to the next segment
+function nextSegment() {
+
+  // Move the starship back to the start if we are on the last location
+  if (locationCount.value === 3) {
 
     // Resets locationCount
     locationCount.value = 0;
 
-    // Moves the starship back to the start
-    resetStarshipPosition()
-
-  }
-
-  segmentCount.value = segmentCount.value + 1;
-
-  // Checks the segment count value to see if we arrived at a location
-  if (segmentCount.value > pathSegmentsCount.value) {
-    // If we arrived at a location, increases the location count
-    locationCount.value = locationCount.value + 1
-    // Resets the segment count
+    // Resets segmentCount
     segmentCount.value = 0;
+
+    // Moves the starship back to the start
+    resetStarshipPosition();
+
+  } else {
+
+    // Increases segment count by 1
+    segmentCount.value++;
+
+    const shipElement = document.getElementById('ship-svg');
+
+    // Calculates width based on which segment we are on
+    let width = pathSegmentWidth.value * segmentCount.value;
+
+    // Animates the starship to the next segment
+    shipElement.style.transform = `translateX(${width}px)`;
+
+    // Checks the segment count value to see if we arrived at a location
+    // If so increases the location count by 1
+    checkSegmentCount();
+
   }
-
-  const shipElement = document.getElementById('ship-svg');
-
-  // Calculates width based on which segment we are on
-  let width = pathSegmentWidth.value * segmentCount.value;
-
-  // Animates the starship to the next segment
-  shipElement.style.transform = `translateX(${width}px)`;
 
 }
 
@@ -130,20 +140,6 @@ const pathSegmentWidth = computed(() => {
 
 });
 
-
-// -- Watchers --
-
-// When the parent component tells us to start the animation (variable set to true)
-watch(() => props.animateShip, () => {
-  if (props.animateShip === true) {
-    // Starts animation (going to next location)
-    locationCount.value++;
-    nextLocation();
-    // Immediatly resets the variable used to start the animation (back to false)
-    emit('resetAnimateShip');
-  }
-});
-
 </script>
 
 <template>
@@ -169,7 +165,7 @@ watch(() => props.animateShip, () => {
     </div>
   </div>
 
-  <button @click="nextLocation()" >Move</button>
+  <button @click="nextSegment()" >Move</button>
 
 </template>
 
