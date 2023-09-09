@@ -21,6 +21,8 @@ const starshipClassesList = inject('starshipClassesList');
 
 const rawStarshipInfo = ref(props.starshipInfo);
 
+const animateShip = ref(false);
+
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
 const enginesOccupied = ref(false);
@@ -197,6 +199,9 @@ async function refuelStarship() {
 // Decreases the "Fuel left" every second
 function startFuelTimer() {
 
+  // Starts the starship animation
+  animateShip.value = true;
+
   // Starts a timer that will reduce the amount of fuel by the amount set every second if there's enough fuel left
   timerId = setInterval(() => {
 
@@ -346,6 +351,9 @@ watch(enginesOn, (enginesOn) => {
       
       <PathTimeline
         :starship-info="starshipInfo"
+        :animate-ship="animateShip"
+        @reset-animate-ship="animateShip = false"
+        @pause-engines="stopEngines()"
       />
       
     </div>

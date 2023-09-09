@@ -1,15 +1,23 @@
 <script setup>
-import { ref, watch, computed, inject, onMounted } from 'vue';
+import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
-  starshipInfo: Object
+  starshipInfo: Object,
+  animateShip: Boolean
 });
+
+const emit = defineEmits([
+  'resetAnimateShip',
+  'pauseEngines'
+]);
 
 const starshipClassesList = inject('starshipClassesList');
 
 const locationCount = ref(0);
 
 const pathDistance = 15000;
+
+let shipTransitionTimeout;
 
 // -- Lifecycle Hooks --
 
@@ -18,6 +26,10 @@ onMounted(() => {
   setTransitionDuration(shipTransitionDuration.value);
 
 });
+
+onUnmounted(() => {
+  clearTimeout(shipTransitionTimeout);
+})
 
 // -- Methods --
 
@@ -44,6 +56,13 @@ function nextLocation() {
 
   // Animation the ship up to the location wanted
   ship.style.transform = `translateX(${shipAnimationWidth}px)`;
+
+  // Pause the engines when we arrived at the location
+  shipTransitionTimeout = setTimeout(() => {
+
+    emit('pauseEngines');
+
+  }, shipTransitionDuration.value * 1000);
 
 }
 
@@ -83,6 +102,17 @@ watch(locationCount, (count) => {
     }, 100);
   }
 
+});
+
+// When the parent component tells us to start the animation (variable set to true)
+watch(() => props.animateShip, () => {
+  if (props.animateShip === true) {
+    // Starts animation (going to next location)
+    locationCount.value++;
+    nextLocation();
+    // Immediatly resets the variable used to start the animation (back to false)
+    emit('resetAnimateShip');
+  }
 });
 
 </script>
