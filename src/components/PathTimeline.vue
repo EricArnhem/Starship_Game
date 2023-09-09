@@ -65,12 +65,24 @@ const shipTransitionDuration = computed(() => {
 
 // -- Watchers --
 
-// Resets locationCount when it reaches 5 (trying to move while on last location)
+// Resets locationCount and moves ship back to the start 
 watch(locationCount, (count) => {
+
+  // If we try to move while on last location
   if (count > 4) {
+    // Resets locationCount
     locationCount.value = 0;
+    // Moves the ship back to the start without transition
+    setTransitionDuration(0);
     nextLocation();
+
+  } else {
+    setTimeout(() => {
+      // Add back the default transition duration after a timeout otherwise the changed duration gets reverted too quickly
+      setTransitionDuration(shipTransitionDuration.value);
+    }, 100);
   }
+
 });
 
 </script>
