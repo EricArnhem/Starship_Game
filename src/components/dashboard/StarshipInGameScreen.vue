@@ -137,6 +137,17 @@ async function stopEngines() {
 
 }
 
+function pauseEngines() {
+
+  displayAlert('Engines idling...');
+  enginesOn.value = false;
+  enginesStatus.value = 'PAUSED';
+
+  // Save the "Fuel left" value to the database
+  updateFuelLeft();
+
+}
+
 async function refuelStarship() {
 
   const fuelLeft = rawStarshipInfo.value.fuelLeft;
@@ -358,7 +369,7 @@ watch(enginesOn, (enginesOn) => {
       <PathTimeline
         ref="myPathTimeline"
         :starship-info="starshipInfo"
-        @pause-engines="stopEngines()"
+        @pause-engines="pauseEngines()"
       />
       
     </div>
