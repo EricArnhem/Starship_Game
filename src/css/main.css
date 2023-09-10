@@ -116,6 +116,12 @@ h3 {
   transition: 0.1s;
 }
 
+@media screen and (max-width: 900px) {
+  .button:hover:not([disabled]) {
+    background-color: var(--button-bg-color);
+  }
+}
+
 .button:active:not([disabled]) {
   background-color: var(--button-bg-active-color);
   transition: 0.1s;
