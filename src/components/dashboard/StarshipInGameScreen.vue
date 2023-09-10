@@ -148,6 +148,14 @@ function pauseEngines() {
 
 }
 
+function resumeEngines() {
+
+  displayAlert('Engines resuming...');
+  enginesOn.value = true;
+  enginesStatus.value = 'ON';
+
+}
+
 async function refuelStarship() {
 
   const fuelLeft = rawStarshipInfo.value.fuelLeft;
@@ -283,7 +291,32 @@ function stopGame() {
 
 // Gets the right text to update the engines button depending on the engines status
 const enginesButtonText = computed(() => {
-  return enginesOn.value === false ? 'Start' : 'Stop';
+
+  if (enginesOn.value === false && enginesStatus.value === "PAUSED") {
+    return 'Resume';
+  }
+
+  if (enginesOn.value === false && enginesStatus.value === "OFF") {
+    return 'Start';
+  }
+
+  return 'Stop';
+
+});
+
+// Gets the right function to use when clicking on the Start/Stop button
+const enginesButtonFunction = computed(() => {
+
+  if (enginesOn.value === false && enginesStatus.value === "PAUSED") {
+    return resumeEngines;
+  }
+
+  if (enginesOn.value === false && enginesStatus.value === "OFF") {
+    return startEngines;
+  }
+
+  return stopEngines;
+
 });
 
 // Calculates the correct text color when the status changes
@@ -351,7 +384,7 @@ watch(enginesOn, (enginesOn) => {
         <button 
           class="button" 
           :disabled="enginesOccupied" 
-          @click="enginesOn === false ? startEngines() : stopEngines()"
+          @click="enginesButtonFunction"
         >
           {{ enginesButtonText }}
         </button>
