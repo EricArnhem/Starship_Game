@@ -4,6 +4,7 @@ import { ref } from 'vue';
 // API methods
 import { updateStarshipHullPoints, updateStarshipCredits } from "@/api/methods/starship.js";
 
+// Encounters data
 import encountersList from '@/data/encountersList.json';
 
 const props = defineProps({
