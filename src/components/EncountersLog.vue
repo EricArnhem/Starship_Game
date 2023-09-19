@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+
+// API methods
+import { updateStarshipHullPoints, updateStarshipCredits } from "@/api/methods/starship.js";
+
 import encountersList from '@/data/encountersList.json';
 
 const props = defineProps({
@@ -72,6 +76,9 @@ function handleChoice(choice) {
   // Displays the choice result prompt
   encounterPrompt.value = choice.outcome.prompt
 
+  // Saves the updated starship info to the database 
+  saveStarshipInfo();
+
 }
 
 // Updates the starship hull points
@@ -111,6 +118,43 @@ function updateCredits(credits) {
   // If the sum of the credits are superior or equal to 0
   if (creditsSum >= 0) {
     rawStarshipInfo.value.credits += creditsChange;
+  }
+
+}
+
+// Saves the updated starship infos to the database
+async function saveStarshipInfo() {
+
+  let updatedHullPoints = rawStarshipInfo.value.hullPoints;
+  let updatedCredits = rawStarshipInfo.value.credits;
+
+  // Gets starship public id
+  let starshipPublicId = rawStarshipInfo.value.publicId;
+
+  // Saving the starship hull points value to the database
+  const hullPointsData = {
+    hullPoints: updatedHullPoints
+  }
+
+  try {
+
+    await updateStarshipHullPoints(starshipPublicId, hullPointsData);
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  // Saving the starship credits value to the database
+  const creditsData = {
+    credits: updatedCredits
+  }
+
+  try {
+
+    await updateStarshipCredits(starshipPublicId, creditsData);
+
+  } catch (error) {
+    console.log(error);
   }
 
 }
