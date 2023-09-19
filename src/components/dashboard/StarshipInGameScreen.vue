@@ -408,7 +408,9 @@ watch(enginesOn, (enginesOn) => {
       
     </div>
 
-    <EncountersLog />
+    <EncountersLog 
+      :starship-info="starshipInfo"
+    />
 
   </div>
 
