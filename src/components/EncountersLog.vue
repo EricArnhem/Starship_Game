@@ -80,6 +80,9 @@ function handleChoice(choice) {
   // Saves the updated starship info to the database 
   saveStarshipInfo();
 
+  // Clears/Removes the choices buttons
+  encounterChoices.value = [];
+
 }
 
 // Updates the starship hull points
@@ -159,7 +162,6 @@ async function saveStarshipInfo() {
   }
 
 }
-
 
 </script>
 
