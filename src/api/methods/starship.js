@@ -82,6 +82,40 @@ export function updateStarshipFuelLeft(starshipPublicId, starshipData) {
 }
 
 /**
+ * Updates the hull points for a starship using the provided data.
+ * 
+ * @param {string} starshipPublicId - The public ID of the starship of which we want to update the hull points.
+ * @param {object} starshipData - The data for updating the starship's hull points.
+ * @param {number} starshipData.hullPoints - The updated amount of hull points for the starship.
+ * @returns {Promise} A Promise that resolves when the starship hull points is successfully updated or rejects with an error.
+ */
+export function updateStarshipHullPoints(starshipPublicId, starshipData) {
+  return axiosClient.put(`/starship/${starshipPublicId}/hull-points`, starshipData)
+    .catch(error => {
+      console.log(error);
+      // Returning error to display the correct result message to the client
+      return error;
+    })
+}
+
+/**
+ * Updates the credits for a starship using the provided data.
+ * 
+ * @param {string} starshipPublicId - The public ID of the starship of which we want to update the credits.
+ * @param {object} starshipData - The data for updating the starship's credits.
+ * @param {number} starshipData.credits - The updated amount of credits for the starship.
+ * @returns {Promise} A Promise that resolves when the starship credits is successfully updated or rejects with an error.
+ */
+export function updateStarshipCredits(starshipPublicId, starshipData) {
+  return axiosClient.put(`/starship/${starshipPublicId}/credits`, starshipData)
+    .catch(error => {
+      console.log(error);
+      // Returning error to display the correct result message to the client
+      return error;
+    })
+}
+
+/**
  * Deletes the starship with the provided public ID
  * 
  * @param {string} starshipPublicId - The public ID of the starship to delete.
