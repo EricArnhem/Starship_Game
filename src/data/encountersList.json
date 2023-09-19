@@ -1,0 +1,92 @@
+{
+  "friendly": [
+    {
+      "prompt": "Friendly encounter prompt message 1",
+      "choices": [
+        {
+          "id": 1,
+          "text": "Choice text 1",
+          "outcome": {
+            "prompt": "You picked the choice n°1",
+            "hullPoints": 20,
+            "credits": 4000
+          }
+        },
+        {
+          "id": 2,
+          "text": "Choice text 2",
+          "outcome": {
+            "prompt": "You picked the choice n°2",
+            "credits": 1500
+          }
+        }
+      ]
+    },
+    {
+      "prompt": "Friendly encounter prompt message 2",
+      "choices": [
+        {
+          "id": 1,
+          "text": "Choice text 1",
+          "outcome": {
+            "prompt": "You picked the choice n°1",
+            "hullPoints": 10,
+            "credits": 1000
+          }
+        },
+        {
+          "id": 2,
+          "text": "Choice text 2",
+          "outcome": {
+            "prompt": "You picked the choice n°2",
+            "credits": 3333
+          }
+        }
+      ]
+    }
+  ],
+  "enemy": [
+    {
+      "prompt": "Enemy encounter prompt message 1",
+      "choices": [
+        {
+          "id": 1,
+          "text": "Choice text 1",
+          "outcome": {
+            "prompt": "You picked the choice n°1",
+            "hullPoints": -30
+          }
+        },
+        {
+          "id": 2,
+          "text": "Choice text 2",
+          "outcome": {
+            "prompt": "You picked the choice n°2",
+            "credits": 5000
+          }
+        }
+      ]
+    },
+    {
+      "prompt": "Enemy encounter prompt message 2",
+      "choices": [
+        {
+          "id": 1,
+          "text": "Choice text 1",
+          "outcome": {
+            "prompt": "You picked the choice n°1",
+            "hullPoints": -20
+          }
+        },
+        {
+          "id": 2,
+          "text": "Choice text 2",
+          "outcome": {
+            "prompt": "You picked the choice n°2",
+            "credits": 2500
+          }
+        }
+      ]
+    }
+  ]
+}
