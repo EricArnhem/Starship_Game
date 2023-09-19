@@ -53,12 +53,20 @@ function newEncounter() {
 
 }
 
+// TEMPORARY - USED TO TEST
+newEncounter()
+
 // Updates the stats and the prompt depending on the choice button clicked
 function handleChoice(choice) {
 
   // If the choice changes the hullPoints
   if (choice.outcome.hullPoints) {
     updateHullPoints(choice.outcome.hullPoints);
+  }
+
+  // If the choice changes the credits
+  if (choice.outcome.credits) {
+    updateCredits(choice.outcome.credits);
   }
 
   // Displays the choice result prompt
@@ -89,7 +97,24 @@ function updateHullPoints(hullPoints) {
 
 }
 
-newEncounter()
+// Updates the starship credits
+function updateCredits(credits) {
+
+  let creditsChange = credits
+  let creditsSum = rawStarshipInfo.value.credits + creditsChange;
+
+  // If the sum of the credits are under 0. Limits the credits to 0 (min)
+  if (creditsSum < 0) {
+    rawStarshipInfo.value.credits = 0;
+  }
+
+  // If the sum of the credits are superior or equal to 0
+  if (creditsSum >= 0) {
+    rawStarshipInfo.value.credits += creditsChange;
+  }
+
+}
+
 
 </script>
 
