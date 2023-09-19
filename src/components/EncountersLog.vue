@@ -1,16 +1,79 @@
 <script setup>
+import { ref } from 'vue';
+import encountersList from '@/data/encountersList.json';
+
+const encounterPrompt = ref('');
+const encounterChoices = ref([]);
+
+// -- Methods ---
+
+// Returns a random encounter of any type
+function selectEncounter() {
+
+  let encounterType = '';
+
+  const randomNumber = Math.random();
+
+  // Determine the type of the encounter with a 50/50 chance
+  if (randomNumber < 0.5) {
+    encounterType = 'friendly';
+  } else {
+    encounterType = 'enemy';
+  }
+
+  // Get the encounters list of the determined type
+  const encounterTypeList = encountersList[encounterType];
+
+  // Select a random encounter from the list
+  const randomIndex = Math.floor(Math.random() * encounterTypeList.length);
+
+  const randomEncounter = encounterTypeList[randomIndex];
+
+  // Returns the encounter
+  return randomEncounter;
+
+}
+
+// Selects and displays a random encounter
+function newEncounter() {
+
+  // Select a random encounter
+  const encounterData = selectEncounter();
+
+  console.log(encounterData);
+
+  encounterPrompt.value = encounterData.prompt;
+  encounterChoices.value = encounterData.choices;
+
+}
+
+newEncounter()
+
 </script>
 
 <template>
 
   <div id="starship-encounters">
       <h3>Encounters log</h3>
-      <p id="starship-encounters-message">Waiting for an encounter.</p>
-      <ul id="starship-encounters-choices-list">
-        <li><button class="button">Option A</button></li>
-        <li><button class="button">Option B</button></li>
-        <li><button class="button">Option C</button></li>
+
+      <p id="starship-encounters-message">
+        {{ encounterPrompt ? encounterPrompt : 'Waiting for an encounter.' }}
+      </p>
+
+      <ul v-if="encounterChoices" id="starship-encounters-choices-list">
+
+        <li 
+          v-for="choice in encounterChoices"
+          :key="choice.id">
+          
+          <button class="button" @click="encounterPrompt = choice.outcome.prompt">
+            {{ choice.text }}
+          </button>
+
+        </li>
+
       </ul>
+
   </div>
     
 </template>
