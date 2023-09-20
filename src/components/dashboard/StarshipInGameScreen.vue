@@ -42,6 +42,10 @@ const myAlertScreen = ref(null);
 // Used to import the nextSegment() function
 const myPathTimeline = ref(null);
 
+// Hold the reference to the EncountersLog component
+// Used to import the newEncounter() and clearEncounter() functions
+const myEncountersLog = ref(null);
+
 // -- Lifecycle Hooks --
 
 onBeforeUnmount(() => {
@@ -54,6 +58,7 @@ onBeforeUnmount(() => {
 
 // -- Methods --
 
+// Imported functions from child components
 function displayAlert(textString) {
   myAlertScreen.value.displayAlert(textString);
 }
@@ -61,6 +66,16 @@ function displayAlert(textString) {
 function nextSegment() {
   myPathTimeline.value.nextSegment();
 }
+
+function newEncounter() {
+  myEncountersLog.value.newEncounter();
+}
+
+function clearEncounter() {
+  myEncountersLog.value.clearEncounter();
+}
+
+// ----------------------------------------
 
 function startEngines() {
 
@@ -409,6 +424,7 @@ watch(enginesOn, (enginesOn) => {
     </div>
 
     <EncountersLog 
+      ref="myEncountersLog"
       :starship-info="starshipInfo"
     />
 

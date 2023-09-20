@@ -11,6 +11,11 @@ const props = defineProps({
   starshipInfo: Object
 });
 
+defineExpose({
+  newEncounter,
+  clearEncounter
+});
+
 const starshipClassesList = inject('starshipClassesList');
 
 const rawStarshipInfo = ref(props.starshipInfo);
@@ -60,9 +65,6 @@ function newEncounter() {
   encounterChoices.value = encounterData.choices;
 
 }
-
-// TEMPORARY - USED TO TEST
-newEncounter()
 
 // Resets the encounter prompt and choice results
 function clearEncounter() {
