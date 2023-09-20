@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, inject } from 'vue';
 
 // API methods
 import { updateStarshipHullPoints, updateStarshipCredits } from "@/api/methods/starship.js";
@@ -10,6 +10,8 @@ import encountersList from '@/data/encountersList.json';
 const props = defineProps({
   starshipInfo: Object
 });
+
+const starshipClassesList = inject('starshipClassesList');
 
 const rawStarshipInfo = ref(props.starshipInfo);
 
@@ -93,12 +95,13 @@ function handleChoice(choice) {
 // Updates the starship hull points
 function updateHullPoints(hullPoints) {
 
+  let maxHullPoints = starshipMaxHullPoints.value;
   let hullPointsChange = hullPoints
   let hullPointsSum = rawStarshipInfo.value.hullPoints + hullPointsChange;
 
-  // If the sum of the points are over 100. Limits the points to 100 (max)
-  if (hullPointsSum > 100) {
-    rawStarshipInfo.value.hullPoints = 100;
+  // If the sum of the points are over the maximum allowed for the class. Limits the points to the maximum
+  if (hullPointsSum > maxHullPoints) {
+    rawStarshipInfo.value.hullPoints = maxHullPoints;
   }
 
   // If the sum of the points are under 0. Limits the points to 0 (min)
@@ -106,8 +109,8 @@ function updateHullPoints(hullPoints) {
     rawStarshipInfo.value.hullPoints = 0;
   }
 
-  // If the sum of the points are between 0 and 100 (between min and max)
-  if (hullPointsSum >= 0 && hullPointsSum <= 100) {
+  // If the sum of the points are between 0 and the maximum allowed for the class (between min and max)
+  if (hullPointsSum >= 0 && hullPointsSum <= maxHullPoints) {
     rawStarshipInfo.value.hullPoints += hullPointsChange;
   }
 
@@ -167,6 +170,12 @@ async function saveStarshipInfo() {
   }
 
 }
+
+// -- Computed properties --
+
+const starshipMaxHullPoints = computed(() => {
+  return starshipClassesList.value.find(element => element.id === props.starshipInfo.starshipClassId).hullPoints;
+});
 
 </script>
 
