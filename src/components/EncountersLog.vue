@@ -15,6 +15,7 @@ const rawStarshipInfo = ref(props.starshipInfo);
 
 const encounterPrompt = ref('');
 const encounterChoices = ref([]);
+const encounterChoiceResults = ref({});
 
 // -- Methods ---
 
@@ -67,14 +68,18 @@ function handleChoice(choice) {
   // If the choice changes the hullPoints
   if (choice.outcome.hullPoints) {
     updateHullPoints(choice.outcome.hullPoints);
+    // Saves value to display it with the result
+    encounterChoiceResults.value.Hull = choice.outcome.hullPoints;
   }
 
   // If the choice changes the credits
   if (choice.outcome.credits) {
     updateCredits(choice.outcome.credits);
+    // Saves value to display it with the result
+    encounterChoiceResults.value.Credits = choice.outcome.credits;
   }
 
-  // Displays the choice result prompt
+  // Displays the choice result prompt and stats results
   encounterPrompt.value = choice.outcome.prompt
 
   // Saves the updated starship info to the database 
@@ -174,6 +179,15 @@ async function saveStarshipInfo() {
         {{ encounterPrompt ? encounterPrompt : 'Waiting for an encounter.' }}
       </p>
 
+      <p id="starship-choice-results">
+        <span 
+          v-for="(value, index) in encounterChoiceResults" 
+          :key="index">
+          {{ index }}: {{ value }}
+          <br>
+        </span>
+      </p>
+
       <ul v-if="encounterChoices" id="starship-encounters-choices-list">
 
         <li 
@@ -197,7 +211,8 @@ async function saveStarshipInfo() {
   width: 100%;
 }
 
-#starship-encounters-message {
+#starship-encounters-message,
+#starship-choice-results {
   font-size: 1.1em;
   text-align: center;
 }
