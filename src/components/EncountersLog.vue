@@ -64,6 +64,12 @@ function newEncounter() {
 // TEMPORARY - USED TO TEST
 newEncounter()
 
+// Resets the encounter prompt and choice results
+function clearEncounter() {
+  encounterPrompt.value = '';
+  encounterChoiceResults.value = {};
+}
+
 // Updates the stats and the prompt depending on the choice button clicked
 function handleChoice(choice) {
 
