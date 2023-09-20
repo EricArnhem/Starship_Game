@@ -6,7 +6,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  'pauseEngines'
+  'pauseEngines',
+  'newLocation'
 ]);
 
 defineExpose({
@@ -59,6 +60,7 @@ function checkSegmentCount() {
     locationCount.value++
 
     emit('pauseEngines');
+    emit('newLocation');
 
   }
 

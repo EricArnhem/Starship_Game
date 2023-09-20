@@ -11,6 +11,10 @@ const props = defineProps({
   starshipInfo: Object
 });
 
+const emit = defineEmits([
+  'choicePicked'
+]);
+
 defineExpose({
   newEncounter,
   clearEncounter
@@ -97,6 +101,8 @@ function handleChoice(choice) {
 
   // Clears/Removes the choices buttons
   encounterChoices.value = [];
+
+  emit('choicePicked');
 
 }
 

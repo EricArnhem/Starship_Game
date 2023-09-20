@@ -26,6 +26,8 @@ const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
 const enginesOccupied = ref(false);
 
+const inEncounter = ref(false);
+
 const fuelConsumption = 100;
 let timerId;
 let enginesTimeoutId;
@@ -167,6 +169,8 @@ function pauseEngines() {
 function resumeEngines() {
 
   displayAlert('Engines resuming...');
+  clearEncounter();
+
   enginesOn.value = true;
   enginesStatus.value = 'ON';
 
@@ -399,7 +403,7 @@ watch(enginesOn, (enginesOn) => {
 
         <button 
           class="button" 
-          :disabled="enginesOccupied" 
+          :disabled="enginesOccupied || inEncounter" 
           @click="enginesButtonFunction"
         >
           {{ enginesButtonText }}
@@ -419,6 +423,7 @@ watch(enginesOn, (enginesOn) => {
         ref="myPathTimeline"
         :starship-info="starshipInfo"
         @pause-engines="pauseEngines()"
+        @new-location="newEncounter(); inEncounter = true"
       />
       
     </div>
@@ -426,6 +431,7 @@ watch(enginesOn, (enginesOn) => {
     <EncountersLog 
       ref="myEncountersLog"
       :starship-info="starshipInfo"
+      @choice-picked="inEncounter = false"
     />
 
   </div>
