@@ -200,6 +200,9 @@ async function refuelStarship() {
       // Re-enables the Engines buttons
       disableEnginesButtons.value = false;
 
+      // Re-enables the Start/Stop button
+      disableStartStopButton.value = false;
+
     }, refuelDuration);
 
   }
@@ -329,8 +332,6 @@ watch(enginesOn, (enginesOn) => {
   } else {
     // Stops when engines are turned OFF
     clearInterval(timerId);
-    // TEMPORARY FIX (engines buttons not enabled)
-    disableEnginesButtons.value = false;
   }
 });
 
