@@ -94,7 +94,7 @@ function startEngines() {
         // Re-enables the Engines buttons
         disableEnginesButtons.value = false;
 
-      }, 2500);
+      }, 1000);
 
     }
 
@@ -117,7 +117,7 @@ function stopEngines() {
     // Re-enables the Engines buttons
     disableEnginesButtons.value = false;
 
-  }, 2500);
+  }, 1000);
 
   // Save the "Fuel left" value to the database
   updateFuelLeft();
@@ -212,11 +212,11 @@ function startFuelTimer() {
   // Starts a timer that will reduce the amount of fuel by the amount set every second if there's enough fuel left
   timerId = setInterval(() => {
 
-    // Calls the method used to animate the starship to the next segment
-    nextSegment();
-
     // If there's enough fuel to travel
     if ((rawStarshipInfo.value.fuelLeft - fuelConsumption) >= 0) {
+
+      // Calls the method used to animate the starship to the next segment
+      nextSegment();
 
       // Reduces fuel by 100
       rawStarshipInfo.value.fuelLeft -= fuelConsumption;
@@ -229,12 +229,8 @@ function startFuelTimer() {
       // Stops the timer
       clearInterval(timerId);
 
-      // Stopping the engines
-      enginesTimeoutId = setTimeout(() => {
-
-        stopEngines();
-
-      }, 2500);
+      // Stops the engines
+      stopEngines();
 
     }
 
