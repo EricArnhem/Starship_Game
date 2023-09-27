@@ -24,7 +24,10 @@ const rawStarshipInfo = ref(props.starshipInfo);
 
 const enginesOn = ref(false);
 const enginesStatus = ref('OFF');
-const enginesOccupied = ref(false);
+
+const disableEnginesButtons = ref(false);
+const disableStartStopButton = ref(false);
+const disableRefuelButton = ref(false);
 
 const inEncounter = ref(false);
 
@@ -85,7 +88,7 @@ function startEngines() {
   if (rawStarshipInfo.value.fuelLeft > 0) {
 
     // Disables the Engines buttons
-    enginesOccupied.value = true;
+    disableEnginesButtons.value = true;
 
     // If the engines are OFF
     if (enginesOn.value === false) {
@@ -100,7 +103,7 @@ function startEngines() {
         displayAlert('Engines started.');
 
         // Re-enables the Engines buttons
-        enginesOccupied.value = false;
+        disableEnginesButtons.value = false;
 
       }, 2500);
 
@@ -119,7 +122,7 @@ async function stopEngines() {
   return new Promise((resolve) => {
 
     // Disables the Engines buttons
-    enginesOccupied.value = true;
+    disableEnginesButtons.value = true;
 
     // If the engines are ON
     if (enginesOn.value === true) {
@@ -133,7 +136,7 @@ async function stopEngines() {
         displayAlert('Engines stopped.');
 
         // Re-enables the Engines buttons
-        enginesOccupied.value = false;
+        disableEnginesButtons.value = false;
 
         // Timeout to let the 'Engines stopped' alert display before refueling
         alertTimeout = setTimeout(() => {
@@ -193,7 +196,7 @@ async function refuelStarship() {
   if (fuelLeft !== fuelCapacity) {
 
     // Disables the Engines buttons
-    enginesOccupied.value = true;
+    disableEnginesButtons.value = true;
 
     enginesStatus.value = 'REFUELING';
     displayAlert('Refueling the starship...');
@@ -227,7 +230,10 @@ async function refuelStarship() {
         displayAlert('Starship refueled.');
 
         // Re-enables the Engines buttons
-        enginesOccupied.value = false;
+        disableEnginesButtons.value = false;
+
+        // Enables the Start/Stop button
+        disableStartStopButton.value = true;
 
       }, refuelDuration);
 
@@ -258,8 +264,8 @@ function startFuelTimer() {
 
     } else {
       // If we run out of fuel
-      // Disables the Engines buttons
-      enginesOccupied.value = true;
+      // Disables the Start/Stop button
+      disableStartStopButton.value = true;
 
       displayAlert("The starship ran of out fuel.");
 
@@ -369,7 +375,9 @@ watch(enginesOn, (enginesOn) => {
     startFuelTimer();
   } else {
     // Stops when engines are turned OFF
-    clearInterval(timerId)
+    clearInterval(timerId);
+    // TEMPORARY FIX (engines buttons not enabled)
+    disableEnginesButtons.value = false;
   }
 });
 
@@ -403,7 +411,7 @@ watch(enginesOn, (enginesOn) => {
 
         <button 
           class="button" 
-          :disabled="enginesOccupied || inEncounter" 
+          :disabled="disableEnginesButtons || disableStartStopButton || inEncounter" 
           @click="enginesButtonFunction"
         >
           {{ enginesButtonText }}
@@ -411,7 +419,7 @@ watch(enginesOn, (enginesOn) => {
 
         <button 
           class="button" 
-          :disabled="enginesOccupied" 
+          :disabled="disableEnginesButtons || disableRefuelButton" 
           @click="refuelStarship()"
         >
           Refuel
