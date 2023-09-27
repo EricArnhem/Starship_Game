@@ -234,6 +234,10 @@ const starshipMaxHullPoints = computed(() => {
   width: 100%;
 }
 
+#starship-encounters-message {
+  padding: 0 15px;
+}
+
 #starship-encounters-message,
 #starship-choice-results {
   font-size: 1.1em;
