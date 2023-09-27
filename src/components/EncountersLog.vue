@@ -63,8 +63,6 @@ function newEncounter() {
   // Select a random encounter
   const encounterData = selectEncounter();
 
-  console.log(encounterData);
-
   encounterPrompt.value = encounterData.prompt;
   encounterChoices.value = encounterData.choices;
 
