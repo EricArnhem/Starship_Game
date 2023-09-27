@@ -5,7 +5,6 @@ import { ref, computed, watch, inject, onBeforeUnmount } from 'vue';
 import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
 
 // Vue components
-import AlertScreen from '@/components/AlertScreen.vue';
 import StatsTable from '@/components/StatsTable.vue';
 import PathTimeline from '@/components/PathTimeline.vue';
 import EncountersLog from '@/components/EncountersLog.vue';
@@ -39,10 +38,6 @@ let alertTimeout;
 const maxRefuelDuration = 5000; // Longest time a refuel can take from 0 to max (in milliseconds)
 let refuelAnimationData = ref({});
 
-// Hold the reference to the AlertScreen component
-// Used to import the displayAlert() function
-const myAlertScreen = ref(null);
-
 // Hold the reference to the PathTimeline component
 // Used to import the nextSegment() function
 const myPathTimeline = ref(null);
@@ -64,9 +59,6 @@ onBeforeUnmount(() => {
 // -- Methods --
 
 // Imported functions from child components
-function displayAlert(textString) {
-  myAlertScreen.value.displayAlert(textString);
-}
 
 function nextSegment() {
   myPathTimeline.value.nextSegment();
@@ -93,14 +85,11 @@ function startEngines() {
     // If the engines are OFF
     if (enginesOn.value === false) {
 
-      displayAlert('Engines starting...');
-
       enginesTimeoutId = setTimeout(() => {
 
         // We start them and update the Engines status
         enginesOn.value = true;
         enginesStatus.value = 'ON';
-        displayAlert('Engines started.');
 
         // Re-enables the Engines buttons
         disableEnginesButtons.value = false;
@@ -108,10 +97,6 @@ function startEngines() {
       }, 2500);
 
     }
-
-  } else {
-
-    displayAlert('Not enough fuel to start the engines.');
 
   }
 
@@ -127,13 +112,11 @@ async function stopEngines() {
     // If the engines are ON
     if (enginesOn.value === true) {
 
-      displayAlert('Engines shutting down...');
       enginesOn.value = false;
 
       enginesTimeoutId = setTimeout(() => {
 
         enginesStatus.value = 'OFF';
-        displayAlert('Engines stopped.');
 
         // Re-enables the Engines buttons
         disableEnginesButtons.value = false;
@@ -160,7 +143,6 @@ async function stopEngines() {
 
 function pauseEngines() {
 
-  displayAlert('Engines idling...');
   enginesOn.value = false;
   enginesStatus.value = 'PAUSED';
 
@@ -171,7 +153,6 @@ function pauseEngines() {
 
 function resumeEngines() {
 
-  displayAlert('Engines resuming...');
   clearEncounter();
 
   enginesOn.value = true;
@@ -199,7 +180,6 @@ async function refuelStarship() {
     disableEnginesButtons.value = true;
 
     enginesStatus.value = 'REFUELING';
-    displayAlert('Refueling the starship...');
 
     // Calculating the time it takes to refuel
     const fuelNeeded = fuelCapacity - fuelLeft;
@@ -227,7 +207,6 @@ async function refuelStarship() {
         updateFuelLeft();
 
         enginesStatus.value = 'OFF';
-        displayAlert('Starship refueled.');
 
         // Re-enables the Engines buttons
         disableEnginesButtons.value = false;
@@ -238,10 +217,6 @@ async function refuelStarship() {
       }, refuelDuration);
 
     }, 2500);
-
-  } else {
-
-    displayAlert("Fuel tank already at maximum capacity.");
 
   }
 
@@ -266,8 +241,6 @@ function startFuelTimer() {
       // If we run out of fuel
       // Disables the Start/Stop button
       disableStartStopButton.value = true;
-
-      displayAlert("The starship ran of out fuel.");
 
       // Stops the timer
       clearInterval(timerId);
@@ -384,8 +357,6 @@ watch(enginesOn, (enginesOn) => {
 </script>
 
 <template>
-
-  <AlertScreen ref="myAlertScreen"/>
 
   <div id="starship-data" class="content-box">
 
