@@ -102,42 +102,25 @@ function startEngines() {
 
 }
 
-async function stopEngines() {
+function stopEngines() {
 
-  return new Promise((resolve) => {
+  // Disables the Engines buttons
+  disableEnginesButtons.value = true;
 
-    // Disables the Engines buttons
-    disableEnginesButtons.value = true;
+  // Turning off the engines before the timeout to stop the fuel consumption immediatly
+  enginesOn.value = false;
 
-    // If the engines are ON
-    if (enginesOn.value === true) {
+  enginesTimeoutId = setTimeout(() => {
 
-      enginesOn.value = false;
+    enginesStatus.value = 'OFF';
 
-      enginesTimeoutId = setTimeout(() => {
+    // Re-enables the Engines buttons
+    disableEnginesButtons.value = false;
 
-        enginesStatus.value = 'OFF';
+  }, 2500);
 
-        // Re-enables the Engines buttons
-        disableEnginesButtons.value = false;
-
-        // Timeout to let the 'Engines stopped' alert display before refueling
-        alertTimeout = setTimeout(() => {
-
-          resolve(); // Resolve the promise to signal completion
-
-        }, 2500);
-
-      }, 2500);
-
-      // Save the "Fuel left" value to the database
-      updateFuelLeft();
-
-    } else {
-      resolve(); // Resolve the promise if engines were already off
-    }
-
-  });
+  // Save the "Fuel left" value to the database
+  updateFuelLeft();
 
 }
 
@@ -168,12 +151,14 @@ async function refuelStarship() {
   const starshipClassId = rawStarshipInfo.value.starshipClassId;
   const fuelCapacity = starshipClassesList.value.find(element => element.id === starshipClassId).fuelCapacity;
 
-  // If engines are ON, we turn them OFF
+  let enginesCurrentStatus = enginesStatus.value;
+
+  // If engines are ON, we PAUSE them
   if (enginesOn.value === true) {
-    await stopEngines();
+    pauseEngines();
   }
 
-  // If the Starship is not already at max fuel capacity
+  // Start Refueling if the Starship is not already at max fuel capacity
   if (fuelLeft !== fuelCapacity) {
 
     // Disables the Engines buttons
@@ -186,37 +171,36 @@ async function refuelStarship() {
 
     const refuelDuration = (fuelNeeded * maxRefuelDuration) / fuelCapacity;
 
-    // Wait a bit before starting the refueling process (time for the 'Refueling...' alert to display)
+    // Puts refuel data into an object to pass it as a prop to the StatsTable
+    // When the 'refuelAnimationData' prop value changes the animation in automatically started
+    refuelAnimationData.value = {
+      fuelLeft: fuelLeft,
+      fuelCapacity: fuelCapacity,
+      refuelDuration: refuelDuration
+    }
+
+    // After the refueling is done (animation ended)
     enginesTimeoutId = setTimeout(() => {
 
-      // Puts refuel data into an object to pass it as a prop to the StatsTable
-      // When the 'refuelAnimationData' prop value changes the animation in automatically started
-      refuelAnimationData.value = {
-        fuelLeft: fuelLeft,
-        fuelCapacity: fuelCapacity,
-        refuelDuration: refuelDuration
+      // Changing the Starship "Fuel left" value to the max fuel capacity
+      rawStarshipInfo.value.fuelLeft = fuelCapacity;
+
+      // Updating the value in the database
+      updateFuelLeft();
+
+      // Put the engines back to PAUSE status if they were ON or PAUSED
+      if (enginesCurrentStatus === 'ON' || enginesCurrentStatus === 'PAUSED') {
+        enginesStatus.value = 'PAUSED';
+      }
+      // Or put the engines back to OFF status if they were OFF
+      if (enginesCurrentStatus === 'OFF') {
+        enginesStatus.value = 'OFF';
       }
 
-      // After the refueling is done (animation ended)
-      enginesTimeoutId = setTimeout(() => {
+      // Re-enables the Engines buttons
+      disableEnginesButtons.value = false;
 
-        // Changing the Starship "Fuel left" value to the max fuel capacity
-        rawStarshipInfo.value.fuelLeft = fuelCapacity;
-
-        // Updating the value in the database
-        updateFuelLeft();
-
-        enginesStatus.value = 'OFF';
-
-        // Re-enables the Engines buttons
-        disableEnginesButtons.value = false;
-
-        // Enables the Start/Stop button
-        disableStartStopButton.value = true;
-
-      }, refuelDuration);
-
-    }, 2500);
+    }, refuelDuration);
 
   }
 
