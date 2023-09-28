@@ -343,8 +343,15 @@ watch(enginesOn, (enginesOn) => {
   }
 });
 
-// Disables the Refuel button when fuel tank is full
+// Enables/Disables the Start and/or Refuel button depending on the fuel left
 watch(() => rawStarshipInfo.value.fuelLeft, (fuelLeft) => {
+
+  // Disables/Enables the Start button if the fuel tank is empty or not
+  if (fuelLeft === 0) {
+    disableStartStopButton.value = true;
+  } else {
+    disableStartStopButton.value = false;
+  }
 
   // Getting the class fuel capacity
   const fuelCapacity = starshipClassData.value.fuelCapacity;
