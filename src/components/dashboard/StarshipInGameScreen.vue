@@ -148,8 +148,7 @@ async function refuelStarship() {
   const fuelLeft = rawStarshipInfo.value.fuelLeft;
 
   // Getting the class fuel capacity
-  const starshipClassId = rawStarshipInfo.value.starshipClassId;
-  const fuelCapacity = starshipClassesList.value.find(element => element.id === starshipClassId).fuelCapacity;
+  const fuelCapacity = starshipClassData.value.fuelCapacity;
 
   let enginesCurrentStatus = enginesStatus.value;
 
@@ -323,6 +322,15 @@ const enginesStatusTheme = computed(() => {
 
 });
 
+// Gets the starship's class data
+const starshipClassData = computed(() => {
+
+  const starshipClassId = rawStarshipInfo.value.starshipClassId;
+
+  return starshipClassesList.value.find(element => element.id === starshipClassId);
+
+});
+
 // -- Watchers --
 
 // Decrease the "Fuel left" when the engines are ON
@@ -339,8 +347,7 @@ watch(enginesOn, (enginesOn) => {
 watch(() => rawStarshipInfo.value.fuelLeft, (fuelLeft) => {
 
   // Getting the class fuel capacity
-  const starshipClassId = rawStarshipInfo.value.starshipClassId;
-  const fuelCapacity = starshipClassesList.value.find(element => element.id === starshipClassId).fuelCapacity;
+  const fuelCapacity = starshipClassData.value.fuelCapacity;
 
   // Disable Refuel button if the fuel tank is full
   if (fuelLeft === fuelCapacity) {
