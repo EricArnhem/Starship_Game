@@ -271,6 +271,17 @@ function stopGame() {
 
 }
 
+// Disables the engines buttons and turn off the starship
+function gameOver() {
+
+  // Disables the Engines buttons
+  disableEnginesButtons.value = true;
+  // Turning off the engines
+  enginesOn.value = false;
+  enginesStatus.value = 'OFF';
+
+}
+
 // -- Computed properties --
 
 // Gets the right text to update the engines button depending on the engines status
@@ -367,7 +378,16 @@ watch(() => rawStarshipInfo.value.fuelLeft, (fuelLeft) => {
     disableRefuelButton.value = false;
   }
 
-}, { immediate: true })
+}, { immediate: true });
+
+// Disables/Enables the engines buttons and turn off the starship if hull points to 0 or not
+watch(() => rawStarshipInfo.value.hullPoints, (hullPoints) => {
+
+  if (hullPoints === 0) {
+    gameOver();
+  }
+
+}, { immediate: true });
 
 </script>
 
