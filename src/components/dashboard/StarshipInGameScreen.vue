@@ -440,6 +440,14 @@ watch(() => rawStarshipInfo.value.fuelLeft, (fuelLeft) => {
 
   position: relative;
   padding: 0;
+  margin-top: 10px;
+}
+
+/* Removes top margin on mobile screens */
+@media screen and (max-width: 480px) {
+  #starship-data {
+    margin-top: 0;
+  }
 }
 
 #go-back-button {
