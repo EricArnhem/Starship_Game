@@ -335,6 +335,23 @@ watch(enginesOn, (enginesOn) => {
   }
 });
 
+// Disables the Refuel button when fuel tank is full
+watch(() => rawStarshipInfo.value.fuelLeft, (fuelLeft) => {
+
+  // Getting the class fuel capacity
+  const starshipClassId = rawStarshipInfo.value.starshipClassId;
+  const fuelCapacity = starshipClassesList.value.find(element => element.id === starshipClassId).fuelCapacity;
+
+  // Disable Refuel button if the fuel tank is full
+  if (fuelLeft === fuelCapacity) {
+    disableRefuelButton.value = true;
+  } else {
+    // Re-enables the Refuel button if the fuel tank is not full
+    disableRefuelButton.value = false;
+  }
+
+}, { immediate: true })
+
 </script>
 
 <template>
