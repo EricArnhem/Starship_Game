@@ -129,8 +129,11 @@ function pauseEngines() {
   enginesOn.value = false;
   enginesStatus.value = 'PAUSED';
 
-  // Save the "Fuel left" value to the database
-  updateFuelLeft();
+  // Short timeout to make sure the latest fuel left value is saved to the database
+  setTimeout(() => {
+    // Save the "Fuel left" value to the database
+    updateFuelLeft();
+  }, 100);
 
 }
 
