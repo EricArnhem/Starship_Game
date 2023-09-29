@@ -9,6 +9,9 @@ import StatsTable from '@/components/StatsTable.vue';
 import PathTimeline from '@/components/PathTimeline.vue';
 import EncountersLog from '@/components/EncountersLog.vue';
 
+import GameOverModal from '@/components/GameOverModal.vue';
+import { openModal } from '@/components/modal/state';
+
 const props = defineProps({
   starshipInfo: Object
 });
@@ -450,6 +453,13 @@ watch(() => rawStarshipInfo.value.hullPoints, (hullPoints) => {
 
   </div>
 
+  <Teleport to="body">
+
+    <GameOverModal />
+
+  </Teleport>
+
+  <button @click="openModal()">OPEN MODAL</button>
 
 </template>
 
