@@ -15,7 +15,7 @@ const router = useRouter();
         <div class="modal-container content-box" @click.stop>
 
           <div class="modal-header">
-            <h2>
+            <h2 v-if="$slots.title">
               <slot name="title"></slot>
             </h2>
             <img 
@@ -99,7 +99,8 @@ const router = useRouter();
 
 #modal-close-cross {
   cursor: pointer;
-  margin-left: 15px;
+  margin-left: auto;
+  padding-left: 10px;
 }
 
 #modal-close-cross:hover {
