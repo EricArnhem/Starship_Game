@@ -79,8 +79,8 @@ function clearEncounter() {
 
 function startEngines() {
 
-  // If the starship has enough fuel
-  if (rawStarshipInfo.value.fuelLeft > 0) {
+  // If the starship has enough fuel and is not destroyed
+  if (rawStarshipInfo.value.fuelLeft > 0 && rawStarshipInfo.value.hullPoints > 0) {
 
     // Disables the Engines buttons
     disableEnginesButtons.value = true;
