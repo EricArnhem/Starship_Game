@@ -183,6 +183,27 @@ async function saveStarshipInfo() {
 
 }
 
+function checkChoiceCredits(choice) {
+
+  // If the outcome reduces the credit balance
+  if (Math.sign(choice.outcome.credits) === -1) {
+
+    let creditBalance = rawStarshipInfo.value.credits;
+    let creditChange = Math.abs(choice.outcome.credits);
+
+    // If we don't have enough credits to use that choice
+    if ((creditBalance - creditChange) < 0) {
+      // Disables the choice button
+      return true;
+    }
+
+  }
+
+  // Enables the choice button
+  return false;
+
+}
+
 // -- Computed properties --
 
 const starshipMaxHullPoints = computed(() => {
@@ -215,7 +236,11 @@ const starshipMaxHullPoints = computed(() => {
           v-for="choice in encounterChoices"
           :key="choice.id">
           
-          <button class="button" @click="handleChoice(choice)">
+          <button 
+            class="button" 
+            @click="checkChoiceCredits(choice) ? null : handleChoice(choice)"
+            :disabled="checkChoiceCredits(choice)"
+          >
             {{ choice.text }}
           </button>
 
