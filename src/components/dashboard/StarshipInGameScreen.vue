@@ -2,7 +2,7 @@
 import { ref, computed, watch, inject, onBeforeUnmount } from 'vue';
 
 // API methods
-import { updateStarshipFuelLeft } from "@/api/methods/starship.js";
+import { updateStarshipFuelLeft, deleteStarship } from "@/api/methods/starship.js";
 
 // Vue components
 import StatsTable from '@/components/StatsTable.vue';
@@ -275,7 +275,7 @@ function stopGame() {
 }
 
 // Disables the engines buttons and turn off the starship
-function gameOver() {
+async function gameOver() {
 
   // Disables the Engines buttons
   disableEnginesButtons.value = true;
@@ -283,6 +283,18 @@ function gameOver() {
   // Turning off the engines
   enginesOn.value = false;
   enginesStatus.value = 'OFF';
+
+  // Getting starship public id
+  let starshipPublicId = rawStarshipInfo.value.publicId;
+
+  // Deleting the starship from the database
+  try {
+
+    await deleteStarship(starshipPublicId)
+
+  } catch (error) {
+    console.log(error);
+  }
 
   // Opens the game over modal
   openModal();
