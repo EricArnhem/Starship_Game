@@ -2,6 +2,10 @@
 import { useRoute, useRouter } from 'vue-router'
 import { modalOpen, closeModal } from './state';
 
+const emit = defineEmits([
+  'closeModal'
+]);
+
 const route = useRoute();
 const router = useRouter();
 </script>
@@ -10,7 +14,7 @@ const router = useRouter();
 
   <Transition name="modal">
 
-    <div class="modal-mask" v-if="modalOpen" @click="closeModal()">
+    <div class="modal-mask" v-if="modalOpen" @click="closeModal(); emit('closeModal');">
       <div class="modal-wrapper">
         <div class="modal-container content-box" @click.stop>
 
@@ -23,7 +27,7 @@ const router = useRouter();
               src="@/images/close-cross.svg" 
               title="Close" 
               alt="Close cross" 
-              @click="closeModal(); router.push(route.matched[0])" 
+              @click="closeModal(); emit('closeModal'); router.push(route.matched[0])" 
             >
           </div>
 

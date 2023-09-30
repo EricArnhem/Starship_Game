@@ -10,7 +10,7 @@ import MyModal from '@/components/modal/MyModal.vue';
 
 <template>
 
-  <MyModal>
+  <MyModal @close-modal="router.go(0)">
 
     <template #body>
 
