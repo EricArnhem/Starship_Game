@@ -274,7 +274,7 @@ function stopGame() {
 
 }
 
-// Disables the engines buttons and turn off the starship
+// Disables the engines buttons, Turn off the starship, deletes it from the database then displays a game over modal
 async function gameOver() {
 
   // Disables the Engines buttons
