@@ -279,9 +279,13 @@ function gameOver() {
 
   // Disables the Engines buttons
   disableEnginesButtons.value = true;
+
   // Turning off the engines
   enginesOn.value = false;
   enginesStatus.value = 'OFF';
+
+  // Opens the game over modal
+  openModal();
 
 }
 
@@ -458,8 +462,6 @@ watch(() => rawStarshipInfo.value.hullPoints, (hullPoints) => {
     <GameOverModal />
 
   </Teleport>
-
-  <button @click="openModal()">OPEN MODAL</button>
 
 </template>
 
