@@ -5,11 +5,11 @@ import { ref, computed, watch, inject, onBeforeUnmount } from 'vue';
 import { updateStarshipFuelLeft, deleteStarship } from "@/api/methods/starship.js";
 
 // Vue components
-import StatsTable from '@/components/StatsTable.vue';
-import PathTimeline from '@/components/PathTimeline.vue';
-import EncountersLog from '@/components/EncountersLog.vue';
+import StatsTable from '@/components/dashboard/ingame/StatsTable.vue';
+import PathTimeline from '@/components/dashboard/ingame/PathTimeline.vue';
+import EncountersLog from '@/components/dashboard/ingame/EncountersLog.vue';
 
-import GameOverModal from '@/components/GameOverModal.vue';
+import GameOverModal from '@/components/dashboard/ingame/GameOverModal.vue';
 import { openModal } from '@/components/modal/state';
 
 const props = defineProps({
