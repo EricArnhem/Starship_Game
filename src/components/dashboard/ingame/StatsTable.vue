@@ -119,7 +119,7 @@ watch(() => props.refuelAnimationData, (refuelAnimationData) => {
   }
 
   #starship-stats td {
-    padding: 12px 12px;
+    padding: 6px 12px;
   }
 }
 

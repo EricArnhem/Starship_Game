@@ -516,10 +516,7 @@ watch(() => rawStarshipInfo.value.hullPoints, (hullPoints) => {
 #starship-info {
   display: flex;
   flex-direction: column;
-
   width: 100%;
-
-  padding-bottom: 22.4px;
   border-right: 1px solid var(--main-border-color);
 }
 
