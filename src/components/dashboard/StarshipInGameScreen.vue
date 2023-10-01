@@ -424,7 +424,7 @@ watch(() => rawStarshipInfo.value.hullPoints, (hullPoints) => {
 
     <div id="starship-info">
 
-      <h3>Starships stats</h3>
+      <h3>Starship stats</h3>
       <StatsTable
         :starship-info="starshipInfo"
         :refuel-animation-data="refuelAnimationData" 
