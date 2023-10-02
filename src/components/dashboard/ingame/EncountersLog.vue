@@ -74,22 +74,43 @@ function clearEncounter() {
   encounterChoiceResults.value = {};
 }
 
-// Updates the stats and the prompt depending on the choice button clicked
-function handleChoice(choice) {
+// Updates the stats and displays the stats changes
+function handleResults(choiceOutcome) {
 
   // If the choice changes the hullPoints
-  if (choice.outcome.hullPoints) {
-    updateHullPoints(choice.outcome.hullPoints);
+  if (choiceOutcome.hullPoints) {
+    updateHullPoints(choiceOutcome.hullPoints);
+
     // Saves value to display it with the result
-    encounterChoiceResults.value.Hull = choice.outcome.hullPoints;
+    // If the value is positive, we add a + sign before it
+    if (Math.sign(choiceOutcome.hullPoints) === 1) {
+      encounterChoiceResults.value.Hull = `+${choiceOutcome.hullPoints}`;
+    } else {
+      encounterChoiceResults.value.Hull = choiceOutcome.hullPoints;
+    }
+
   }
 
   // If the choice changes the credits
-  if (choice.outcome.credits) {
-    updateCredits(choice.outcome.credits);
+  if (choiceOutcome.credits) {
+    updateCredits(choiceOutcome.credits);
+
     // Saves value to display it with the result
-    encounterChoiceResults.value.Credits = choice.outcome.credits;
+    // If the value is positive, we add a + sign before it
+    if (Math.sign(choiceOutcome.hullPoints) === 1) {
+      encounterChoiceResults.value.Credits = `+${choiceOutcome.credits}`;
+    } else {
+      encounterChoiceResults.value.Credits = choiceOutcome.credits;
+    }
+
   }
+
+}
+
+// Updates the stats and the prompt depending on the choice button clicked
+function handleChoice(choice) {
+
+  handleResults(choice.outcome);
 
   // Displays the choice result prompt and stats results
   encounterPrompt.value = choice.outcome.prompt
