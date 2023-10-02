@@ -149,7 +149,7 @@ function resumeEngines() {
 
 }
 
-async function refuelStarship() {
+function refuelStarship() {
 
   const fuelLeft = rawStarshipInfo.value.fuelLeft;
 
